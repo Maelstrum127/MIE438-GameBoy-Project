@@ -75,6 +75,7 @@ void main(){
     while(1){
         if (counter%10 == 0){
             animate(0, &current_sprite_index);
+            counter = 0;
         }
         move();
         delay(100);
