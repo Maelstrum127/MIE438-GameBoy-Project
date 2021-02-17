@@ -74,7 +74,6 @@ void main(){
 
     while(1){
         if (counter%10 == 0){
-            counter = 0;
             animate(0, &current_sprite_index);
         }
         move();
