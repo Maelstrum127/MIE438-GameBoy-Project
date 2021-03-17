@@ -9,28 +9,31 @@ Symbol Table
     .__.H$L.                                                    =  000000 L
   1 _Face2                                                         000000 GR
     _LCDC_REG                                                      ****** GX
-    _SCX_REG                                                       ****** GX
-    _SCY_REG                                                       ****** GX
-    _WX_REG                                                        ****** GX
-    _WY_REG                                                        ****** GX
+  0 ___str_0                                                       0000A0 R
+    __divuint                                                      ****** GX
     __modsint                                                      ****** GX
-  0 _animate                                                       000063 GR
-  1 _backgroundmap                                                 0000C0 GR
+    __moduint                                                      ****** GX
+  0 _animate                                                       000308 GR
+  0 _animate_sprite                                                000182 GR
+  0 _blankmap                                                      00009F GR
+  0 _can_player_move                                               0000C3 GR
     _delay                                                         ****** GX
-    _font_init                                                     ****** GX
-    _font_load                                                     ****** GX
-    _font_min                                                      ****** GX
-    _font_set                                                      ****** GX
+  1 _game_running                                                  0001EC GR
+  1 _has_key                                                       0001EA GR
     _joypad                                                        ****** GX
-  0 _main                                                          0000AD GR
-  0 _move                                                          000000 GR
+  0 _main                                                          000352 GR
+  1 _maze                                                          000080 GR
+  1 _maze_tiles                                                    000040 GR
+  0 _move                                                          000218 GR
+  1 _open_door                                                     0001EB GR
+  1 _playerlocation                                                0001E8 GR
+    _printf                                                        ****** GX
     _set_bkg_data                                                  ****** GX
     _set_bkg_tiles                                                 ****** GX
     _set_sprite_data                                               ****** GX
-    _set_win_tiles                                                 ****** GX
     _shadow_OAM                                                    ****** GX
-  1 _simple_background_tiles                                       000040 GR
-  1 _windowmap                                                     000390 GR
+  0 _special_tile                                                  000000 GR
+    _wait_vbl_done                                                 ****** GX
 
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy Z80-like CPU), page 2.
@@ -38,11 +41,11 @@ Hexadecimal [24-Bits]
 
 Area Table
 
-   0 _CODE                                      size    16D   flags    0
-   1 _DATA                                      size    395   flags    0
+   0 _CODE                                      size    411   flags    0
+   1 _DATA                                      size    1ED   flags    0
    2 _DABS                                      size      0   flags    8
    3 _HOME                                      size      0   flags    0
-   4 _GSINIT                                    size   11E9   flags    0
+   4 _GSINIT                                    size    988   flags    0
    5 _GSFINAL                                   size      0   flags    0
    6 _CABS                                      size      0   flags    8
 
