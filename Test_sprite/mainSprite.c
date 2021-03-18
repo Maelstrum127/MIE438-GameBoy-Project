@@ -113,6 +113,68 @@ UINT8 setbit_backward(UINT8 step){
 return (step + 1)%2;
 }
 
+UINT8 setbit_right(UINT8 step){
+    if (step == 1){
+    set_sprite_tile(0,18);
+    bit.spriteids[0] = 0;
+    set_sprite_tile(1,19);
+    bit.spriteids[1] = 1;
+    set_sprite_tile(2,20);
+    bit.spriteids[2] = 2;    
+    set_sprite_tile(3,21);
+    bit.spriteids[3] = 3;  
+    set_sprite_tile(4,22);
+    bit.spriteids[4] = 4; 
+    set_sprite_tile(5,23);
+    bit.spriteids[5] = 5;
+    }
+    if (step == 0){
+    set_sprite_tile(0,30);
+    bit.spriteids[0] = 0;
+    set_sprite_tile(1,31);
+    bit.spriteids[1] = 1;
+    set_sprite_tile(2,32);
+    bit.spriteids[2] = 2;    
+    set_sprite_tile(3,33);
+    bit.spriteids[3] = 3;  
+    set_sprite_tile(4,34);
+    bit.spriteids[4] = 4; 
+    set_sprite_tile(5,35);
+    bit.spriteids[5] = 5;   
+    }
+return (step + 1)%2;
+}
+UINT8 setbit_left(UINT8 step){
+    if (step == 1){
+    set_sprite_tile(0,24);
+    bit.spriteids[0] = 0;
+    set_sprite_tile(1,25);
+    bit.spriteids[1] = 1;
+    set_sprite_tile(2,26);
+    bit.spriteids[2] = 2;    
+    set_sprite_tile(3,27);
+    bit.spriteids[3] = 3;  
+    set_sprite_tile(4,28);
+    bit.spriteids[4] = 4; 
+    set_sprite_tile(5,29);
+    bit.spriteids[5] = 5;
+    }
+    if (step == 0){
+    set_sprite_tile(0,37);
+    bit.spriteids[0] = 0;
+    set_sprite_tile(1,38);
+    bit.spriteids[1] = 1;
+    set_sprite_tile(2,39);
+    bit.spriteids[2] = 2;    
+    set_sprite_tile(3,40);
+    bit.spriteids[3] = 3;  
+    set_sprite_tile(4,41);
+    bit.spriteids[4] = 4; 
+    set_sprite_tile(5,42);
+    bit.spriteids[5] = 5;   
+    }
+return (step + 1)%2;
+}
 
 void reset_bit(){
     set_sprite_tile(0,0);
@@ -131,7 +193,7 @@ void reset_bit(){
 
 void main(){
     UINT8 step = 0;
-    set_sprite_data(0, 30, GameSprites);
+    set_sprite_data(0, 43, GameSprites);
     setupbit();
 
     SHOW_SPRITES;
@@ -140,11 +202,13 @@ void main(){
     while(1){
         if (joypad() & J_LEFT){
             bit.x -=2;
+            step = setbit_left(step);
             movegamecharacter(&bit, bit.x, bit.y);
 
         }
         if (joypad() & J_RIGHT){
             bit.x += 2;
+            step = setbit_right(step);
             movegamecharacter(&bit, bit.x, bit.y);
         }
 
