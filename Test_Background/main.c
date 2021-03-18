@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include "BackgroundMap.h"
 #include "BackgroundData.h"
-#include "GameCharacter.c"
 
 struct GameCharacter bit;
 struct GameCharacter byte; 
