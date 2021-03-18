@@ -2,11 +2,23 @@
 #include <gb/font.h>
 #include <stdio.h>
 #include "Face2.c"
-#include "maze_tiles.c"
-#include "maze.c"
+#include <gb/cgb.h>
+#include "BackgroundMap.h"
+#include "BackgroundData.h"
 
-const unsigned char blankmap[1] = {0x00};
-UINT8 playerlocation[2];
+const unsigned char blankmap[1] = {0x0C};
+UINT16 playerlocation[2];
+
+const UWORD backgroundpalette[] = {   
+    BackgroundDataCGBPal0c0, BackgroundDataCGBPal0c1, BackgroundDataCGBPal0c2, BackgroundDataCGBPal0c3,
+    BackgroundDataCGBPal1c0, BackgroundDataCGBPal1c1, BackgroundDataCGBPal1c2, BackgroundDataCGBPal1c3,
+    BackgroundDataCGBPal2c0, BackgroundDataCGBPal2c1, BackgroundDataCGBPal2c2, BackgroundDataCGBPal2c3,
+    BackgroundDataCGBPal3c0, BackgroundDataCGBPal3c1, BackgroundDataCGBPal3c2, BackgroundDataCGBPal3c3,
+    BackgroundDataCGBPal4c0, BackgroundDataCGBPal4c1, BackgroundDataCGBPal4c2, BackgroundDataCGBPal4c3,
+    BackgroundDataCGBPal5c0, BackgroundDataCGBPal5c1, BackgroundDataCGBPal5c2, BackgroundDataCGBPal5c3,
+    BackgroundDataCGBPal6c0, BackgroundDataCGBPal6c1, BackgroundDataCGBPal6c2, BackgroundDataCGBPal6c3,
+};
+
 UBYTE has_key, open_door, game_running;
 
 UINT8 special_tile(UINT16 player_loc){
@@ -34,7 +46,7 @@ UINT8 special_tile(UINT16 player_loc){
     return rtn;
 }
 
-UINT8 can_player_move(UINT8 newplayerx, UINT8 newplayery){
+UINT8 can_player_move(UINT16 newplayerx, UINT16 newplayery){
     UINT16 indexTLx;
     UINT16 indexTLy;
     UINT16 tileindexTL;
@@ -43,11 +55,14 @@ UINT8 can_player_move(UINT8 newplayerx, UINT8 newplayery){
     indexTLx = (newplayerx - 8)/8;
     indexTLy = (newplayery - 16)/8;
 
-    tileindexTL = 20*indexTLy + indexTLx;
+    tileindexTL = 40*indexTLy + indexTLx;
 
-    result = special_tile(tileindexTL);
-    if (maze[tileindexTL] == blankmap[0]){
+    result = 0; //special_tile(tileindexTL);
+    if (BackgroundMapPLN0[tileindexTL] == blankmap[0]){
         result = 1;
+    }
+    if (newplayery < 16 || newplayery > 168){
+        result = 0;
     }
 
     return result;
@@ -66,40 +81,61 @@ void animate_sprite(UINT8 sprite_index, INT8 move_x, INT8 move_y){
     }
 }
 
-void move(UINT8 sprite_index, UINT8 *player_loc_x, UINT8 *player_loc_y){
-    int tile = 8;
+void move_background_with_animation(INT8 move_x, INT8 move_y){
+    while(move_x != 0){
+        scroll_bkg(move_x < 0 ? -1 : 1, 0);
+        move_x += (move_x > 0 ? -1 : 1);
+        wait_vbl_done();
+    }
+    while (move_y != 0){
+        scroll_bkg(0, move_y < 0 ? -1 : 1);
+        move_y += (move_y > 0 ? -1 : 1);
+        wait_vbl_done();
+    }
+}
+
+void move(UINT8 sprite_index, UINT16 *player_loc_x, UINT16 *player_loc_y){
+    UINT16 tile = 8;
     switch (joypad())
     {
     case J_LEFT:
         if (can_player_move(*player_loc_x - tile, *player_loc_y)){
-            animate_sprite(sprite_index, -1*tile, 0);
+            //animate_sprite(sprite_index, -1*tile, 0);
+            move_background_with_animation(-1*tile, 0);
             *player_loc_x -= tile;
         }
-        //scroll_bkg(-1*tile, 0);
         break;
     case J_RIGHT:
         if (can_player_move(*player_loc_x + tile, *player_loc_y)){
-            animate_sprite(sprite_index, 1*tile, 0);
+            //animate_sprite(sprite_index, 1*tile, 0);
+            move_background_with_animation(tile, 0);
             *player_loc_x += tile;
         }
-        //scroll_bkg(tile, 0);
         break;
     case J_UP:
         if (can_player_move(*player_loc_x, *player_loc_y - tile)){
-            animate_sprite(sprite_index, 0, -1*tile);
+            if (*player_loc_y < 96 || *player_loc_y > 104){
+                animate_sprite(sprite_index, 0, -1*tile);
+            }
+            else{
+                move_background_with_animation(0, -1*tile);
+            }
             *player_loc_y -= tile;
         }
-        //scroll_bkg(0, -1*tile);
         break;
     case J_DOWN:
         if (can_player_move(*player_loc_x, *player_loc_y + tile)){
-            animate_sprite(sprite_index, 0, 1*tile);
+            if (*player_loc_y < 88 || *player_loc_y > 96){
+                animate_sprite(sprite_index, 0, tile);
+            }
+            else{
+                move_background_with_animation(0, tile);
+            }
             *player_loc_y += tile;
         }
         break;
     default:
         scroll_sprite(0, 0, 0);
-        //scroll_bkg(0, 0);
         break;
     }
 }
@@ -121,29 +157,20 @@ void animate(int sprite_location, int *csi){
 }
 
 void main(){
-
-    /*
-    font_t min_font;
-    font_init();
-    min_font = font_load(font_min); //36 tiles
-    font_set(min_font); 
-    set_win_tiles(0, 0, 5, 1, windowmap);
-    move_win(7, 120);   
-    SHOW_WIN;
-    */
-
-    set_bkg_data(0, 4, maze_tiles); //start at 37 to avoid clash with font, shares same memory locations
-    set_bkg_tiles(0, 0, 20, 19, maze);
-
-
+    set_bkg_palette(0, 7, &backgroundpalette[0]);
+    set_bkg_data(0, 14, BackgroundData);
+    VBK_REG = 1;
+    set_bkg_tiles(0, 0, BackgroundMapWidth, BackgroundMapHeight, BackgroundMapPLN1);
+    VBK_REG = 0;
+    set_bkg_tiles(0, 0, BackgroundMapWidth, BackgroundMapHeight, BackgroundMapPLN0);
     DISPLAY_ON;
     SHOW_BKG;
-    
+   
     UINT8 current_sprite_index = 0;
     game_running = 1;
 
-    playerlocation[0] = 16;
-    playerlocation[1] = 24;
+    playerlocation[0] = 88;
+    playerlocation[1] = 88;
 
     int counter = 0;
     set_sprite_data(0, 4, Face2);
