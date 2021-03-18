@@ -4,8 +4,6 @@
 #include "BackgroundMap.h"
 #include "BackgroundData.h"
 
-struct GameCharacter bit;
-struct GameCharacter byte; 
 
 const UWORD backgroundpalette[] =
 {   
@@ -18,12 +16,6 @@ const UWORD backgroundpalette[] =
     BackgroundDataCGBPal6c0, BackgroundDataCGBPal6c1, BackgroundDataCGBPal6c2, BackgroundDataCGBPal6c3,
 };
 
-void setupbit(){
-    bit.x = 80;
-    bit.y = 130;
-    bit.width = 16;
-    bit.height = 16;
-}
 void main(){
 
     set_bkg_palette(0, 7, &backgroundpalette[0]);
