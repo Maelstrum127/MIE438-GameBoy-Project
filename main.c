@@ -23,10 +23,6 @@ UINT8 gameOn = 1;
 
 const UWORD backgroundpalette[]=
 {
-    Lvl1BackgroundDataSGBPal0c0, Lvl1BackgroundDataSGBPal0c1, Lvl1BackgroundDataSGBPal0c2,Lvl1BackgroundDataSGBPal0c3,
-    Lvl1BackgroundDataSGBPal1c0, Lvl1BackgroundDataSGBPal1c1, Lvl1BackgroundDataSGBPal1c2, Lvl1BackgroundDataSGBPal1c3,
-    Lvl1BackgroundDataSGBPal2c0, Lvl1BackgroundDataSGBPal2c1, Lvl1BackgroundDataSGBPal2c2, Lvl1BackgroundDataSGBPal2c3,
-    Lvl1BackgroundDataSGBPal3c0, Lvl1BackgroundDataSGBPal3c1, Lvl1BackgroundDataSGBPal3c2, Lvl1BackgroundDataSGBPal3c3,
     Lvl1BackgroundDataCGBPal0c0, Lvl1BackgroundDataCGBPal0c1, Lvl1BackgroundDataCGBPal0c2, Lvl1BackgroundDataCGBPal0c3,
     Lvl1BackgroundDataCGBPal1c0, Lvl1BackgroundDataCGBPal1c1, Lvl1BackgroundDataCGBPal1c2, Lvl1BackgroundDataCGBPal1c3,
     Lvl1BackgroundDataCGBPal2c0, Lvl1BackgroundDataCGBPal2c1, Lvl1BackgroundDataCGBPal2c2, Lvl1BackgroundDataCGBPal2c3,
@@ -41,10 +37,10 @@ void load_menu(){
     //set_bkg_data(0,19,MenuTiles);
     //set_bkg_tiles(12,0,8,10, Menu);
     //switch to 2nd video memory bank 
-    VBK_REG = 1;
-    set_bkg_tiles(12, 0, MenuMapWidth, MenuMapHeight, MenuMapPLN0);
-    VBK_REG = 0;
-    set_bkg_tiles(12, 0, MenuMapWidth, MenuMapHeight, MenuMapPLN1);
+    // VBK_REG = 1;
+    // set_bkg_tiles(12, 0, MenuMapWidth, MenuMapHeight, MenuMapPLN0);
+    // VBK_REG = 0;
+    // set_bkg_tiles(12, 0, MenuMapWidth, MenuMapHeight, MenuMapPLN1);
 
     set_sprite_data(2, 1, ArrowSprite);
     set_sprite_tile(1, 2);
@@ -104,12 +100,12 @@ void main(){
 
     set_bkg_palette(0, 7, &backgroundpalette[0]);
     // set background data 
-    set_bkg_data(0, 127, TileLabel);
+    set_bkg_data(0, 127, Lvl1BackgroundData);
     //switch to 2nd video memory bank 
     VBK_REG = 1;
-    set_bkg_tiles(0, 0, Lvl1BackgroundMapWidth, Lvl1BackgroundMapHeight, Lvl1BackgroundMapPLN0);
-    VBK_REG = 0;
     set_bkg_tiles(0, 0, Lvl1BackgroundMapWidth, Lvl1BackgroundMapHeight, Lvl1BackgroundMapPLN1);
+    VBK_REG = 0;
+    set_bkg_tiles(0, 0, Lvl1BackgroundMapWidth, Lvl1BackgroundMapHeight, Lvl1BackgroundMapPLN0);
 
     set_sprite_data(0, 2, Smiler);
     set_sprite_tile(0, 0);
