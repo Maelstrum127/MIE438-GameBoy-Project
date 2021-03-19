@@ -8,7 +8,7 @@
    Section       : 
    Bank          : 0
    Map size      : 8 x 9
-   Tile set      : lvl1_maptiles.gbr
+   Tile set      : C:\Users\julia\Documents\U of T\Year3\MIE438\MIE438-GameBoy-Project\Test_Background\lvl1_mapmenutiles.gbr
    Plane count   : 2 planes (16 bits)
    Plane order   : Planes are continues
    Tile offset   : 0
@@ -18,12 +18,12 @@
 
 */
 
-#define MenuMapWidth 8
-#define MenuMapHeight 9
-#define MenuMapBank 0
+#define MenuDataWidth 8
+#define MenuDataHeight 9
+#define MenuDataBank 0
 
-#define MenuMap MenuMapPLN0
-extern unsigned char MenuMapPLN0[];
-extern unsigned char MenuMapPLN1[];
+#define MenuData MenuDataPLN0
+extern unsigned char MenuDataPLN0[];
+extern unsigned char MenuDataPLN1[];
 
 /* End of MENUMAP.H */
