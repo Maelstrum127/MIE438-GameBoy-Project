@@ -97,6 +97,7 @@
 #define Lvl1BackgroundDataCGBPal7c1 8935
 #define Lvl1BackgroundDataCGBPal7c2 6596
 #define Lvl1BackgroundDataCGBPal7c3 5344
+
 /* CGBpalette entries. */
 extern unsigned char Lvl1BackgroundDataCGB[];
 /* Start of tile array. */

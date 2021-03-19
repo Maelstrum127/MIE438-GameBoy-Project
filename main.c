@@ -10,6 +10,9 @@
 #include "backgrounds/splashscreen_data.c"
 #include "backgrounds/splashscreen_map.c"
 #include "backgrounds/blankscreen.c"
+#include "Test_Background/Lvl1BackgroundMap.h"
+#include "Test_Background/Lvl1BackgroundData.h"
+#include "Test_Background/MenuMap.h"
 
 
 struct Arrow arrow; 
@@ -18,10 +21,31 @@ UBYTE keydown;
 UINT8 menuOption; 
 UINT8 gameOn = 1;
 
+const UWORD backgroundpalette[]=
+{
+    Lvl1BackgroundDataSGBPal0c0, Lvl1BackgroundDataSGBPal0c1, Lvl1BackgroundDataSGBPal0c2,Lvl1BackgroundDataSGBPal0c3,
+    Lvl1BackgroundDataSGBPal1c0, Lvl1BackgroundDataSGBPal1c1, Lvl1BackgroundDataSGBPal1c2, Lvl1BackgroundDataSGBPal1c3,
+    Lvl1BackgroundDataSGBPal2c0, Lvl1BackgroundDataSGBPal2c1, Lvl1BackgroundDataSGBPal2c2, Lvl1BackgroundDataSGBPal2c3,
+    Lvl1BackgroundDataSGBPal3c0, Lvl1BackgroundDataSGBPal3c1, Lvl1BackgroundDataSGBPal3c2, Lvl1BackgroundDataSGBPal3c3,
+    Lvl1BackgroundDataCGBPal0c0, Lvl1BackgroundDataCGBPal0c1, Lvl1BackgroundDataCGBPal0c2, Lvl1BackgroundDataCGBPal0c3,
+    Lvl1BackgroundDataCGBPal1c0, Lvl1BackgroundDataCGBPal1c1, Lvl1BackgroundDataCGBPal1c2, Lvl1BackgroundDataCGBPal1c3,
+    Lvl1BackgroundDataCGBPal2c0, Lvl1BackgroundDataCGBPal2c1, Lvl1BackgroundDataCGBPal2c2, Lvl1BackgroundDataCGBPal2c3,
+    Lvl1BackgroundDataCGBPal3c0, Lvl1BackgroundDataCGBPal3c1, Lvl1BackgroundDataCGBPal3c2, Lvl1BackgroundDataCGBPal3c3,
+    Lvl1BackgroundDataCGBPal4c0, Lvl1BackgroundDataCGBPal4c1, Lvl1BackgroundDataCGBPal4c2, Lvl1BackgroundDataCGBPal4c3,
+    Lvl1BackgroundDataCGBPal5c0, Lvl1BackgroundDataCGBPal5c1, Lvl1BackgroundDataCGBPal5c2, Lvl1BackgroundDataCGBPal5c3,
+    Lvl1BackgroundDataCGBPal6c0, Lvl1BackgroundDataCGBPal6c1, Lvl1BackgroundDataCGBPal6c2, Lvl1BackgroundDataCGBPal6c3,
+    Lvl1BackgroundDataCGBPal7c0, Lvl1BackgroundDataCGBPal7c1, Lvl1BackgroundDataCGBPal7c2, Lvl1BackgroundDataCGBPal7c3,
+};
 
 void load_menu(){
-    set_bkg_data(0,19,MenuTiles);
-    set_bkg_tiles(12,0,8,10, Menu);
+    //set_bkg_data(0,19,MenuTiles);
+    //set_bkg_tiles(12,0,8,10, Menu);
+    //switch to 2nd video memory bank 
+    VBK_REG = 1;
+    set_bkg_tiles(12, 0, MenuMapWidth, MenuMapHeight, MenuMapPLN0);
+    VBK_REG = 0;
+    set_bkg_tiles(12, 0, MenuMapWidth, MenuMapHeight, MenuMapPLN1);
+
     set_sprite_data(2, 1, ArrowSprite);
     set_sprite_tile(1, 2);
     
@@ -59,8 +83,12 @@ void load_menu(){
 void resumeGame(){
     move_sprite(0, smile.x, smile.y); 
 
-    set_bkg_data(0,19,MenuTiles);
-    set_bkg_tiles(0, 0, 40, 18, blankMap);
+    //set_bkg_data(0,19,MenuTiles);
+    //set_bkg_tiles(0, 0, 40, 18, blankMap);
+    VBK_REG = 1;
+    set_bkg_tiles(0, 0, Lvl1BackgroundMapWidth, Lvl1BackgroundMapHeight, Lvl1BackgroundMapPLN0);
+    VBK_REG = 0;
+    set_bkg_tiles(0, 0, Lvl1BackgroundMapWidth, Lvl1BackgroundMapHeight, Lvl1BackgroundMapPLN1);
 }
 
 void main(){
@@ -71,8 +99,17 @@ void main(){
     DISPLAY_ON;
     waitpad(J_START);
 
-    set_bkg_data(0,19,MenuTiles);
-    set_bkg_tiles(0, 0, 20, 18, blankMap);
+    // set_bkg_data(0,19,MenuTiles);
+    // set_bkg_tiles(0, 0, 20, 18, blankMap);
+
+    set_bkg_palette(0, 7, &backgroundpalette[0]);
+    // set background data 
+    set_bkg_data(0, 127, TileLabel);
+    //switch to 2nd video memory bank 
+    VBK_REG = 1;
+    set_bkg_tiles(0, 0, Lvl1BackgroundMapWidth, Lvl1BackgroundMapHeight, Lvl1BackgroundMapPLN0);
+    VBK_REG = 0;
+    set_bkg_tiles(0, 0, Lvl1BackgroundMapWidth, Lvl1BackgroundMapHeight, Lvl1BackgroundMapPLN1);
 
     set_sprite_data(0, 2, Smiler);
     set_sprite_tile(0, 0);

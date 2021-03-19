@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "backgroundmap.h": "c",
+        "backgrounddata.h": "c",
+        "lvl1backgroundmap.h": "c"
+    }
+}
