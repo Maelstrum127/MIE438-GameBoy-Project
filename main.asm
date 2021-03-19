@@ -417,7 +417,7 @@ _can_player_move::
 	rr	c
 	srl	b
 	rr	c
-;main.c:58: tileindexTL = 40*indexTLy + indexTLx;
+;main.c:58: tileindexTL = 40*indexTLy + indexTLx; // x_width * y_index + x_index
 	ld	l, c
 	ld	h, b
 	add	hl, hl

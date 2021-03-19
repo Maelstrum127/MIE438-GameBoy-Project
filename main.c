@@ -55,7 +55,7 @@ UINT8 can_player_move(UINT16 newplayerx, UINT16 newplayery){
     indexTLx = (newplayerx - 8)/8;
     indexTLy = (newplayery - 16)/8;
 
-    tileindexTL = 40*indexTLy + indexTLx;
+    tileindexTL = 40*indexTLy + indexTLx; // x_width * y_index + x_index
 
     result = 0; //special_tile(tileindexTL);
     if (BackgroundMapPLN0[tileindexTL] == blankmap[0]){
