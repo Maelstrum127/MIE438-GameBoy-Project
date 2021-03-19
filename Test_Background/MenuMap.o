@@ -5,8 +5,8 @@ O -mgbz80
 S .__.ABS. Def000000
 A _CODE size 0 flags 0 addr 0
 A _DATA size 90 flags 0 addr 0
-S _MenuMapPLN0 Def000000
-S _MenuMapPLN1 Def000048
+S _MenuDataPLN0 Def000000
+S _MenuDataPLN1 Def000048
 A _DABS size 0 flags 8 addr 0
 A _HOME size 0 flags 0 addr 0
 A _GSINIT size 2D0 flags 0 addr 0

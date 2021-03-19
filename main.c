@@ -11,7 +11,7 @@
 #include "backgrounds/splashscreen_map.c"
 #include "backgrounds/blankscreen.c"
 #include "Test_Background/Lvl1BackgroundMap.h"
-#include "Test_Background/Lvl1BackgroundData.h"
+#include "Test_Background/Lvl1AllData.h"
 #include "Test_Background/MenuMap.h"
 
 
@@ -23,24 +23,29 @@ UINT8 gameOn = 1;
 
 const UWORD backgroundpalette[]=
 {
-    Lvl1BackgroundDataCGBPal0c0, Lvl1BackgroundDataCGBPal0c1, Lvl1BackgroundDataCGBPal0c2, Lvl1BackgroundDataCGBPal0c3,
-    Lvl1BackgroundDataCGBPal1c0, Lvl1BackgroundDataCGBPal1c1, Lvl1BackgroundDataCGBPal1c2, Lvl1BackgroundDataCGBPal1c3,
-    Lvl1BackgroundDataCGBPal2c0, Lvl1BackgroundDataCGBPal2c1, Lvl1BackgroundDataCGBPal2c2, Lvl1BackgroundDataCGBPal2c3,
-    Lvl1BackgroundDataCGBPal3c0, Lvl1BackgroundDataCGBPal3c1, Lvl1BackgroundDataCGBPal3c2, Lvl1BackgroundDataCGBPal3c3,
-    Lvl1BackgroundDataCGBPal4c0, Lvl1BackgroundDataCGBPal4c1, Lvl1BackgroundDataCGBPal4c2, Lvl1BackgroundDataCGBPal4c3,
-    Lvl1BackgroundDataCGBPal5c0, Lvl1BackgroundDataCGBPal5c1, Lvl1BackgroundDataCGBPal5c2, Lvl1BackgroundDataCGBPal5c3,
-    Lvl1BackgroundDataCGBPal6c0, Lvl1BackgroundDataCGBPal6c1, Lvl1BackgroundDataCGBPal6c2, Lvl1BackgroundDataCGBPal6c3,
-    Lvl1BackgroundDataCGBPal7c0, Lvl1BackgroundDataCGBPal7c1, Lvl1BackgroundDataCGBPal7c2, Lvl1BackgroundDataCGBPal7c3,
+    Lvl1AllDataCGBPal0c0, Lvl1AllDataCGBPal0c1, Lvl1AllDataCGBPal0c2, Lvl1AllDataCGBPal0c3,
+    Lvl1AllDataCGBPal1c0, Lvl1AllDataCGBPal1c1, Lvl1AllDataCGBPal1c2, Lvl1AllDataCGBPal1c3,
+    Lvl1AllDataCGBPal2c0, Lvl1AllDataCGBPal2c1, Lvl1AllDataCGBPal2c2, Lvl1AllDataCGBPal2c3,
+    Lvl1AllDataCGBPal3c0, Lvl1AllDataCGBPal3c1, Lvl1AllDataCGBPal3c2, Lvl1AllDataCGBPal3c3,
+    Lvl1AllDataCGBPal4c0, Lvl1AllDataCGBPal4c1, Lvl1AllDataCGBPal4c2, Lvl1AllDataCGBPal4c3,
+    Lvl1AllDataCGBPal5c0, Lvl1AllDataCGBPal5c1, Lvl1AllDataCGBPal5c2, Lvl1AllDataCGBPal5c3,
+    Lvl1AllDataCGBPal6c0, Lvl1AllDataCGBPal6c1, Lvl1AllDataCGBPal6c2, Lvl1AllDataCGBPal6c3,
+    Lvl1AllDataCGBPal7c0, Lvl1AllDataCGBPal7c1, Lvl1AllDataCGBPal7c2, Lvl1AllDataCGBPal7c3,
 };
 
 void load_menu(){
     //set_bkg_data(0,19,MenuTiles);
     //set_bkg_tiles(12,0,8,10, Menu);
     //switch to 2nd video memory bank 
+
+    // set_bkg_palette(0, 7, &backgroundpalette[0]);
+    // // set background data 
+    // set_bkg_data(0, 80, Lvl1AllData);
+    // //switch to 2nd video memory bank 
     // VBK_REG = 1;
-    // set_bkg_tiles(12, 0, MenuMapWidth, MenuMapHeight, MenuMapPLN0);
+    // set_bkg_tiles(12, 0, MenuDataWidth, MenuDataHeight, MenuDataPLN1);
     // VBK_REG = 0;
-    // set_bkg_tiles(12, 0, MenuMapWidth, MenuMapHeight, MenuMapPLN1);
+    // set_bkg_tiles(12, 0, MenuDataWidth, MenuDataHeight, MenuDataPLN0);
 
     set_sprite_data(2, 1, ArrowSprite);
     set_sprite_tile(1, 2);
@@ -79,12 +84,14 @@ void load_menu(){
 void resumeGame(){
     move_sprite(0, smile.x, smile.y); 
 
-    //set_bkg_data(0,19,MenuTiles);
-    //set_bkg_tiles(0, 0, 40, 18, blankMap);
-    VBK_REG = 1;
-    set_bkg_tiles(0, 0, Lvl1BackgroundMapWidth, Lvl1BackgroundMapHeight, Lvl1BackgroundMapPLN0);
-    VBK_REG = 0;
-    set_bkg_tiles(0, 0, Lvl1BackgroundMapWidth, Lvl1BackgroundMapHeight, Lvl1BackgroundMapPLN1);
+    // set_bkg_palette(0, 7, &backgroundpalette[0]);
+    // // set background data 
+    // set_bkg_data(0, 80, Lvl1AllData);
+    // //switch to 2nd video memory bank 
+    // VBK_REG = 1;
+    // set_bkg_tiles(0, 0, Lvl1BackgroundMapWidth, Lvl1BackgroundMapHeight, Lvl1BackgroundMapPLN1);
+    // VBK_REG = 0;
+    // set_bkg_tiles(0, 0, Lvl1BackgroundMapWidth, Lvl1BackgroundMapHeight, Lvl1BackgroundMapPLN0);
 }
 
 void main(){
@@ -99,13 +106,20 @@ void main(){
     // set_bkg_tiles(0, 0, 20, 18, blankMap);
 
     set_bkg_palette(0, 7, &backgroundpalette[0]);
-    // set background data 
-    set_bkg_data(0, 127, Lvl1BackgroundData);
+    // // set background data 
+    // set_bkg_data(0, 126, Lvl1AllData);
+    // //switch to 2nd video memory bank 
+    // VBK_REG = 1;
+    // set_bkg_tiles(0, 0, Lvl1BackgroundMapWidth, Lvl1BackgroundMapHeight, Lvl1BackgroundMapPLN1);
+    // VBK_REG = 0;
+    // set_bkg_tiles(0, 0, Lvl1BackgroundMapWidth, Lvl1BackgroundMapHeight, Lvl1BackgroundMapPLN0);
+
+    set_bkg_data(0, 80, Lvl1AllData);
     //switch to 2nd video memory bank 
     VBK_REG = 1;
-    set_bkg_tiles(0, 0, Lvl1BackgroundMapWidth, Lvl1BackgroundMapHeight, Lvl1BackgroundMapPLN1);
+    set_bkg_tiles(12, 0, MenuDataWidth, MenuDataHeight, MenuDataPLN1);
     VBK_REG = 0;
-    set_bkg_tiles(0, 0, Lvl1BackgroundMapWidth, Lvl1BackgroundMapHeight, Lvl1BackgroundMapPLN0);
+    set_bkg_tiles(12, 0, MenuDataWidth, MenuDataHeight, MenuDataPLN0);
 
     set_sprite_data(0, 2, Smiler);
     set_sprite_tile(0, 0);
@@ -116,7 +130,6 @@ void main(){
     SHOW_SPRITES;
     SHOW_BKG;
     DISPLAY_ON; 
-
     while(gameOn == 1){
         switch(joypad()){
             case J_LEFT: 

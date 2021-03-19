@@ -50,27 +50,27 @@ _Lvl1BackgroundMapPLN1::
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x0007)
 	ld	(hl), #0x30
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x0008)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x0009)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x000a)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x000b)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x000c)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x000d)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x000e)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x000f)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x0010)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x0011)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x0012)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x0013)
 	ld	(hl), #0x00
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x0014)
@@ -128,27 +128,27 @@ _Lvl1BackgroundMapPLN1::
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x002e)
 	ld	(hl), #0x2e
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x002f)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x0030)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x0031)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x0032)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x0033)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x0034)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x0035)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x0036)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x0037)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x0038)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x0039)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x003a)
 	ld	(hl), #0x00
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x003b)
@@ -206,27 +206,27 @@ _Lvl1BackgroundMapPLN1::
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x0055)
 	ld	(hl), #0x2e
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x0056)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x0057)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x0058)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x0059)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x005a)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x005b)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x005c)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x005d)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x005e)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x005f)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x0060)
-	ld	(hl), #0x00
+	ld	(hl), #0x25
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x0061)
 	ld	(hl), #0x00
 	ld	hl, #(_Lvl1BackgroundMapPLN0 + 0x0062)
@@ -1633,31 +1633,31 @@ _Lvl1BackgroundMapPLN1::
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0012)
 	ld	(hl), #0x00
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0013)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0014)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0015)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0016)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0017)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0018)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0019)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x001a)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x001b)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x001c)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x001d)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x001e)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x001f)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0020)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0021)
@@ -1711,31 +1711,31 @@ _Lvl1BackgroundMapPLN1::
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0039)
 	ld	(hl), #0x00
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x003a)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x003b)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x003c)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x003d)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x003e)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x003f)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0040)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0041)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0042)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0043)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0044)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0045)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0046)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0047)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0048)
@@ -1789,31 +1789,31 @@ _Lvl1BackgroundMapPLN1::
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0060)
 	ld	(hl), #0x00
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0061)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0062)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0063)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0064)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0065)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0066)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0067)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0068)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0069)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x006a)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x006b)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x006c)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x006d)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x006e)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x006f)
@@ -1973,17 +1973,17 @@ _Lvl1BackgroundMapPLN1::
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x00bc)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x00bd)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x00be)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x00bf)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x00c0)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x00c1)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x00c2)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x00c3)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x00c4)
@@ -2051,17 +2051,17 @@ _Lvl1BackgroundMapPLN1::
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x00e3)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x00e4)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x00e5)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x00e6)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x00e7)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x00e8)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x00e9)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x00ea)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x00eb)
@@ -2129,17 +2129,17 @@ _Lvl1BackgroundMapPLN1::
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x010a)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x010b)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x010c)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x010d)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x010e)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x010f)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0110)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0111)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0112)
@@ -2207,17 +2207,17 @@ _Lvl1BackgroundMapPLN1::
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0131)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0132)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0133)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0134)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0135)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0136)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0137)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0138)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0139)
@@ -2285,17 +2285,17 @@ _Lvl1BackgroundMapPLN1::
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0158)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0159)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x015a)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x015b)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x015c)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x015d)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x015e)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x015f)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0160)
@@ -2363,17 +2363,17 @@ _Lvl1BackgroundMapPLN1::
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x017f)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0180)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0181)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0182)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0183)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0184)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0185)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0186)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0187)
@@ -2411,47 +2411,47 @@ _Lvl1BackgroundMapPLN1::
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0197)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0198)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0199)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x019a)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x019b)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x019c)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x019d)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x019e)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x019f)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01a0)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01a1)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01a2)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01a3)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01a4)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01a5)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01a6)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01a7)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01a8)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01a9)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01aa)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01ab)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01ac)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01ad)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01ae)
@@ -2489,7 +2489,7 @@ _Lvl1BackgroundMapPLN1::
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01be)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01bf)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01c0)
 	ld	(hl), #0x04
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01c1)
@@ -2503,29 +2503,29 @@ _Lvl1BackgroundMapPLN1::
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01c5)
 	ld	(hl), #0x04
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01c6)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01c7)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01c8)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01c9)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01ca)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01cb)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01cc)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01cd)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01ce)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01cf)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01d0)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01d1)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01d2)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01d3)
@@ -2567,7 +2567,7 @@ _Lvl1BackgroundMapPLN1::
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01e5)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01e6)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01e7)
 	ld	(hl), #0x04
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01e8)
@@ -2581,29 +2581,29 @@ _Lvl1BackgroundMapPLN1::
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01ec)
 	ld	(hl), #0x04
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01ed)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01ee)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01ef)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01f0)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01f1)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01f2)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01f3)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01f4)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01f5)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01f6)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01f7)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01f8)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01f9)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x01fa)
@@ -2645,7 +2645,7 @@ _Lvl1BackgroundMapPLN1::
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x020c)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x020d)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x020e)
 	ld	(hl), #0x04
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x020f)
@@ -2659,27 +2659,27 @@ _Lvl1BackgroundMapPLN1::
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0213)
 	ld	(hl), #0x04
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0214)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0215)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0216)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0217)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0218)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0219)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x021a)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x021b)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x021c)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x021d)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x021e)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x021f)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0220)
@@ -2723,33 +2723,33 @@ _Lvl1BackgroundMapPLN1::
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0233)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0234)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0235)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0236)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0237)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0238)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0239)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x023a)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x023b)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x023c)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x023d)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x023e)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x023f)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0240)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0241)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0242)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0243)
@@ -2801,33 +2801,33 @@ _Lvl1BackgroundMapPLN1::
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x025a)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x025b)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x025c)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x025d)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x025e)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x025f)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0260)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0261)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0262)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0263)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0264)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0265)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0266)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0267)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0268)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0269)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x026a)
@@ -2879,19 +2879,19 @@ _Lvl1BackgroundMapPLN1::
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0281)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0282)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0283)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0284)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0285)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0286)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0287)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0288)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x0289)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x028a)
@@ -2957,7 +2957,7 @@ _Lvl1BackgroundMapPLN1::
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x02a8)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x02a9)
-	ld	(hl), #0x00
+	ld	(hl), #0x05
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x02aa)
 	ld	(hl), #0x01
 	ld	hl, #(_Lvl1BackgroundMapPLN1 + 0x02ab)
