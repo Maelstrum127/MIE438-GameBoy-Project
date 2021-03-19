@@ -64,7 +64,7 @@
 
 /* Gameboy Color palette 2 */
 #define Lvl1BackgroundDataCGBPal2c0 11055
-#define Lvl1BackgroundDataCGBPal2c1 1192
+#define Lvl1BackgroundDataCGBPal2c1 1355
 #define Lvl1BackgroundDataCGBPal2c2 5605
 #define Lvl1BackgroundDataCGBPal2c3 480
 
