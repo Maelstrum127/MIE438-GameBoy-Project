@@ -10,7 +10,7 @@
    Map size      : 39 x 20
    Tile set      : C:\Users\Claire Glossop\Downloads\gbtd22\lvl1_maptiles.gbr
    Plane count   : 2 planes (16 bits)
-   Plane order   : Tiles are continues
+   Plane order   : Planes are continues
    Tile offset   : 0
    Split data    : No
 
@@ -22,6 +22,8 @@
 #define Lvl1BackgroundMapHeight 20
 #define Lvl1BackgroundMapBank 0
 
-extern unsigned char Lvl1BackgroundMap[];
+#define Lvl1BackgroundMap Lvl1BackgroundMapPLN0
+extern unsigned char Lvl1BackgroundMapPLN0[];
+extern unsigned char Lvl1BackgroundMapPLN1[];
 
 /* End of LVL1BACKGROUNDMAP.H */
