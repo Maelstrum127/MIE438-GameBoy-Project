@@ -4,10 +4,57 @@
 #include "BackgroundMap.h"
 #include "BackgroundData.h"
 #include "GameCharacter.c"
-#include "GameSprites.c"
+#include "GameSprites.h"
 
 struct GameCharacter bit;
 UBYTE spritesize = 8;
+
+const UWORD backgroundpalette[] = {
+    RGB_PINK, RGB_PINK, RGB_PINK, RGB_PINK,
+};
+
+const UWORD spritepalette[] = {
+    GameSpritesCGBPal0c0,
+    GameSpritesCGBPal0c1,
+    GameSpritesCGBPal0c2,
+    GameSpritesCGBPal0c3,
+
+    GameSpritesCGBPal1c0,
+    GameSpritesCGBPal1c1,
+    GameSpritesCGBPal1c2,
+    GameSpritesCGBPal1c3,
+
+
+    GameSpritesCGBPal2c0,
+    GameSpritesCGBPal2c1,
+    GameSpritesCGBPal2c2,
+    GameSpritesCGBPal2c3,
+
+    GameSpritesCGBPal3c0,
+    GameSpritesCGBPal3c1,
+    GameSpritesCGBPal3c2,
+    GameSpritesCGBPal3c3,
+
+    GameSpritesCGBPal4c0,
+    GameSpritesCGBPal4c1,
+    GameSpritesCGBPal4c2,
+    GameSpritesCGBPal4c3,
+
+    GameSpritesCGBPal5c0,
+    GameSpritesCGBPal5c1,
+    GameSpritesCGBPal5c2,
+    GameSpritesCGBPal5c3,
+
+    GameSpritesCGBPal6c0,
+    GameSpritesCGBPal6c1,
+    GameSpritesCGBPal6c2,
+    GameSpritesCGBPal6c3,
+
+    GameSpritesCGBPal7c0,
+    GameSpritesCGBPal7c1,
+    GameSpritesCGBPal7c2,
+    GameSpritesCGBPal7c3,
+};
 
 void performantdelay(UINT8 numloops){
     UINT8 i;
@@ -34,16 +81,22 @@ void setupbit(){
     // load bit sprites
     set_sprite_tile(0,0);
     bit.spriteids[0] = 0;
+    set_sprite_prop(0,4);
     set_sprite_tile(1,1);
     bit.spriteids[1] = 1;
+    set_sprite_prop(1,4);
     set_sprite_tile(2,2);
-    bit.spriteids[2] = 2;    
+    bit.spriteids[2] = 2;
+    set_sprite_prop(2,4);    
     set_sprite_tile(3,3);
-    bit.spriteids[3] = 3;  
+    bit.spriteids[3] = 3;
+    set_sprite_prop(3,4);  
     set_sprite_tile(4,4);
     bit.spriteids[4] = 4; 
+    set_sprite_prop(4,7);
     set_sprite_tile(5,5);
-    bit.spriteids[5] = 5;  
+    bit.spriteids[5] = 5; 
+    set_sprite_prop(5,7); 
 
     movegamecharacter(&bit, bit.x, bit.y); 
 
@@ -193,6 +246,11 @@ void reset_bit(){
 
 void main(){
     UINT8 step = 0;
+
+    set_bkg_palette(0, 1, &backgroundpalette[0]);
+
+    set_sprite_palette(0,8, &spritepalette[0]);
+    
     set_sprite_data(0, 43, GameSprites);
     setupbit();
 
@@ -201,24 +259,24 @@ void main(){
 
     while(1){
         if (joypad() & J_LEFT){
-            bit.x -=2;
+            bit.x -=8;
             step = setbit_left(step);
             movegamecharacter(&bit, bit.x, bit.y);
 
         }
         if (joypad() & J_RIGHT){
-            bit.x += 2;
+            bit.x += 8;
             step = setbit_right(step);
             movegamecharacter(&bit, bit.x, bit.y);
         }
 
         if (joypad() & J_UP){
-            bit.y -= 2;
+            bit.y -= 8;
             step = setbit_backward(step);
             movegamecharacter(&bit, bit.x, bit.y);
         }
         if (joypad() & J_DOWN){
-            bit.y += 2;
+            bit.y += 8;
             step = setbit_forward(step);
             movegamecharacter(&bit, bit.x, bit.y);
 

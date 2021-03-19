@@ -1,5 +1,6 @@
-c:\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -DUSE_SFR_FOR_REG -c -o mainSprite.o mainSprite.c 
-c:\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -DUSE_SFR_FOR_REG -o mainSprite.gb mainSprite.o
+c:\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -c -o GameSprites.o GameSprites.c 
+c:\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -c -o mainSprite.o mainSprite.c 
+c:\gbdk\bin\lcc -Wa-l -Wl-m -Wf--debug -Wl-y -Wl-w -Wm-yc -o gbcSprite.gb GameSprites.o mainSprite.o
 
 DEL *.lst
 DEL *.o
