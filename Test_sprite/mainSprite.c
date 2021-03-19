@@ -87,10 +87,10 @@ void setupbit(){
     set_sprite_prop(1,4);
     set_sprite_tile(2,2);
     bit.spriteids[2] = 2;
-    set_sprite_prop(2,4);    
+    set_sprite_prop(2,1);    
     set_sprite_tile(3,3);
     bit.spriteids[3] = 3;
-    set_sprite_prop(3,4);  
+    set_sprite_prop(3,1);  
     set_sprite_tile(4,4);
     bit.spriteids[4] = 4; 
     set_sprite_prop(4,7);
@@ -213,17 +213,17 @@ UINT8 setbit_left(UINT8 step){
     bit.spriteids[5] = 5;
     }
     if (step == 0){
-    set_sprite_tile(0,37);
+    set_sprite_tile(0,36);
     bit.spriteids[0] = 0;
-    set_sprite_tile(1,38);
+    set_sprite_tile(1,37);
     bit.spriteids[1] = 1;
-    set_sprite_tile(2,39);
+    set_sprite_tile(2,38);
     bit.spriteids[2] = 2;    
-    set_sprite_tile(3,40);
+    set_sprite_tile(3,39);
     bit.spriteids[3] = 3;  
-    set_sprite_tile(4,41);
+    set_sprite_tile(4,40);
     bit.spriteids[4] = 4; 
-    set_sprite_tile(5,42);
+    set_sprite_tile(5,41);
     bit.spriteids[5] = 5;   
     }
 return (step + 1)%2;
