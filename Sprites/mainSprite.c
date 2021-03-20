@@ -5,6 +5,9 @@
 #include "BackgroundData.h"
 #include "GameCharacter.c"
 #include "GameSprites.h"
+//#include "spriteBitAnimation.c"
+#include "Lvl1BackgroundData.h"
+#include "Lvl1BackgroundMap.h"
 
 struct GameCharacter_rec bit;
 struct GameCharacter_square frog;
@@ -63,6 +66,49 @@ const UWORD backgroundpalette[] =
     BackgroundDataCGBPal4c0, BackgroundDataCGBPal4c1, BackgroundDataCGBPal4c2, BackgroundDataCGBPal4c3,
     BackgroundDataCGBPal5c0, BackgroundDataCGBPal5c1, BackgroundDataCGBPal5c2, BackgroundDataCGBPal5c3,
     BackgroundDataCGBPal6c0, BackgroundDataCGBPal6c1, BackgroundDataCGBPal6c2, BackgroundDataCGBPal6c3,
+};
+
+const UWORD lvl1backgroundpalette[] = {
+
+  Lvl1BackgroundDataCGBPal0c0,
+  Lvl1BackgroundDataCGBPal0c1,
+  Lvl1BackgroundDataCGBPal0c2,
+  Lvl1BackgroundDataCGBPal0c3,
+
+  Lvl1BackgroundDataCGBPal1c0,
+  Lvl1BackgroundDataCGBPal1c1,
+  Lvl1BackgroundDataCGBPal1c2,
+  Lvl1BackgroundDataCGBPal1c3,
+
+  Lvl1BackgroundDataCGBPal2c0,
+  Lvl1BackgroundDataCGBPal2c1,
+  Lvl1BackgroundDataCGBPal2c2,
+  Lvl1BackgroundDataCGBPal2c3,
+
+  Lvl1BackgroundDataCGBPal3c0,
+  Lvl1BackgroundDataCGBPal3c1,
+  Lvl1BackgroundDataCGBPal3c2,
+  Lvl1BackgroundDataCGBPal3c3,
+
+  Lvl1BackgroundDataCGBPal4c0,
+  Lvl1BackgroundDataCGBPal4c1,
+  Lvl1BackgroundDataCGBPal4c2,
+  Lvl1BackgroundDataCGBPal4c3,
+
+  Lvl1BackgroundDataCGBPal5c0,
+  Lvl1BackgroundDataCGBPal5c1,
+  Lvl1BackgroundDataCGBPal5c2,
+  Lvl1BackgroundDataCGBPal5c3,
+
+  Lvl1BackgroundDataCGBPal6c0,
+  Lvl1BackgroundDataCGBPal6c1,
+  Lvl1BackgroundDataCGBPal6c2,
+  Lvl1BackgroundDataCGBPal6c3,
+
+  Lvl1BackgroundDataCGBPal7c0,
+  Lvl1BackgroundDataCGBPal7c1,
+  Lvl1BackgroundDataCGBPal7c2,
+  Lvl1BackgroundDataCGBPal7c3,
 };
 
 void performantdelay(UINT8 numloops){
@@ -234,19 +280,23 @@ return (step + 1)%2;
 void main(){
     UINT8 step = 0;
 
-    set_bkg_palette(0, 7, &backgroundpalette[0]);
+    //set_bkg_palette(0, 7, &backgroundpalette[0]);
+    set_bkg_palette(0, 7, &lvl1backgroundpalette[0]);
 
     // set background data 
-    set_bkg_data(0, 14, BackgroundData);
+    //set_bkg_data(0, 14, BackgroundData);
+    set_bkg_data(0, 127, Lvl1BackgroundData);
 
     //switch to 2nd video memory bank 
     VBK_REG = 1;
 
-    set_bkg_tiles(0, 0, BackgroundMapWidth, BackgroundMapHeight, BackgroundMapPLN1);
+    //set_bkg_tiles(0, 0, BackgroundMapWidth, BackgroundMapHeight, BackgroundMapPLN1);
+    set_bkg_tiles(0, 0, Lvl1BackgroundMapWidth, Lvl1BackgroundMapHeight, Lvl1BackgroundMapPLN1);
 
     VBK_REG = 0;
 
-    set_bkg_tiles(0, 0, BackgroundMapWidth, BackgroundMapHeight, BackgroundMapPLN0);
+    //set_bkg_tiles(0, 0, BackgroundMapWidth, BackgroundMapHeight, BackgroundMapPLN0);
+    set_bkg_tiles(0, 0, Lvl1BackgroundMapWidth, Lvl1BackgroundMapHeight, Lvl1BackgroundMapPLN0);
 
     set_sprite_palette(0, 8, &spritepalette[0]);
     
