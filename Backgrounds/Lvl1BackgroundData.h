@@ -81,10 +81,10 @@
 #define Lvl1BackgroundDataCGBPal4c3 10570
 
 /* Gameboy Color palette 5 */
-#define Lvl1BackgroundDataCGBPal5c0 6076
-#define Lvl1BackgroundDataCGBPal5c1 8935
-#define Lvl1BackgroundDataCGBPal5c2 6596
-#define Lvl1BackgroundDataCGBPal5c3 5344
+#define Lvl1BackgroundDataCGBPal5c0 21140
+#define Lvl1BackgroundDataCGBPal5c1 32023
+#define Lvl1BackgroundDataCGBPal5c2 22545
+#define Lvl1BackgroundDataCGBPal5c3 14373
 
 /* Gameboy Color palette 6 */
 #define Lvl1BackgroundDataCGBPal6c0 6076

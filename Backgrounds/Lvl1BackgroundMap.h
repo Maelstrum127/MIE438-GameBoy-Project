@@ -7,8 +7,8 @@
  Info:
    Section       : 
    Bank          : 0
-   Map size      : 39 x 20
-   Tile set      : C:\Users\Claire Glossop\Downloads\gbtd22\lvl1_maptiles.gbr
+   Map size      : 23 x 20
+   Tile set      : lvl1_maptiles.gbr
    Plane count   : 2 planes (16 bits)
    Plane order   : Planes are continues
    Tile offset   : 0
@@ -18,7 +18,7 @@
 
 */
 
-#define Lvl1BackgroundMapWidth 39
+#define Lvl1BackgroundMapWidth 23
 #define Lvl1BackgroundMapHeight 20
 #define Lvl1BackgroundMapBank 0
 
