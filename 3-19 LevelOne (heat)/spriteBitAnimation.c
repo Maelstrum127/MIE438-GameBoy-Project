@@ -76,7 +76,7 @@ void setupbit(){
     set_sprite_prop(1,4);
     set_sprite_tile(2,2);
     bit.spriteids[2] = 2;
-    set_sprite_prop(2,4);    
+    set_sprite_prop(2,1);    
     set_sprite_tile(3,3);
     bit.spriteids[3] = 3;
     set_sprite_prop(3,4);  
@@ -94,31 +94,19 @@ void setupbit(){
 UINT8 setbit_forward(UINT8 step){
     if (step == 1){
     set_sprite_tile(0,0);
-    bit.spriteids[0] = 0;
     set_sprite_tile(1,1);
-    bit.spriteids[1] = 1;
-    set_sprite_tile(2,2);
-    bit.spriteids[2] = 2;    
-    set_sprite_tile(3,3);
-    bit.spriteids[3] = 3;  
+    set_sprite_tile(2,2);   
+    set_sprite_tile(3,3); 
     set_sprite_tile(4,6);
-    bit.spriteids[4] = 4; 
     set_sprite_tile(5,7);
-    bit.spriteids[5] = 5;
     }
     if (step == 0){
     set_sprite_tile(0,0);
-    bit.spriteids[0] = 0;
     set_sprite_tile(1,1);
-    bit.spriteids[1] = 1;
-    set_sprite_tile(2,2);
-    bit.spriteids[2] = 2;    
+    set_sprite_tile(2,2); 
     set_sprite_tile(3,3);
-    bit.spriteids[3] = 3;  
     set_sprite_tile(4,8);
-    bit.spriteids[4] = 4; 
-    set_sprite_tile(5,9);
-    bit.spriteids[5] = 5;   
+    set_sprite_tile(5,9); 
     }
 return (step + 1)%2;
 }
@@ -126,31 +114,19 @@ return (step + 1)%2;
 UINT8 setbit_backward(UINT8 step){
     if (step == 1){
     set_sprite_tile(0,10);
-    bit.spriteids[0] = 0;
     set_sprite_tile(1,11);
-    bit.spriteids[1] = 1;
-    set_sprite_tile(2,12);
-    bit.spriteids[2] = 2;    
+    set_sprite_tile(2,12);  
     set_sprite_tile(3,13);
-    bit.spriteids[3] = 3;  
     set_sprite_tile(4,14);
-    bit.spriteids[4] = 4; 
     set_sprite_tile(5,15);
-    bit.spriteids[5] = 5;
     }
     if (step == 0){
     set_sprite_tile(0,10);
-    bit.spriteids[0] = 0;
     set_sprite_tile(1,11);
-    bit.spriteids[1] = 1;
-    set_sprite_tile(2,12);
-    bit.spriteids[2] = 2;    
-    set_sprite_tile(3,13);
-    bit.spriteids[3] = 3;  
+    set_sprite_tile(2,12);   
+    set_sprite_tile(3,13); 
     set_sprite_tile(4,16);
-    bit.spriteids[4] = 4; 
-    set_sprite_tile(5,17);
-    bit.spriteids[5] = 5;   
+    set_sprite_tile(5,17);  
     }
 return (step + 1)%2;
 }
@@ -158,79 +134,49 @@ return (step + 1)%2;
 UINT8 setbit_right(UINT8 step){
     if (step == 1){
     set_sprite_tile(0,18);
-    bit.spriteids[0] = 0;
     set_sprite_tile(1,19);
-    bit.spriteids[1] = 1;
-    set_sprite_tile(2,20);
-    bit.spriteids[2] = 2;    
+    set_sprite_tile(2,20);  
     set_sprite_tile(3,21);
-    bit.spriteids[3] = 3;  
     set_sprite_tile(4,22);
-    bit.spriteids[4] = 4; 
     set_sprite_tile(5,23);
-    bit.spriteids[5] = 5;
     }
     if (step == 0){
     set_sprite_tile(0,30);
-    bit.spriteids[0] = 0;
     set_sprite_tile(1,31);
-    bit.spriteids[1] = 1;
-    set_sprite_tile(2,32);
-    bit.spriteids[2] = 2;    
-    set_sprite_tile(3,33);
-    bit.spriteids[3] = 3;  
+    set_sprite_tile(2,32);   
+    set_sprite_tile(3,33); 
     set_sprite_tile(4,34);
-    bit.spriteids[4] = 4; 
-    set_sprite_tile(5,35);
-    bit.spriteids[5] = 5;   
+    set_sprite_tile(5,35); 
     }
 return (step + 1)%2;
 }
 UINT8 setbit_left(UINT8 step){
     if (step == 1){
     set_sprite_tile(0,24);
-    bit.spriteids[0] = 0;
     set_sprite_tile(1,25);
-    bit.spriteids[1] = 1;
-    set_sprite_tile(2,26);
-    bit.spriteids[2] = 2;    
+    set_sprite_tile(2,26);  
     set_sprite_tile(3,27);
-    bit.spriteids[3] = 3;  
     set_sprite_tile(4,28);
-    bit.spriteids[4] = 4; 
     set_sprite_tile(5,29);
-    bit.spriteids[5] = 5;
     }
     if (step == 0){
     set_sprite_tile(0,37);
-    bit.spriteids[0] = 0;
     set_sprite_tile(1,38);
-    bit.spriteids[1] = 1;
-    set_sprite_tile(2,39);
-    bit.spriteids[2] = 2;    
-    set_sprite_tile(3,40);
-    bit.spriteids[3] = 3;  
+    set_sprite_tile(2,39);   
+    set_sprite_tile(3,40); 
     set_sprite_tile(4,41);
-    bit.spriteids[4] = 4; 
-    set_sprite_tile(5,42);
-    bit.spriteids[5] = 5;   
+    set_sprite_tile(5,42); 
     }
 return (step + 1)%2;
 }
 
 void reset_bit(){
     set_sprite_tile(0,0);
-    bit.spriteids[0] = 0;
     set_sprite_tile(1,1);
-    bit.spriteids[1] = 1;
-    set_sprite_tile(2,2);
-    bit.spriteids[2] = 2;    
+    set_sprite_tile(2,2); 
     set_sprite_tile(3,3);
-    bit.spriteids[3] = 3;  
     set_sprite_tile(4,4);
-    bit.spriteids[4] = 4; 
-    set_sprite_tile(5,5);
-    bit.spriteids[5] = 5;   
+    set_sprite_tile(5,5); 
 }
 
 void joypadDetection(UINT8 step){
