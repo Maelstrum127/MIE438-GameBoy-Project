@@ -2,6 +2,7 @@
     "files.associations": {
         "backgroundmap.h": "c",
         "backgrounddata.h": "c",
-        "lvl1backgroundmap.h": "c"
+        "lvl1backgroundmap.h": "c",
+        "lvl1alldata.h": "c"
     }
 }
