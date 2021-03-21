@@ -400,29 +400,35 @@ void move(UINT8 *step, UINT16 *player_loc_x, UINT16 *player_loc_y){
     }
 }
 
-void main(){
+void setup_map(UWORD *pallete, unsigned char *map_data, unsigned char *tiles_1, unsigned char *tiles_0, int character_x, int character_y){
     // setup background
-    set_bkg_palette(0, 7, &backgroundpalette[0]);
-    set_bkg_data(0, 14, BackgroundData);
+    set_bkg_palette(0, 7, pallete);
+    set_bkg_data(0, 14, map_data);
     VBK_REG = 1;
-    set_bkg_tiles(0, 0, BackgroundMapWidth, BackgroundMapHeight, BackgroundMapPLN1);
+    set_bkg_tiles(0, 0, BackgroundMapWidth, BackgroundMapHeight, tiles_1);
     VBK_REG = 0;
-    set_bkg_tiles(0, 0, BackgroundMapWidth, BackgroundMapHeight, BackgroundMapPLN0);
+    set_bkg_tiles(0, 0, BackgroundMapWidth, BackgroundMapHeight, tiles_0);
     SHOW_BKG;
    
     // setup character sprite
     set_sprite_palette(0,8, &spritepalette[0]);
     set_sprite_data(0, 43, GameSprites);
-    //move_sprite(0, playerlocation[0], playerlocation[1]); // across, down
-    UINT16 init_x = 88;
-    UINT16 init_y = 88;
-    setupbit(init_x, init_y);
-    player_location[0] = init_x;
-    player_location[1] = init_y;
+    setupbit(character_x, character_y);
+    player_location[0] = character_x;
+    player_location[1] = character_y;
     SHOW_SPRITES;
     DISPLAY_ON;
 
-    UINT8 current_sprite_index = 0;
+}
+
+void main(){
+    setup_map(backgroundpalette,
+    BackgroundData, 
+    BackgroundMapPLN1, 
+    BackgroundMapPLN0, 
+    88, 
+    88);
+
     game_running = 1;
     UINT8 step = 0;
 

@@ -9,6 +9,7 @@
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _main
+	.globl _setup_map
 	.globl _move
 	.globl _walk_background_movement
 	.globl _walk_without_background_movement
@@ -2161,14 +2162,16 @@ _move::
 ;main.c:401: }
 	add	sp, #6
 	ret
-;main.c:403: void main(){
+;main.c:403: void setup_map(UWORD *pallete, unsigned char *map_data, unsigned char *tiles_1, unsigned char *tiles_0, int character_x, int character_y){
 ;	---------------------------------
-; Function main
+; Function setup_map
 ; ---------------------------------
-_main::
-	dec	sp
-;main.c:405: set_bkg_palette(0, 7, &backgroundpalette[0]);
-	ld	hl, #_backgroundpalette
+_setup_map::
+;main.c:405: set_bkg_palette(0, 7, pallete);
+	pop	bc
+	pop	hl
+	push	hl
+	push	bc
 	push	hl
 	ld	a, #0x07
 	push	af
@@ -2178,8 +2181,11 @@ _main::
 	inc	sp
 	call	_set_bkg_palette
 	add	sp, #4
-;main.c:406: set_bkg_data(0, 14, BackgroundData);
-	ld	hl, #_BackgroundData
+;main.c:406: set_bkg_data(0, 14, map_data);
+	ldhl	sp,	#4
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
 	push	hl
 	ld	a, #0x0e
 	push	af
@@ -2192,8 +2198,11 @@ _main::
 ;main.c:407: VBK_REG = 1;
 	ld	a, #0x01
 	ldh	(_VBK_REG+0),a
-;main.c:408: set_bkg_tiles(0, 0, BackgroundMapWidth, BackgroundMapHeight, BackgroundMapPLN1);
-	ld	hl, #_BackgroundMapPLN1
+;main.c:408: set_bkg_tiles(0, 0, BackgroundMapWidth, BackgroundMapHeight, tiles_1);
+	ldhl	sp,	#6
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
 	push	hl
 	ld	de, #0x1428
 	push	de
@@ -2208,8 +2217,11 @@ _main::
 ;main.c:409: VBK_REG = 0;
 	ld	a, #0x00
 	ldh	(_VBK_REG+0),a
-;main.c:410: set_bkg_tiles(0, 0, BackgroundMapWidth, BackgroundMapHeight, BackgroundMapPLN0);
-	ld	hl, #_BackgroundMapPLN0
+;main.c:410: set_bkg_tiles(0, 0, BackgroundMapWidth, BackgroundMapHeight, tiles_0);
+	ldhl	sp,	#8
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
 	push	hl
 	ld	de, #0x1428
 	push	de
@@ -2247,42 +2259,83 @@ _main::
 	inc	sp
 	call	_set_sprite_data
 	add	sp, #4
-;main.c:419: setupbit(init_x, init_y);
-	ld	de, #0x5858
-	push	de
+;main.c:416: setupbit(character_x, character_y);
+	ldhl	sp,	#12
+	ld	a, (hl-)
+	ld	b, a
+	dec	hl
+	ld	a, (hl)
+	push	bc
+	inc	sp
+	push	af
+	inc	sp
 	call	_setupbit
 	add	sp, #2
-;main.c:420: player_location[0] = init_x;
-	ld	hl, #_player_location
-	ld	a, #0x58
-	ld	(hl+), a
-	ld	(hl), #0x00
-;main.c:421: player_location[1] = init_y;
-	ld	hl, #(_player_location + 0x0002)
-	ld	a, #0x58
-	ld	(hl+), a
-	ld	(hl), #0x00
-;main.c:422: SHOW_SPRITES;
+;main.c:417: player_location[0] = character_x;
+	ld	de, #_player_location
+	ldhl	sp,	#10
+	ld	a, (hl)
+	ld	(de), a
+	inc	de
+	inc	hl
+	ld	a, (hl)
+	ld	(de), a
+;main.c:418: player_location[1] = character_y;
+	ld	de, #(_player_location + 0x0002)
+	inc	hl
+	ld	a, (hl)
+	ld	(de), a
+	inc	de
+	inc	hl
+	ld	a, (hl)
+	ld	(de), a
+;main.c:419: SHOW_SPRITES;
 	ldh	a, (_LCDC_REG+0)
 	or	a, #0x02
 	ldh	(_LCDC_REG+0),a
-;main.c:423: DISPLAY_ON;
+;main.c:420: DISPLAY_ON;
 	ldh	a, (_LCDC_REG+0)
 	or	a, #0x80
 	ldh	(_LCDC_REG+0),a
-;main.c:426: game_running = 1;
+;main.c:422: }
+	ret
+;main.c:424: void main(){
+;	---------------------------------
+; Function main
+; ---------------------------------
+_main::
+	dec	sp
+;main.c:428: BackgroundMapPLN0, 
+;main.c:427: BackgroundMapPLN1, 
+;main.c:426: BackgroundData, 
+;main.c:425: setup_map(backgroundpalette,
+	ld	hl, #0x0058
+	push	hl
+	ld	l, #0x58
+	push	hl
+	ld	hl, #_BackgroundMapPLN0
+	push	hl
+	ld	hl, #_BackgroundMapPLN1
+	push	hl
+	ld	hl, #_BackgroundData
+	push	hl
+	ld	hl, #_backgroundpalette
+	push	hl
+	call	_setup_map
+	add	sp, #12
+;main.c:432: game_running = 1;
 	ld	hl, #_game_running
 	ld	(hl), #0x01
-;main.c:427: UINT8 step = 0;
+;main.c:433: UINT8 step = 0;
 	xor	a, a
 	ldhl	sp,	#0
 	ld	(hl), a
-;main.c:429: while(game_running){
+;main.c:435: while(game_running){
 00101$:
 	ld	a, (#_game_running)
 	or	a, a
 	jr	Z, 00104$
-;main.c:430: move(&step, &player_location[0], &player_location[1]);
+;main.c:436: move(&step, &player_location[0], &player_location[1]);
 	ldhl	sp,	#0
 	ld	c, l
 	ld	b, h
@@ -2293,14 +2346,14 @@ _main::
 	push	bc
 	call	_move
 	add	sp, #6
-;main.c:431: delay(100);
+;main.c:437: delay(100);
 	ld	hl, #0x0064
 	push	hl
 	call	_delay
 	add	sp, #2
 	jr	00101$
 00104$:
-;main.c:433: }
+;main.c:439: }
 	inc	sp
 	ret
 	.area _CODE
