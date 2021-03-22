@@ -1,0 +1,22 @@
+Here's the explanation of what files are comparable to what files:
+
+spriteBitAnimation.c ~ mainSprite.c
+changes:    no more "main.c" function
+            width of Bit has changed
+            removed performantDelay function
+            created "joypadDetection" and "heatJoypadDetection" functions
+                note: the former is for general movement, the latter is for the heat combat level
+            ...possibly more, but I don't see any.
+            
+GameCharacter.c ~ GameCharacter.c
+changes:    added a new "enemyCharacter" struct, to be used for the heat enemy character.
+
+LevelOne: This is the level design of the heat level.
+It requires:
+A colorful background (preferably scrolling downwards)
+colorful heat sprites (see below),
+and also needs a message to appear at the end of main.c, letting them know if they've won or lost.
+
+heat.gbr:
+This is the heat enemy tileset. Currently without any colors, and I don't know how to implement the colors
+to be honest, as I didn't really examine the Bit code that closely.
