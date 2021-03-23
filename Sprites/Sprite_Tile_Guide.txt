@@ -1,0 +1,68 @@
+Sprite Tile guide:
+
+BIT:
+
+0-5 --> forward still 
+
+6-9 --> walking forward 
+
+10-13 --> backwards torso (top 4 tiles)
+
+14-17 --> walking backwards (first 4 remain same for still) 
+
+18-23 --> walking right version 1
+
+24-29 --> walking left version 1 
+
+30-35 --> walking right version 2 
+
+36-41 --> walking left version 2
+
+56-57 --> backwards still (body)
+
+
+FROG:
+
+42-43 --> head 1
+
+44-45 --> body 
+
+46-47 --> head 2 
+
+PIKACHU:
+
+48-51 --> tail left 
+
+52-55 --> tail right 
+
+FIRE SPRITE:
+
+58-59 --> fire sprite
+
+PONG BUG BOARD:
+
+60-61 --> board
+
+SIGNAL:
+
+62 --> signal up 
+
+63 --> signal down 
+
+VILLIAN:
+
+64-69 --> 2x3 villian 
+
+OWL:
+
+70-71 --> Owl blink head
+
+72-73 --> Owl body 
+
+74-75 --> Owl eyes open 
+
+
+
+
+
+

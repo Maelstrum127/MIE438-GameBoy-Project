@@ -1,6 +1,6 @@
 /*
 
- BACKGROUNDMAP.H
+ NEWBACKGROUNDDATA.H
 
  Include File.
 
@@ -102,4 +102,4 @@ extern unsigned char NewBackgroundDataCGB[];
 /* Start of tile array. */
 extern unsigned char NewBackgroundData[];
 
-/* End of BACKGROUNDMAP.H */
+/* End of NEWBACKGROUNDDATA.H */

@@ -8,11 +8,17 @@
 //#include "spriteBitAnimation.c"
 #include "Lvl1BackgroundData.h"
 #include "Lvl1BackgroundMap.h"
+#include "gb/font.h"
 
 struct GameCharacter_rec bit;
 struct GameCharacter_square frog;
 
 UBYTE spritesize = 8;
+
+unsigned char windowmap[] = 
+{
+    0x13, 0x10, 0x17, 0x17, 0x1A
+};
 
 const UWORD spritepalette[] = {
     GameSpritesCGBPal0c0,
@@ -277,8 +283,22 @@ UINT8 setfrog_bounce(UINT8 step){
 return (step + 1)%2; 
 }
 
+void interruptLCD(){
+    HIDE_WIN;
+}
+
 void main(){
+    font_t min_font;
     UINT8 step = 0;
+
+    STAT_REG = 0x45;
+    LYC_REG = 0x08;
+
+    //disable_interrupts();
+
+    font_init();
+    min_font = font_load(font_min);
+    font_set(min_font);
 
     //set_bkg_palette(0, 7, &backgroundpalette[0]);
     set_bkg_palette(0, 7, &lvl1backgroundpalette[0]);
@@ -298,6 +318,9 @@ void main(){
     //set_bkg_tiles(0, 0, BackgroundMapWidth, BackgroundMapHeight, BackgroundMapPLN0);
     set_bkg_tiles(0, 0, Lvl1BackgroundMapWidth, Lvl1BackgroundMapHeight, Lvl1BackgroundMapPLN0);
 
+    set_win_tiles(0,0,5,1,windowmap);
+    move_win(7,0);
+
     set_sprite_palette(0, 8, &spritepalette[0]);
     
     set_sprite_data(0, 50, GameSprites);
@@ -307,9 +330,17 @@ void main(){
 
     SHOW_SPRITES;
     SHOW_BKG;
+    SHOW_WIN;
     DISPLAY_ON;
 
+    add_LCD(interruptLCD);
+    enable_interrupts();
+    set_interrupts(VBL_IFLAG | LCD_IFLAG);
+
     while(1){
+        //SHOW_WIN;
+        //scroll_bkg(1,0);
+        //wait_vbl_done();
         if (joypad() & J_LEFT){
             bit.x -=8;
             step = setbit_left(step);

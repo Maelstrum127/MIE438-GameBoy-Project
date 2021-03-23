@@ -26,6 +26,30 @@
 /* Bank of tiles. */
 #define Lvl1BackgroundDataBank 0
 
+/* Super Gameboy palette 0 */
+#define Lvl1BackgroundDataSGBPal0c0 6076
+#define Lvl1BackgroundDataSGBPal0c1 8935
+#define Lvl1BackgroundDataSGBPal0c2 6596
+#define Lvl1BackgroundDataSGBPal0c3 5344
+
+/* Super Gameboy palette 1 */
+#define Lvl1BackgroundDataSGBPal1c0 6076
+#define Lvl1BackgroundDataSGBPal1c1 8935
+#define Lvl1BackgroundDataSGBPal1c2 6596
+#define Lvl1BackgroundDataSGBPal1c3 5344
+
+/* Super Gameboy palette 2 */
+#define Lvl1BackgroundDataSGBPal2c0 6076
+#define Lvl1BackgroundDataSGBPal2c1 8935
+#define Lvl1BackgroundDataSGBPal2c2 6596
+#define Lvl1BackgroundDataSGBPal2c3 5344
+
+/* Super Gameboy palette 3 */
+#define Lvl1BackgroundDataSGBPal3c0 6076
+#define Lvl1BackgroundDataSGBPal3c1 8935
+#define Lvl1BackgroundDataSGBPal3c2 6596
+#define Lvl1BackgroundDataSGBPal3c3 5344
+
 /* Gameboy Color palette 0 */
 #define Lvl1BackgroundDataCGBPal0c0 6076
 #define Lvl1BackgroundDataCGBPal0c1 8935

@@ -3,11 +3,11 @@
 #include <stdio.h>
 #include "Lvl1BackgroundData.h"
 #include "Lvl1BackgroundMap.h"
-#include "gb/font.h"
+#include <gb/font.h>
 
 unsigned char windowmap[] = 
 {
-    0x13, 0x10, 0x17, 0x17, 0x1A
+    0x01, 0x02, 0x03, 0x04, 0x05
 };
 
 const UWORD lvl1backgroundpalette[] = {
@@ -66,7 +66,6 @@ void interruptLCD(){
 
 void main(){
     font_t min_font;
-    UINT8 step = 0;
 
     STAT_REG = 0x45;
     LYC_REG = 0x08;
@@ -78,11 +77,11 @@ void main(){
     font_set(min_font);
 
     //set_bkg_palette(0, 7, &backgroundpalette[0]);
-    set_bkg_palette(0, 7, &lvl1backgroundpalette[0]);
+    //set_bkg_palette(0, 7, &lvl1backgroundpalette[0]);
 
     // set background data 
     //set_bkg_data(0, 14, BackgroundData);
-    set_bkg_data(0, 127, Lvl1BackgroundData);
+    set_bkg_data(40, 127, Lvl1BackgroundData);
 
     //switch to 2nd video memory bank 
     VBK_REG = 1;
@@ -102,13 +101,13 @@ void main(){
     SHOW_WIN;
     DISPLAY_ON;
 
-    add_LCD(interruptLCD);
-    enable_interrupts();
-    set_interrupts(VBL_IFLAG | LCD_IFLAG);
+    //add_LCD(interruptLCD);
+    //enable_interrupts();
+    //set_interrupts(VBL_IFLAG | LCD_IFLAG);
 
     while(1){
         SHOW_WIN;
-        scroll_bkg(1,0);
-        wait_vbl_done();
+        //scroll_bkg(1,0);
+        //wait_vbl_done();
     }
 }
