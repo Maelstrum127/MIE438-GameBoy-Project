@@ -9,6 +9,8 @@
 #include "Lvl1BackgroundData.h"
 #include "Lvl1BackgroundMap.h"
 #include "gb/font.h"
+#include "MemBackgroundMap.h"
+#include "NewBackgroundData.h"
 
 struct GameCharacter_rec bit;
 struct GameCharacter_square frog;
@@ -74,47 +76,47 @@ const UWORD backgroundpalette[] =
     BackgroundDataCGBPal6c0, BackgroundDataCGBPal6c1, BackgroundDataCGBPal6c2, BackgroundDataCGBPal6c3,
 };
 
-const UWORD lvl1backgroundpalette[] = {
+const UWORD newbackgroundpalette[] = {
 
-  Lvl1BackgroundDataCGBPal0c0,
-  Lvl1BackgroundDataCGBPal0c1,
-  Lvl1BackgroundDataCGBPal0c2,
-  Lvl1BackgroundDataCGBPal0c3,
+  NewBackgroundDataCGBPal0c0,
+  NewBackgroundDataCGBPal0c1,
+  NewBackgroundDataCGBPal0c2,
+  NewBackgroundDataCGBPal0c3,
 
-  Lvl1BackgroundDataCGBPal1c0,
-  Lvl1BackgroundDataCGBPal1c1,
-  Lvl1BackgroundDataCGBPal1c2,
-  Lvl1BackgroundDataCGBPal1c3,
+  NewBackgroundDataCGBPal1c0,
+  NewBackgroundDataCGBPal1c1,
+  NewBackgroundDataCGBPal1c2,
+  NewBackgroundDataCGBPal1c3,
 
-  Lvl1BackgroundDataCGBPal2c0,
-  Lvl1BackgroundDataCGBPal2c1,
-  Lvl1BackgroundDataCGBPal2c2,
-  Lvl1BackgroundDataCGBPal2c3,
+  NewBackgroundDataCGBPal2c0,
+  NewBackgroundDataCGBPal2c1,
+  NewBackgroundDataCGBPal2c2,
+  NewBackgroundDataCGBPal2c3,
 
-  Lvl1BackgroundDataCGBPal3c0,
-  Lvl1BackgroundDataCGBPal3c1,
-  Lvl1BackgroundDataCGBPal3c2,
-  Lvl1BackgroundDataCGBPal3c3,
+  NewBackgroundDataCGBPal3c0,
+  NewBackgroundDataCGBPal3c1,
+  NewBackgroundDataCGBPal3c2,
+  NewBackgroundDataCGBPal3c3,
 
-  Lvl1BackgroundDataCGBPal4c0,
-  Lvl1BackgroundDataCGBPal4c1,
-  Lvl1BackgroundDataCGBPal4c2,
-  Lvl1BackgroundDataCGBPal4c3,
+  NewBackgroundDataCGBPal4c0,
+  NewBackgroundDataCGBPal4c1,
+  NewBackgroundDataCGBPal4c2,
+  NewBackgroundDataCGBPal4c3,
 
-  Lvl1BackgroundDataCGBPal5c0,
-  Lvl1BackgroundDataCGBPal5c1,
-  Lvl1BackgroundDataCGBPal5c2,
-  Lvl1BackgroundDataCGBPal5c3,
+  NewBackgroundDataCGBPal5c0,
+  NewBackgroundDataCGBPal5c1,
+  NewBackgroundDataCGBPal5c2,
+  NewBackgroundDataCGBPal5c3,
 
-  Lvl1BackgroundDataCGBPal6c0,
-  Lvl1BackgroundDataCGBPal6c1,
-  Lvl1BackgroundDataCGBPal6c2,
-  Lvl1BackgroundDataCGBPal6c3,
+  NewBackgroundDataCGBPal6c0,
+  NewBackgroundDataCGBPal6c1,
+  NewBackgroundDataCGBPal6c2,
+  NewBackgroundDataCGBPal6c3,
 
-  Lvl1BackgroundDataCGBPal7c0,
-  Lvl1BackgroundDataCGBPal7c1,
-  Lvl1BackgroundDataCGBPal7c2,
-  Lvl1BackgroundDataCGBPal7c3,
+  NewBackgroundDataCGBPal7c0,
+  NewBackgroundDataCGBPal7c1,
+  NewBackgroundDataCGBPal7c2,
+  NewBackgroundDataCGBPal7c3,
 };
 
 void performantdelay(UINT8 numloops){
@@ -287,6 +289,27 @@ void interruptLCD(){
     HIDE_WIN;
 }
 
+void switch_background(){
+
+    set_bkg_palette(0, 7, &newbackgroundpalette[0]);
+
+    set_bkg_data(0, 127, NewBackgroundData);
+
+    //switch to 2nd video memory bank 
+    VBK_REG = 1;
+
+    //set_bkg_tiles(0, 0, BackgroundMapWidth, BackgroundMapHeight, BackgroundMapPLN1);
+    set_bkg_tiles(0, 0, MemBackgroundMapWidth, MemBackgroundMapHeight, MemBackgroundMapPLN1);
+
+    VBK_REG = 0;
+
+    //set_bkg_tiles(0, 0, BackgroundMapWidth, BackgroundMapHeight, BackgroundMapPLN0);
+    set_bkg_tiles(0, 0, MemBackgroundMapWidth, MemBackgroundMapHeight, MemBackgroundMapPLN0);
+
+    SHOW_WIN;
+}
+
+
 void main(){
     font_t min_font;
     UINT8 step = 0;
@@ -301,11 +324,11 @@ void main(){
     font_set(min_font);
 
     //set_bkg_palette(0, 7, &backgroundpalette[0]);
-    set_bkg_palette(0, 7, &lvl1backgroundpalette[0]);
+    set_bkg_palette(0, 7, &newbackgroundpalette[0]);
 
     // set background data 
     //set_bkg_data(0, 14, BackgroundData);
-    set_bkg_data(0, 127, Lvl1BackgroundData);
+    set_bkg_data(0, 110, NewBackgroundData);
 
     //switch to 2nd video memory bank 
     VBK_REG = 1;
@@ -318,8 +341,8 @@ void main(){
     //set_bkg_tiles(0, 0, BackgroundMapWidth, BackgroundMapHeight, BackgroundMapPLN0);
     set_bkg_tiles(0, 0, Lvl1BackgroundMapWidth, Lvl1BackgroundMapHeight, Lvl1BackgroundMapPLN0);
 
-    set_win_tiles(0,0,5,1,windowmap);
-    move_win(7,0);
+    //set_win_tiles(0,0,5,1,windowmap);
+    //move_win(7,0);
 
     set_sprite_palette(0, 8, &spritepalette[0]);
     
@@ -360,6 +383,9 @@ void main(){
             bit.y += 8;
             step = setbit_forward(step);
             movegamecharacter_bit(&bit, bit.x, bit.y);
+        }
+        if (joypad() & J_START){
+            switch_background();
         }
 
         step = setfrog_bounce(step);
