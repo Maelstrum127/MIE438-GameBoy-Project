@@ -7,8 +7,8 @@
  Info:
    Section       : 
    Bank          : 0
-   Map size      : 8 x 10
-   Tile set      : C:\Users\julia\Documents\U of T\Year3\gbtd22\menu.gbr
+   Map size      : 8 x 7
+   Tile set      : C:\Users\julia\Documents\U of T\Year3\MIE438\tiles\menu_blackonwhite.gbr
    Plane count   : 1 plane (8 bits)
    Plane order   : Tiles are continues
    Tile offset   : 0
@@ -18,10 +18,10 @@
 
 */
 
-#define MenuWidth 8
-#define MenuHeight 10
-#define MenuBank 0
+#define MenuMapWidth 8
+#define MenuMapHeight 7
+#define MenuMapBank 0
 
-extern unsigned char Menu[];
+extern unsigned char MenuMap[];
 
 /* End of MENU.H */

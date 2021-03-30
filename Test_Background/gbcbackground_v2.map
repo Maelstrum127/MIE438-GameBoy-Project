@@ -197,17 +197,17 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000033  l__HEADER5                      
      0000006A  l__HOME                         
      0000007E  l__HEADERf                      
-     0000010B  l__BASE                         
+     0000010C  l__BASE                         
      00000200  s__CODE                         
-     000006FD  l__CODE                         
-     000008FD  s__HOME                         
-     00000967  s__BASE                         
-     00000A72  s__CODE_0                       
-     00000A72  s__GSINIT                       
-     00000A72  s__LIT                          
+     000008E6  l__CODE                         
+     00000AE6  s__HOME                         
+     00000B50  s__BASE                         
+     00000C5C  s__CODE_0                       
+     00000C5C  s__GSINIT                       
+     00000C5C  s__LIT                          
      00000E98  l__DATA                         
      000048F8  l__GSINIT                       
-     0000536A  s__GSFINAL                      
+     00005554  s__GSFINAL                      
      0000C000  _shadow_OAM                     
      0000C0A0  s__DATA                         
      0000CF38  s__BSS                          
@@ -219,20 +219,20 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000200    000006FD =        1789. bytes (REL,CON)
+_CODE                               00000200    000008E6 =        2278. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
      00000200  _main                              main
-     00000286  _bit_splashscreen_data             main
-     000006F6  _bit_splashscreen_map              main
-     0000085E  _backgroundpalette                 main
-     0000089E  _set_sprite_palette_entry          CGB
-     000008A3  _set_bkg_palette_entry             CGB
-     000008A6  .set_palette_entry                 CGB
-     000008C2  _cpu_slow                          CGB
-     000008DD  _cpu_fast                          CGB
-     000008E4  _cgb_compatibility                 CGB
+     0000026F  _bit_splashscreen_data             main
+     000008DF  _bit_splashscreen_map              main
+     00000A47  _backgroundpalette                 main
+     00000A87  _set_sprite_palette_entry          CGB
+     00000A8C  _set_bkg_palette_entry             CGB
+     00000A8F  .set_palette_entry                 CGB
+     00000AAB  _cpu_slow                          CGB
+     00000AC6  _cpu_fast                          CGB
+     00000ACD  _cgb_compatibility                 CGB
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 6.
 Hexadecimal  [32-Bits]
@@ -409,64 +409,59 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_HOME                               000008FD    0000006A =         106. bytes (REL,CON)
+_HOME                               00000AE6    0000006A =         106. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     000008FD  .remove_VBL                        Runtime
-     00000900  .remove_int                        Runtime
-     0000091D  .add_VBL                           Runtime
-     00000920  .add_int                           Runtime
-     0000092B  .wait_vbl_done                     Runtime
-     0000092B  _wait_vbl_done                     Runtime
-     0000093A  .display_off                       Runtime
-     0000093A  _display_off                       Runtime
-     00000951  _remove_VBL                        Runtime
-     0000095C  _add_VBL                           Runtime
+     00000AE6  .remove_VBL                        Runtime
+     00000AE9  .remove_int                        Runtime
+     00000B06  .add_VBL                           Runtime
+     00000B09  .add_int                           Runtime
+     00000B14  .wait_vbl_done                     Runtime
+     00000B14  _wait_vbl_done                     Runtime
+     00000B23  .display_off                       Runtime
+     00000B23  _display_off                       Runtime
+     00000B3A  _remove_VBL                        Runtime
+     00000B45  _add_VBL                           Runtime
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 24.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_BASE                               00000967    0000010B =         267. bytes (REL,CON)
+_BASE                               00000B50    0000010C =         268. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00000967  .padup                             
-     00000967  _waitpadup                         
-     00000977  .jpad                              
-     00000977  _joypad                            
-     0000099F  _waitpad                           
-     000009A2  .wait_pad                          
-     000009A9  _set_sprite_palette                CGB
-     000009AE  _set_bkg_palette                   CGB
-     000009B1  .set_palette                       CGB
-     000009D0  _set_bkg_data                      
-     000009D0  _set_win_data                      
-     000009D8  _set_sprite_data                   
-     00000A08  _set_bkg_tiles                     
-     00000A1C  .set_xy_wtt                        
-     00000A25  .set_xy_btt                        
-     00000A34  .set_xy_tt                         
-
+     00000B50  _set_sprite_palette                CGB
+     00000B55  _set_bkg_palette                   CGB
+     00000B58  .set_palette                       CGB
+     00000B77  .delay                             
+     00000BB1  _delay                             
+     00000BBA  _set_bkg_data                      
+     00000BBA  _set_win_data                      
+     00000BC2  _set_sprite_data                   
+     00000BF2  _set_bkg_tiles                     
+     00000C06  .set_xy_wtt                        
+     00000C0F  .set_xy_btt                        
+     00000C1E  .set_xy_tt                         
 ASxxxx Linker V03.00 + NoICE + sdld,  page 25.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_GSINIT                             00000A72    000048F8 =       18680. bytes (REL,CON)
+_GSINIT                             00000C5C    000048F8 =       18680. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00000A72  gsinit                             Runtime
+     00000C5C  gsinit                             Runtime
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 26.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_GSFINAL                            0000536A    00000001 =           1. bytes (REL,CON)
+_GSFINAL                            00005554    00000001 =           1. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -479,8 +474,8 @@ _DATA                               0000C0A0    00000E98 =        3736. bytes (R
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     0000C0A0  _Lvl1AllDataCGB                    Lvl1AllData
-     0000C120  _Lvl1AllData                       Lvl1AllData
+     0000C0A0  _Lvl1BackgroundDataCGB             Lvl1BackgroundData
+     0000C120  _Lvl1BackgroundData                Lvl1BackgroundData
      0000C920  _Lvl1BackgroundMapPLN0             Lvl1BackgroundMap
      0000CC2C  _Lvl1BackgroundMapPLN1             Lvl1BackgroundMap
 
@@ -1131,16 +1126,16 @@ _SFR36                              00000000    00000001 =           1. bytes (A
 Files Linked                              [ module(s) ]
 
 c:\gbdk\lib/small/asxxxx/gb/crt0.o        [ Runtime ]
-Test_Background/Lvl1AllData.o             [ Lvl1AllData ]
+Test_Background/Lvl1BackgroundData.o      [ Lvl1BackgroundData ]
 Test_Background/Lvl1BackgroundMap.o       [ Lvl1BackgroundMap ]
 main.o                                    [ main ]
 
 
 Libraries Linked                          [ object file ]
 
-c:\gbdk\lib/small/asxxxx/gb/gb.lib        [ pad.o ]
-c:\gbdk\lib/small/asxxxx/gb/gb.lib        [ cgb.o ]
 c:\gbdk\lib/small/asxxxx/gb/gb.lib        [ sfr.o ]
+c:\gbdk\lib/small/asxxxx/gb/gb.lib        [ cgb.o ]
+c:\gbdk\lib/small/asxxxx/gb/gb.lib        [ delay.o ]
 c:\gbdk\lib/small/asxxxx/gb/gb.lib        [ set_data.o ]
 c:\gbdk\lib/small/asxxxx/gb/gb.lib        [ set_bk_t.o ]
 c:\gbdk\lib/small/asxxxx/gb/gb.lib        [ set_xy_t.o ]
