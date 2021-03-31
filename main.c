@@ -285,16 +285,16 @@ UINT8 can_player_move(UINT16 newplayerx, UINT16 newplayery){
     UINT16 indexTLx, indexTLy, tileindexTL;
     UINT8 result;
 
-    indexTLx = (newplayerx/8)%40;
+    indexTLx = (newplayerx/8)%BackgroundMapWidth;
     indexTLy = newplayery/8;
 
-    tileindexTL = 40*indexTLy + indexTLx; // x_width * y_index + x_index
+    tileindexTL = BackgroundMapWidth*indexTLy + indexTLx; // x_width * y_index + x_index
 
     result = 0; //special_tile(tileindexTL);
     if (BackgroundMapPLN0[tileindexTL] == blankmap[0] && BackgroundMapPLN0[tileindexTL - 1] == blankmap[0]){
         result = 1;
     }
-    if (newplayery < 16 || newplayery > 168){
+    if (newplayery < 16 || newplayery > 8 + BackgroundMapHeight*8){
         result = 0;
     }
 
@@ -367,7 +367,7 @@ void move(UINT8 *step, UINT16 *player_loc_x, UINT16 *player_loc_y){
     
     case (J_UP):
         if (can_player_move(*player_loc_x, *player_loc_y - tile)){
-            if (*player_loc_y < 96 || *player_loc_y > 104){
+            if (*player_loc_y < 96 || *player_loc_y > BackgroundMapHeight*8 - 56){
                 walk_without_background_movement(0, -1*tile, step);
                 *player_loc_y -= 8;
             }
@@ -376,14 +376,12 @@ void move(UINT8 *step, UINT16 *player_loc_x, UINT16 *player_loc_y){
                 *player_loc_y -= 8;
             }
         }
-        else{
-            *step = setbit_backward(*step);
-        }
+        *step = setbit_backward(*step);
         break;
     
     case (J_DOWN):
         if (can_player_move(*player_loc_x, *player_loc_y + tile)){
-            if (*player_loc_y < 88 || *player_loc_y > 96){
+            if (*player_loc_y < 88 || *player_loc_y > BackgroundMapHeight*8 - 64){
                 walk_without_background_movement(0, tile, step);
                 *player_loc_y += 8;
             }
@@ -400,10 +398,10 @@ void move(UINT8 *step, UINT16 *player_loc_x, UINT16 *player_loc_y){
     }
 }
 
-void setup_map(UWORD *pallete, unsigned char *map_data, unsigned char *tiles_1, unsigned char *tiles_0, int character_x, int character_y){
+void setup_map(UWORD *pallete, unsigned char *map_data, unsigned char *tiles_1, unsigned char *tiles_0, int character_x, int character_y, int data_size){
     // setup background
-    set_bkg_palette(0, 7, pallete);
-    set_bkg_data(0, 14, map_data);
+    set_bkg_palette(0, 8, pallete);
+    set_bkg_data(0, data_size, map_data);
     VBK_REG = 1;
     set_bkg_tiles(0, 0, BackgroundMapWidth, BackgroundMapHeight, tiles_1);
     VBK_REG = 0;
@@ -418,16 +416,10 @@ void setup_map(UWORD *pallete, unsigned char *map_data, unsigned char *tiles_1, 
     player_location[1] = character_y;
     SHOW_SPRITES;
     DISPLAY_ON;
-
 }
 
 void main(){
-    setup_map(backgroundpalette,
-    BackgroundData, 
-    BackgroundMapPLN1, 
-    BackgroundMapPLN0, 
-    88, 
-    88);
+    setup_map(backgroundpalette, BackgroundData, BackgroundMapPLN1, BackgroundMapPLN0, 88, 88, 14);
 
     game_running = 1;
     UINT8 step = 0;
