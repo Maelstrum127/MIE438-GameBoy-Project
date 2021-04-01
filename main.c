@@ -2,22 +2,23 @@
 #include <gb/font.h>
 #include <stdio.h>
 #include <gb/cgb.h>
-#include "BackgroundMap.h"
-#include "BackgroundData.h"
+#include "Lvl1BackgroundMap.h"
+#include "Lvl1BackgroundData.h"
 #include "GameCharacter.c"
 #include "GameSprites.h"
 
-const unsigned char blankmap[1] = {0x0C};
+const unsigned char blankmap[15] = {0x51, 0x52};
 UINT16 player_location[2];
 
-const UWORD backgroundpalette[] = {   
-    BackgroundDataCGBPal0c0, BackgroundDataCGBPal0c1, BackgroundDataCGBPal0c2, BackgroundDataCGBPal0c3,
-    BackgroundDataCGBPal1c0, BackgroundDataCGBPal1c1, BackgroundDataCGBPal1c2, BackgroundDataCGBPal1c3,
-    BackgroundDataCGBPal2c0, BackgroundDataCGBPal2c1, BackgroundDataCGBPal2c2, BackgroundDataCGBPal2c3,
-    BackgroundDataCGBPal3c0, BackgroundDataCGBPal3c1, BackgroundDataCGBPal3c2, BackgroundDataCGBPal3c3,
-    BackgroundDataCGBPal4c0, BackgroundDataCGBPal4c1, BackgroundDataCGBPal4c2, BackgroundDataCGBPal4c3,
-    BackgroundDataCGBPal5c0, BackgroundDataCGBPal5c1, BackgroundDataCGBPal5c2, BackgroundDataCGBPal5c3,
-    BackgroundDataCGBPal6c0, BackgroundDataCGBPal6c1, BackgroundDataCGBPal6c2, BackgroundDataCGBPal6c3,
+const UWORD backgroundpalette[] = {
+    Lvl1BackgroundDataCGBPal0c0, Lvl1BackgroundDataCGBPal0c1, Lvl1BackgroundDataCGBPal0c2, Lvl1BackgroundDataCGBPal0c3,
+    Lvl1BackgroundDataCGBPal1c0, Lvl1BackgroundDataCGBPal1c1, Lvl1BackgroundDataCGBPal1c2, Lvl1BackgroundDataCGBPal1c3,
+    Lvl1BackgroundDataCGBPal2c0, Lvl1BackgroundDataCGBPal2c1, Lvl1BackgroundDataCGBPal2c2, Lvl1BackgroundDataCGBPal2c3,
+    Lvl1BackgroundDataCGBPal3c0, Lvl1BackgroundDataCGBPal3c1, Lvl1BackgroundDataCGBPal3c2, Lvl1BackgroundDataCGBPal3c3,
+    Lvl1BackgroundDataCGBPal4c0, Lvl1BackgroundDataCGBPal4c1, Lvl1BackgroundDataCGBPal4c2, Lvl1BackgroundDataCGBPal4c3,
+    Lvl1BackgroundDataCGBPal5c0, Lvl1BackgroundDataCGBPal5c1, Lvl1BackgroundDataCGBPal5c2, Lvl1BackgroundDataCGBPal5c3,
+    Lvl1BackgroundDataCGBPal6c0, Lvl1BackgroundDataCGBPal6c1, Lvl1BackgroundDataCGBPal6c2, Lvl1BackgroundDataCGBPal6c3,
+    Lvl1BackgroundDataCGBPal7c0, Lvl1BackgroundDataCGBPal7c1, Lvl1BackgroundDataCGBPal7c2, Lvl1BackgroundDataCGBPal7c3,
 };
 
 struct GameCharacter bit;
@@ -281,20 +282,33 @@ UINT8 special_tile(UINT16 player_loc){
     return rtn;
 }
 
-UINT8 can_player_move(UINT16 newplayerx, UINT16 newplayery, unsigned char *bk_col){
+UBYTE is_walkable(unsigned char tile){
+    UBYTE rtn = 0;
+    for (int i=0;i<2;i++){
+        if (tile == blankmap[i]){
+            rtn = 1;
+        }
+    }
+    return rtn;
+}
+
+UINT8 can_player_move(UINT16 newplayerx, UINT16 newplayery, unsigned char *bk_col, unsigned int MapHeight, unsigned int MapWidth){
     UINT16 indexTLx, indexTLy, tileindexTL;
     UINT8 result;
 
-    indexTLx = (newplayerx/8)%BackgroundMapWidth;
+    indexTLx = (newplayerx/8)%MapWidth;
     indexTLy = newplayery/8;
 
-    tileindexTL = BackgroundMapWidth*indexTLy + indexTLx; // x_width * y_index + x_index
+    tileindexTL = MapWidth*indexTLy + indexTLx; // x_width * y_index + x_index
 
     result = 0; //special_tile(tileindexTL);
-    if (bk_col[tileindexTL] == blankmap[0] && bk_col[tileindexTL - 1] == blankmap[0]){
+    if (is_walkable(bk_col[tileindexTL]) && is_walkable(bk_col[tileindexTL - 1])){
         result = 1;
     }
-    if (newplayery < 16 || newplayery > 8 + BackgroundMapHeight*8){
+    if (newplayery < 16 || newplayery > 8 + MapHeight*8){
+        result = 0;
+    }
+    if (newplayerx < 8 || newplayerx > MapWidth*8){
         result = 0;
     }
 
@@ -341,13 +355,18 @@ void walk_background_movement(INT8 move_x, INT8 move_y, UINT8 *step){
     }
 }
 
-void move(UINT8 *step, UINT16 *player_loc_x, UINT16 *player_loc_y, unsigned char *bk_col){
+void move(UINT8 *step, UINT16 *player_loc_x, UINT16 *player_loc_y, unsigned char *bk_col, unsigned int MapHeight, unsigned int MapWidth){
     INT8 tile = 8;
     switch (joypad())
     {
     case (J_LEFT):
-        if (can_player_move(*player_loc_x - tile, *player_loc_y, bk_col)){
-            walk_background_movement(-1*tile, 0, step);
+        if (can_player_move(*player_loc_x - tile, *player_loc_y, bk_col, MapHeight, MapWidth)){
+            if (*player_loc_x < 96 || *player_loc_x > MapWidth*8 - 80){
+                walk_without_background_movement(-1*tile, 0, step);
+            }
+            else{
+                walk_background_movement(-1*tile, 0, step);
+            }
             *player_loc_x -= tile;
         }
         else{
@@ -356,8 +375,13 @@ void move(UINT8 *step, UINT16 *player_loc_x, UINT16 *player_loc_y, unsigned char
         break;
     
     case (J_RIGHT):
-        if (can_player_move(*player_loc_x + tile, *player_loc_y, bk_col)){
-            walk_background_movement(tile, 0, step);
+        if (can_player_move(*player_loc_x + tile, *player_loc_y, bk_col, MapHeight, MapWidth)){
+            if (*player_loc_x < 88 || *player_loc_x > MapWidth*8 - 88){
+                walk_without_background_movement(tile, 0, step);
+            }
+            else{
+                walk_background_movement(tile, 0, step);
+            }
             *player_loc_x += tile;
         }
         else{
@@ -366,29 +390,27 @@ void move(UINT8 *step, UINT16 *player_loc_x, UINT16 *player_loc_y, unsigned char
         break;
     
     case (J_UP):
-        if (can_player_move(*player_loc_x, *player_loc_y - tile, bk_col)){
-            if (*player_loc_y < 96 || *player_loc_y > BackgroundMapHeight*8 - 56){
+        if (can_player_move(*player_loc_x, *player_loc_y - tile, bk_col, MapHeight, MapWidth)){
+            if (*player_loc_y < 96 || *player_loc_y > MapHeight*8 - 56){
                 walk_without_background_movement(0, -1*tile, step);
-                *player_loc_y -= 8;
             }
             else{
                 walk_background_movement(0, -1*tile, step);
-                *player_loc_y -= 8;
             }
+            *player_loc_y -= 8;
         }
         *step = setbit_backward(*step);
         break;
     
     case (J_DOWN):
-        if (can_player_move(*player_loc_x, *player_loc_y + tile, bk_col)){
-            if (*player_loc_y < 88 || *player_loc_y > BackgroundMapHeight*8 - 64){
+        if (can_player_move(*player_loc_x, *player_loc_y + tile, bk_col, MapHeight, MapWidth)){
+            if (*player_loc_y < 88 || *player_loc_y > MapHeight*8 - 64){
                 walk_without_background_movement(0, tile, step);
-                *player_loc_y += 8;
             }
             else{
                 walk_background_movement(0, tile, step);
-                *player_loc_y += 8;
             }
+            *player_loc_y += 8;
         }
         reset_bit();
         break;
@@ -398,14 +420,14 @@ void move(UINT8 *step, UINT16 *player_loc_x, UINT16 *player_loc_y, unsigned char
     }
 }
 
-void setup_map(UWORD *pallete, unsigned char *map_data, unsigned char *tiles_1, unsigned char *tiles_0, int character_x, int character_y, int data_size){
+void setup_map(UWORD *pallete, unsigned char *map_data, unsigned char *tiles_1, unsigned char *tiles_0, int character_x, int character_y, int data_size, unsigned int MapHeight, unsigned int MapWidth){
     // setup background
     set_bkg_palette(0, 8, pallete);
     set_bkg_data(0, data_size, map_data);
     VBK_REG = 1;
-    set_bkg_tiles(0, 0, BackgroundMapWidth, BackgroundMapHeight, tiles_1);
+    set_bkg_tiles(0, 0, MapWidth, MapHeight, tiles_1);
     VBK_REG = 0;
-    set_bkg_tiles(0, 0, BackgroundMapWidth, BackgroundMapHeight, tiles_0);
+    set_bkg_tiles(0, 0, MapWidth, MapHeight, tiles_0);
     SHOW_BKG;
    
     // setup character sprite
@@ -419,17 +441,18 @@ void setup_map(UWORD *pallete, unsigned char *map_data, unsigned char *tiles_1, 
 }
 
 void main(){
-    unsigned char* bk_collision = BackgroundMapPLN0;
-    unsigned char* bk_tiles = BackgroundMapPLN1;
-    setup_map(backgroundpalette, BackgroundData, bk_tiles, bk_collision, 88, 88, 14);
+    unsigned char* bk_collision = Lvl1BackgroundMapPLN0;
+    unsigned char* bk_tiles = Lvl1BackgroundMapPLN1;
+    unsigned int MapHeight = Lvl1BackgroundMapHeight;
+    unsigned int MapWidth = Lvl1BackgroundMapWidth;
+
+    setup_map(backgroundpalette, Lvl1BackgroundData, bk_tiles, bk_collision, 88, 88, 127, MapHeight, MapWidth);
 
     game_running = 1;
     UINT8 step = 0;
 
     while(game_running){
-        move(&step, &player_location[0], &player_location[1], bk_collision);
+        move(&step, &player_location[0], &player_location[1], bk_collision, MapHeight, MapWidth);
         delay(100);
     }
-    
-    
 }
