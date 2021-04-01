@@ -1033,14 +1033,14 @@ ___str_0:
 	.db 0x0a
 	.ascii "      YOU WIN!!!!"
 	.db 0x00
-;main.c:284: UINT8 can_player_move(UINT16 newplayerx, UINT16 newplayery){
+;main.c:284: UINT8 can_player_move(UINT16 newplayerx, UINT16 newplayery, unsigned char *bk_col){
 ;	---------------------------------
 ; Function can_player_move
 ; ---------------------------------
 _can_player_move::
-	add	sp, #-6
+	add	sp, #-5
 ;main.c:288: indexTLx = (newplayerx/8)%BackgroundMapWidth;
-	ldhl	sp,#8
+	ldhl	sp,#7
 	ld	a, (hl+)
 	ld	e, a
 	ld	d, (hl)
@@ -1055,12 +1055,12 @@ _can_player_move::
 	push	de
 	call	__moduint
 	add	sp, #4
-	ldhl	sp,	#4
+	ldhl	sp,	#3
 	ld	a, e
 	ld	(hl+), a
 	ld	(hl), d
 ;main.c:289: indexTLy = newplayery/8;
-	ldhl	sp,#10
+	ldhl	sp,#9
 	ld	a, (hl+)
 	ld	c, a
 	ld	b, (hl)
@@ -1081,87 +1081,77 @@ _can_player_move::
 	add	hl, hl
 	ld	c, l
 	ld	b, h
-	ldhl	sp,	#4
+	ldhl	sp,	#3
 	ld	a, (hl+)
 	ld	h, (hl)
 	ld	l, a
 	add	hl, bc
 	ld	c, l
 	ld	b, h
-	ldhl	sp,	#4
-	ld	a, c
-	ld	(hl+), a
-	ld	(hl), b
+	inc	sp
+	inc	sp
+	push	bc
 ;main.c:293: result = 0; //special_tile(tileindexTL);
-	xor	a, a
-	ldhl	sp,	#2
-	ld	(hl), a
-;main.c:294: if (BackgroundMapPLN0[tileindexTL] == blankmap[0] && BackgroundMapPLN0[tileindexTL - 1] == blankmap[0]){
+	ld	c, #0x00
+;main.c:294: if (bk_col[tileindexTL] == blankmap[0] && bk_col[tileindexTL - 1] == blankmap[0]){
 ;c
-	ld	de, #_BackgroundMapPLN0
-	inc	hl
-	inc	hl
-	ld	a, (hl+)
-	ld	h, (hl)
-	ld	l, a
-	add	hl, de
-	ld	c, (hl)
-	ld	a, (#_blankmap + 0)
-	ldhl	sp,	#3
-	ld	(hl), a
-	ldhl	sp,	#3
-	ld	a, (hl)
-	sub	a, c
-	jr	NZ, 00102$
-	ldhl	sp,#4
+	ldhl	sp,#11
 	ld	a, (hl+)
 	ld	e, a
 	ld	d, (hl)
+	pop	hl
+	push	hl
+	add	hl, de
+	ld	b, (hl)
+	ld	a, (#_blankmap + 0)
+	ldhl	sp,	#2
+	ld	(hl), a
+	ldhl	sp,	#2
+	ld	a, (hl)
+	sub	a, b
+	jr	NZ, 00102$
+	pop	de
+	push	de
 	ld	hl, #0x0001
 	ld	a, e
 	sub	a, l
 	ld	e, a
 	ld	a, d
 	sbc	a, h
-	ldhl	sp,	#1
+	ldhl	sp,	#4
 	ld	(hl-), a
-	ld	(hl), e
 ;c
-	pop	de
-	push	de
-	ld	hl, #_BackgroundMapPLN0
-	add	hl, de
-	push	hl
-	ld	a, l
-	ldhl	sp,	#6
-	ld	(hl), a
-	pop	hl
-	ld	a, h
-	ldhl	sp,	#5
-	ld	(hl-), a
+	ld	a, e
+	ld	(hl+), a
+	dec	hl
 	ld	a, (hl+)
 	ld	e, a
 	ld	d, (hl)
-	ld	a, (de)
-	ld	(hl-), a
-	dec	hl
+	ldhl	sp,	#11
 	ld	a, (hl+)
-	inc	hl
-	sub	a, (hl)
+	ld	h, (hl)
+	ld	l, a
+	add	hl, de
+	ld	e, l
+	ld	d, h
+	ld	a, (de)
+	ld	e, a
+	ldhl	sp,	#2
+	ld	a, (hl)
+	sub	a, e
 	jr	NZ, 00102$
 ;main.c:295: result = 1;
-	ldhl	sp,	#2
-	ld	(hl), #0x01
+	ld	c, #0x01
 00102$:
 ;main.c:297: if (newplayery < 16 || newplayery > 8 + BackgroundMapHeight*8){
-	ldhl	sp,	#10
+	ldhl	sp,	#9
 	ld	a, (hl)
 	sub	a, #0x10
 	inc	hl
 	ld	a, (hl)
 	sbc	a, #0x00
 	jr	C, 00104$
-	ldhl	sp,	#10
+	ldhl	sp,	#9
 	ld	a, #0xa8
 	sub	a, (hl)
 	inc	hl
@@ -1170,15 +1160,12 @@ _can_player_move::
 	jr	NC, 00105$
 00104$:
 ;main.c:298: result = 0;
-	xor	a, a
-	ldhl	sp,	#2
-	ld	(hl), a
+	ld	c, #0x00
 00105$:
 ;main.c:301: return result;
-	ldhl	sp,	#2
-	ld	e, (hl)
+	ld	e, c
 ;main.c:302: }
-	add	sp, #6
+	add	sp, #5
 	ret
 ;main.c:304: void walk_without_background_movement(INT8 move_x, INT8 move_y, UINT8 *step){
 ;	---------------------------------
@@ -1670,7 +1657,7 @@ _walk_background_movement::
 ;main.c:342: }
 	inc	sp
 	ret
-;main.c:344: void move(UINT8 *step, UINT16 *player_loc_x, UINT16 *player_loc_y){
+;main.c:344: void move(UINT8 *step, UINT16 *player_loc_x, UINT16 *player_loc_y, unsigned char *bk_col){
 ;	---------------------------------
 ; Function move
 ; ---------------------------------
@@ -1679,11 +1666,11 @@ _move::
 ;main.c:346: switch (joypad())
 	call	_joypad
 	ld	c, e
-;main.c:349: if (can_player_move(*player_loc_x - tile, *player_loc_y)){
+;main.c:349: if (can_player_move(*player_loc_x - tile, *player_loc_y, bk_col)){
 	ldhl	sp,	#12
 	ld	a, (hl+)
 	ld	e, (hl)
-	ldhl	sp,	#2
+	ldhl	sp,	#0
 	ld	(hl+), a
 	ld	(hl), e
 	ldhl	sp,	#10
@@ -1696,7 +1683,7 @@ _move::
 	ldhl	sp,	#8
 	ld	a, (hl+)
 	ld	e, (hl)
-	ldhl	sp,	#0
+	ldhl	sp,	#2
 	ld	(hl+), a
 	ld	(hl), e
 ;main.c:346: switch (joypad())
@@ -1713,17 +1700,15 @@ _move::
 	jp	00125$
 ;main.c:348: case (J_LEFT):
 00101$:
-;main.c:349: if (can_player_move(*player_loc_x - tile, *player_loc_y)){
-	ldhl	sp,#2
-	ld	a, (hl+)
-	ld	e, a
-	ld	d, (hl)
+;main.c:349: if (can_player_move(*player_loc_x - tile, *player_loc_y, bk_col)){
+	pop	de
+	push	de
 	ld	a, (de)
 	ld	c, a
 	inc	de
 	ld	a, (de)
 	ld	b, a
-	inc	hl
+	ldhl	sp,#4
 	ld	a, (hl+)
 	ld	e, a
 	ld	d, (hl)
@@ -1736,10 +1721,15 @@ _move::
 	add	hl, de
 	ld	e, l
 	ld	d, h
+	ldhl	sp,	#14
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	push	hl
 	push	bc
 	push	de
 	call	_can_player_move
-	add	sp, #4
+	add	sp, #6
 	ld	a, e
 	or	a, a
 	jr	Z, 00103$
@@ -1781,32 +1771,34 @@ _move::
 	jp	00125$
 00103$:
 ;main.c:354: *step = setbit_left(*step);
-	pop	de
-	push	de
+	ldhl	sp,#2
+	ld	a, (hl+)
+	ld	e, a
+	ld	d, (hl)
 	ld	a, (de)
 	push	af
 	inc	sp
 	call	_setbit_left
 	inc	sp
 	ld	c, e
-	pop	hl
-	push	hl
+	ldhl	sp,	#2
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
 	ld	(hl), c
 ;main.c:356: break;
 	jp	00125$
 ;main.c:358: case (J_RIGHT):
 00105$:
-;main.c:359: if (can_player_move(*player_loc_x + tile, *player_loc_y)){
-	ldhl	sp,#2
-	ld	a, (hl+)
-	ld	e, a
-	ld	d, (hl)
+;main.c:359: if (can_player_move(*player_loc_x + tile, *player_loc_y, bk_col)){
+	pop	de
+	push	de
 	ld	a, (de)
 	ld	c, a
 	inc	de
 	ld	a, (de)
 	ld	b, a
-	inc	hl
+	ldhl	sp,#4
 	ld	a, (hl+)
 	ld	e, a
 	ld	d, (hl)
@@ -1817,10 +1809,17 @@ _move::
 	ld	h, a
 	ld	de, #0x0008
 	add	hl, de
-	push	bc
+	ld	e, l
+	ld	d, h
+	ldhl	sp,	#14
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
 	push	hl
+	push	bc
+	push	de
 	call	_can_player_move
-	add	sp, #4
+	add	sp, #6
 	ld	a, e
 	or	a, a
 	jr	Z, 00107$
@@ -1862,26 +1861,28 @@ _move::
 	jp	00125$
 00107$:
 ;main.c:364: *step = setbit_right(*step);
-	pop	de
-	push	de
+	ldhl	sp,#2
+	ld	a, (hl+)
+	ld	e, a
+	ld	d, (hl)
 	ld	a, (de)
 	push	af
 	inc	sp
 	call	_setbit_right
 	inc	sp
 	ld	c, e
-	pop	hl
-	push	hl
+	ldhl	sp,	#2
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
 	ld	(hl), c
 ;main.c:366: break;
 	jp	00125$
 ;main.c:368: case (J_UP):
 00109$:
-;main.c:369: if (can_player_move(*player_loc_x, *player_loc_y - tile)){
-	ldhl	sp,#2
-	ld	a, (hl+)
-	ld	e, a
-	ld	d, (hl)
+;main.c:369: if (can_player_move(*player_loc_x, *player_loc_y - tile, bk_col)){
+	pop	de
+	push	de
 	ld	a, (de)
 	ld	c, a
 	inc	de
@@ -1893,29 +1894,37 @@ _move::
 	ld	a, b
 	adc	a, #0xff
 	ld	b, a
-	inc	hl
+	ldhl	sp,#4
 	ld	a, (hl+)
 	ld	e, a
 	ld	d, (hl)
 	ld	a, (de)
-	ld	l, a
+	dec	hl
+	ld	(hl+), a
 	inc	de
 	ld	a, (de)
-	ld	h, a
+	ld	(hl), a
+	ldhl	sp,	#14
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	push	hl
 	push	bc
+	ldhl	sp,	#8
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
 	push	hl
 	call	_can_player_move
-	add	sp, #4
+	add	sp, #6
 	ld	a, e
 	or	a, a
 	jr	Z, 00115$
 ;main.c:370: if (*player_loc_y < 96 || *player_loc_y > BackgroundMapHeight*8 - 56){
-	ldhl	sp,#2
-	ld	a, (hl+)
-	ld	e, a
-	ld	d, (hl)
+	pop	de
+	push	de
 	ld	a, (de)
-	inc	hl
+	ldhl	sp,	#4
 	ld	(hl+), a
 	inc	de
 	ld	a, (de)
@@ -1949,10 +1958,8 @@ _move::
 	call	_walk_without_background_movement
 	add	sp, #4
 ;main.c:372: *player_loc_y -= 8;
-	ldhl	sp,#2
-	ld	a, (hl+)
-	ld	e, a
-	ld	d, (hl)
+	pop	de
+	push	de
 	ld	a, (de)
 	ld	c, a
 	inc	de
@@ -1964,10 +1971,8 @@ _move::
 	ld	a, b
 	adc	a, #0xff
 	ld	b, a
-	dec	hl
-	ld	a, (hl+)
-	ld	h, (hl)
-	ld	l, a
+	pop	hl
+	push	hl
 	ld	a, c
 	ld	(hl+), a
 	ld	(hl), b
@@ -1988,10 +1993,8 @@ _move::
 	call	_walk_background_movement
 	add	sp, #4
 ;main.c:376: *player_loc_y -= 8;
-	ldhl	sp,#2
-	ld	a, (hl+)
-	ld	e, a
-	ld	d, (hl)
+	pop	de
+	push	de
 	ld	a, (de)
 	ld	c, a
 	inc	de
@@ -2003,35 +2006,35 @@ _move::
 	ld	a, b
 	adc	a, #0xff
 	ld	b, a
-	dec	hl
-	ld	a, (hl+)
-	ld	h, (hl)
-	ld	l, a
+	pop	hl
+	push	hl
 	ld	a, c
 	ld	(hl+), a
 	ld	(hl), b
 00115$:
 ;main.c:379: *step = setbit_backward(*step);
-	pop	de
-	push	de
+	ldhl	sp,#2
+	ld	a, (hl+)
+	ld	e, a
+	ld	d, (hl)
 	ld	a, (de)
 	push	af
 	inc	sp
 	call	_setbit_backward
 	inc	sp
 	ld	c, e
-	pop	hl
-	push	hl
+	ldhl	sp,	#2
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
 	ld	(hl), c
 ;main.c:380: break;
 	jp	00125$
 ;main.c:382: case (J_DOWN):
 00116$:
-;main.c:383: if (can_player_move(*player_loc_x, *player_loc_y + tile)){
-	ldhl	sp,#2
-	ld	a, (hl+)
-	ld	e, a
-	ld	d, (hl)
+;main.c:383: if (can_player_move(*player_loc_x, *player_loc_y + tile, bk_col)){
+	pop	de
+	push	de
 	ld	a, (de)
 	ld	l, a
 	inc	de
@@ -2053,22 +2056,25 @@ _move::
 	inc	de
 	ld	a, (de)
 	ld	(hl), a
+	ldhl	sp,	#14
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	push	hl
 	push	bc
-	dec	hl
+	ldhl	sp,	#8
 	ld	a, (hl+)
 	ld	h, (hl)
 	ld	l, a
 	push	hl
 	call	_can_player_move
-	add	sp, #4
+	add	sp, #6
 	ld	a, e
 	or	a, a
 	jr	Z, 00122$
 ;main.c:384: if (*player_loc_y < 88 || *player_loc_y > BackgroundMapHeight*8 - 64){
-	ldhl	sp,#2
-	ld	a, (hl+)
-	ld	e, a
-	ld	d, (hl)
+	pop	de
+	push	de
 	ld	a, (de)
 	ld	c, a
 	inc	de
@@ -2100,10 +2106,8 @@ _move::
 	call	_walk_without_background_movement
 	add	sp, #4
 ;main.c:386: *player_loc_y += 8;
-	ldhl	sp,#2
-	ld	a, (hl+)
-	ld	e, a
-	ld	d, (hl)
+	pop	de
+	push	de
 	ld	a, (de)
 	ld	c, a
 	inc	de
@@ -2113,10 +2117,8 @@ _move::
 	add	hl, bc
 	ld	c, l
 	ld	b, h
-	ldhl	sp,	#2
-	ld	a, (hl+)
-	ld	h, (hl)
-	ld	l, a
+	pop	hl
+	push	hl
 	ld	a, c
 	ld	(hl+), a
 	ld	(hl), b
@@ -2137,10 +2139,8 @@ _move::
 	call	_walk_background_movement
 	add	sp, #4
 ;main.c:390: *player_loc_y += 8;
-	ldhl	sp,#2
-	ld	a, (hl+)
-	ld	e, a
-	ld	d, (hl)
+	pop	de
+	push	de
 	ld	a, (de)
 	ld	c, a
 	inc	de
@@ -2150,10 +2150,8 @@ _move::
 	add	hl, bc
 	ld	c, l
 	ld	b, h
-	ldhl	sp,	#2
-	ld	a, (hl+)
-	ld	h, (hl)
-	ld	l, a
+	pop	hl
+	push	hl
 	ld	a, c
 	ld	(hl+), a
 	ld	(hl), b
@@ -2309,7 +2307,9 @@ _setup_map::
 ; ---------------------------------
 _main::
 	dec	sp
-;main.c:422: setup_map(backgroundpalette, BackgroundData, BackgroundMapPLN1, BackgroundMapPLN0, 88, 88, 14);
+;main.c:422: unsigned char* bk_collision = BackgroundMapPLN0;
+;main.c:423: unsigned char* bk_tiles = BackgroundMapPLN1;
+;main.c:424: setup_map(backgroundpalette, BackgroundData, bk_tiles, bk_collision, 88, 88, 14);
 	ld	hl, #0x000e
 	push	hl
 	ld	l, #0x58
@@ -2326,37 +2326,39 @@ _main::
 	push	hl
 	call	_setup_map
 	add	sp, #14
-;main.c:424: game_running = 1;
+;main.c:426: game_running = 1;
 	ld	hl, #_game_running
 	ld	(hl), #0x01
-;main.c:425: UINT8 step = 0;
+;main.c:427: UINT8 step = 0;
 	xor	a, a
 	ldhl	sp,	#0
 	ld	(hl), a
-;main.c:427: while(game_running){
+;main.c:429: while(game_running){
 00101$:
 	ld	a, (#_game_running)
 	or	a, a
 	jr	Z, 00104$
-;main.c:428: move(&step, &player_location[0], &player_location[1]);
+;main.c:430: move(&step, &player_location[0], &player_location[1], bk_collision);
 	ldhl	sp,	#0
 	ld	c, l
 	ld	b, h
+	ld	hl, #_BackgroundMapPLN0
+	push	hl
 	ld	hl, #(_player_location + 0x0002)
 	push	hl
 	ld	hl, #_player_location
 	push	hl
 	push	bc
 	call	_move
-	add	sp, #6
-;main.c:429: delay(100);
+	add	sp, #8
+;main.c:431: delay(100);
 	ld	hl, #0x0064
 	push	hl
 	call	_delay
 	add	sp, #2
 	jr	00101$
 00104$:
-;main.c:431: }
+;main.c:435: }
 	inc	sp
 	ret
 	.area _CODE

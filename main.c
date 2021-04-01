@@ -281,7 +281,7 @@ UINT8 special_tile(UINT16 player_loc){
     return rtn;
 }
 
-UINT8 can_player_move(UINT16 newplayerx, UINT16 newplayery){
+UINT8 can_player_move(UINT16 newplayerx, UINT16 newplayery, unsigned char *bk_col){
     UINT16 indexTLx, indexTLy, tileindexTL;
     UINT8 result;
 
@@ -291,7 +291,7 @@ UINT8 can_player_move(UINT16 newplayerx, UINT16 newplayery){
     tileindexTL = BackgroundMapWidth*indexTLy + indexTLx; // x_width * y_index + x_index
 
     result = 0; //special_tile(tileindexTL);
-    if (BackgroundMapPLN0[tileindexTL] == blankmap[0] && BackgroundMapPLN0[tileindexTL - 1] == blankmap[0]){
+    if (bk_col[tileindexTL] == blankmap[0] && bk_col[tileindexTL - 1] == blankmap[0]){
         result = 1;
     }
     if (newplayery < 16 || newplayery > 8 + BackgroundMapHeight*8){
@@ -341,12 +341,12 @@ void walk_background_movement(INT8 move_x, INT8 move_y, UINT8 *step){
     }
 }
 
-void move(UINT8 *step, UINT16 *player_loc_x, UINT16 *player_loc_y){
+void move(UINT8 *step, UINT16 *player_loc_x, UINT16 *player_loc_y, unsigned char *bk_col){
     INT8 tile = 8;
     switch (joypad())
     {
     case (J_LEFT):
-        if (can_player_move(*player_loc_x - tile, *player_loc_y)){
+        if (can_player_move(*player_loc_x - tile, *player_loc_y, bk_col)){
             walk_background_movement(-1*tile, 0, step);
             *player_loc_x -= tile;
         }
@@ -356,7 +356,7 @@ void move(UINT8 *step, UINT16 *player_loc_x, UINT16 *player_loc_y){
         break;
     
     case (J_RIGHT):
-        if (can_player_move(*player_loc_x + tile, *player_loc_y)){
+        if (can_player_move(*player_loc_x + tile, *player_loc_y, bk_col)){
             walk_background_movement(tile, 0, step);
             *player_loc_x += tile;
         }
@@ -366,7 +366,7 @@ void move(UINT8 *step, UINT16 *player_loc_x, UINT16 *player_loc_y){
         break;
     
     case (J_UP):
-        if (can_player_move(*player_loc_x, *player_loc_y - tile)){
+        if (can_player_move(*player_loc_x, *player_loc_y - tile, bk_col)){
             if (*player_loc_y < 96 || *player_loc_y > BackgroundMapHeight*8 - 56){
                 walk_without_background_movement(0, -1*tile, step);
                 *player_loc_y -= 8;
@@ -380,7 +380,7 @@ void move(UINT8 *step, UINT16 *player_loc_x, UINT16 *player_loc_y){
         break;
     
     case (J_DOWN):
-        if (can_player_move(*player_loc_x, *player_loc_y + tile)){
+        if (can_player_move(*player_loc_x, *player_loc_y + tile, bk_col)){
             if (*player_loc_y < 88 || *player_loc_y > BackgroundMapHeight*8 - 64){
                 walk_without_background_movement(0, tile, step);
                 *player_loc_y += 8;
@@ -419,13 +419,15 @@ void setup_map(UWORD *pallete, unsigned char *map_data, unsigned char *tiles_1, 
 }
 
 void main(){
-    setup_map(backgroundpalette, BackgroundData, BackgroundMapPLN1, BackgroundMapPLN0, 88, 88, 14);
+    unsigned char* bk_collision = BackgroundMapPLN0;
+    unsigned char* bk_tiles = BackgroundMapPLN1;
+    setup_map(backgroundpalette, BackgroundData, bk_tiles, bk_collision, 88, 88, 14);
 
     game_running = 1;
     UINT8 step = 0;
 
     while(game_running){
-        move(&step, &player_location[0], &player_location[1]);
+        move(&step, &player_location[0], &player_location[1], bk_collision);
         delay(100);
     }
     
