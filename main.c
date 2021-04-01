@@ -438,6 +438,7 @@ void setup_map(UWORD *pallete, unsigned char *map_data, unsigned char *tiles_1, 
     player_location[1] = character_y;
     SHOW_SPRITES;
     DISPLAY_ON;
+
 }
 
 void main(){
