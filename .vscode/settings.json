@@ -2,6 +2,7 @@
     "files.associations": {
         "cgb.h": "c",
         "backgrounddata.h": "c",
-        "backgroundmap.h": "c"
+        "backgroundmap.h": "c",
+        "gamesprites.h": "c"
     }
 }

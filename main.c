@@ -6,6 +6,14 @@
 #include "BackgroundData.h"
 #include "GameCharacter.c"
 #include "GameSprites.h"
+#include "Dialogues/letter2Data.c"
+#include "Dialogues/test_dialogue.c"
+#include "Dialogues/test2_dialogue.c"
+#include "Dialogues/test3_dialogue.c"
+#include "Splashscreens/intro1.c"
+#include "Splashscreens/intro2.c"
+#include "Splashscreens/intro3.c"
+
 
 const unsigned char blankmap[1] = {0x0C};
 UINT16 player_location[2];
@@ -398,6 +406,22 @@ void move(UINT8 *step, UINT16 *player_loc_x, UINT16 *player_loc_y){
     }
 }
 
+void setup_splashscreen(){
+    set_win_data(0,45,Letter2Data);
+    set_win_tiles(0,0,Intro1MapWidth,Intro1MapHeight,Intro1Map);
+    SHOW_WIN;
+    DISPLAY_ON;
+    waitpad(J_START);
+    waitpadup(); 
+    set_win_tiles(0,0,Intro2MapWidth,Intro2MapHeight,Intro2Map);
+    waitpad(J_START);
+    waitpadup(); 
+    set_win_tiles(0,0,Intro3MapWidth,Intro3MapHeight,Intro3Map);
+    waitpad(J_START);
+    waitpadup(); 
+    HIDE_WIN;
+}
+
 void setup_map(UWORD *pallete, unsigned char *map_data, unsigned char *tiles_1, unsigned char *tiles_0, int character_x, int character_y, int data_size){
     // setup background
     set_bkg_palette(0, 8, pallete);
@@ -418,14 +442,43 @@ void setup_map(UWORD *pallete, unsigned char *map_data, unsigned char *tiles_1, 
     DISPLAY_ON;
 }
 
-void main(){
-    setup_map(backgroundpalette, BackgroundData, BackgroundMapPLN1, BackgroundMapPLN0, 88, 88, 14);
+void setup_dialogue(){
+    set_win_data(0,45,Letter2Data);
+    set_win_tiles(0,0,Test1Width,Test1Height,Test1);
+    move_win(7, 120);
+    SHOW_WIN;
+    waitpad(J_START);
+    waitpadup(); 
+    set_win_tiles(0,0,Test2Width,Test2Height,Test2);
+    move_win(7, 120);
+    waitpad(J_START);
+    waitpadup(); 
+    set_win_tiles(0,0,Test3Width,Test3Height,Test3);
+    move_win(7, 120);
+}
 
+void main(){
+    //setup_dialogue();
     game_running = 1;
     UINT8 step = 0;
-
+    UINT8 state = 0;
     while(game_running){
-        move(&step, &player_location[0], &player_location[1]);
+        switch(state){
+            case 0: 
+                setup_splashscreen();
+                setup_map(backgroundpalette, BackgroundData, BackgroundMapPLN1, BackgroundMapPLN0, 88, 88, 14);
+                state = 1;
+                break;
+            case 1:
+                move(&step, &player_location[0], &player_location[1]);
+                if ((player_location[0] < 80 && player_location[0] > 60) && (player_location[1] < 100 && player_location[1] > 85)){
+                    state = 2;
+                } 
+                break;
+            case 2:
+                setup_dialogue();
+                break;
+        }
         delay(100);
     }
 }
