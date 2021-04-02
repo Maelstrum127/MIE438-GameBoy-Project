@@ -14,6 +14,7 @@
 	.globl _walk_background_movement
 	.globl _walk_without_background_movement
 	.globl _can_player_move
+	.globl _is_walkable
 	.globl _special_tile
 	.globl _reset_bit
 	.globl _setbit_left
@@ -71,7 +72,7 @@ _game_running::
 	.area _GSINIT
 	.area _GSFINAL
 	.area _GSINIT
-;main.c:24: UBYTE spritesize = 8;
+;main.c:25: UBYTE spritesize = 8;
 	ld	hl, #_spritesize
 	ld	(hl), #0x08
 ;--------------------------------------------------------
@@ -83,51 +84,69 @@ _game_running::
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;main.c:70: void performantdelay(UINT8 numloops){
+;main.c:71: void performantdelay(UINT8 numloops){
 ;	---------------------------------
 ; Function performantdelay
 ; ---------------------------------
 _performantdelay::
-;main.c:72: for(i=0;i<numloops;i++){
+;main.c:73: for(i=0;i<numloops;i++){
 	ld	c, #0x00
 00103$:
 	ld	a, c
 	ldhl	sp,	#2
 	sub	a, (hl)
 	ret	NC
-;main.c:73: wait_vbl_done();
+;main.c:74: wait_vbl_done();
 	call	_wait_vbl_done
-;main.c:72: for(i=0;i<numloops;i++){
+;main.c:73: for(i=0;i<numloops;i++){
 	inc	c
-;main.c:75: }
+;main.c:76: }
 	jr	00103$
 _blankmap:
-	.db #0x0c	; 12
+	.db #0x51	; 81	'Q'
+	.db #0x52	; 82	'R'
+	.db 0x00
+	.db 0x00
+	.db 0x00
+	.db 0x00
+	.db 0x00
+	.db 0x00
+	.db 0x00
+	.db 0x00
+	.db 0x00
+	.db 0x00
+	.db 0x00
+	.db 0x00
+	.db 0x00
 _backgroundpalette:
-	.dw #0x0adf
+	.dw #0x17bc
 	.dw #0x22e7
 	.dw #0x19c4
 	.dw #0x14e0
-	.dw #0x500b
+	.dw #0x7fff
 	.dw #0x5294
+	.dw #0x294a
 	.dw #0x0000
-	.dw #0x03df
-	.dw #0x0400
-	.dw #0x14a5
+	.dw #0x2b2f
+	.dw #0x054b
+	.dw #0x15e5
+	.dw #0x01e0
+	.dw #0x2b2f
+	.dw #0x22ef
+	.dw #0x2b2a
+	.dw #0x2aef
+	.dw #0x6f7b
+	.dw #0x5294
 	.dw #0x3def
-	.dw #0x6739
-	.dw #0x2826
-	.dw #0x342d
-	.dw #0x4411
-	.dw #0x7cd3
-	.dw #0x767e
-	.dw #0x7b54
-	.dw #0x4fd3
-	.dw #0x2f5f
-	.dw #0x02c1
-	.dw #0x1740
-	.dw #0x0dc1
-	.dw #0x0541
+	.dw #0x294a
+	.dw #0x5294
+	.dw #0x7d17
+	.dw #0x5811
+	.dw #0x3825
+	.dw #0x17bc
+	.dw #0x22e7
+	.dw #0x19c4
+	.dw #0x14e0
 	.dw #0x17bc
 	.dw #0x22e7
 	.dw #0x19c4
@@ -165,13 +184,13 @@ _spritepalette:
 	.dw #0x001f
 	.dw #0x000f
 	.dw #0x0000
-;main.c:77: void movegamecharacter(struct GameCharacter* character, UINT8 x, UINT8 y){
+;main.c:78: void movegamecharacter(struct GameCharacter* character, UINT8 x, UINT8 y){
 ;	---------------------------------
 ; Function movegamecharacter
 ; ---------------------------------
 _movegamecharacter::
 	add	sp, #-4
-;main.c:78: move_sprite(character->spriteids[0], x, y);
+;main.c:79: move_sprite(character->spriteids[0], x, y);
 	ldhl	sp,	#9
 	ld	a, (hl)
 	ldhl	sp,	#0
@@ -203,7 +222,7 @@ _movegamecharacter::
 	inc	bc
 	ld	a, (hl)
 	ld	(bc), a
-;main.c:79: move_sprite(character->spriteids[1], x + spritesize, y);
+;main.c:80: move_sprite(character->spriteids[1], x + spritesize, y);
 	ld	a, (hl)
 	ld	hl, #_spritesize
 	add	a, (hl)
@@ -231,7 +250,7 @@ _movegamecharacter::
 	ldhl	sp,	#3
 	ld	a, (hl)
 	ld	(bc), a
-;main.c:80: move_sprite(character->spriteids[2], x, y + spritesize);
+;main.c:81: move_sprite(character->spriteids[2], x, y + spritesize);
 	ldhl	sp,	#0
 	ld	a, (hl)
 	ld	hl, #_spritesize
@@ -261,7 +280,7 @@ _movegamecharacter::
 	dec	hl
 	ld	a, (hl)
 	ld	(bc), a
-;main.c:81: move_sprite(character->spriteids[3], x + spritesize, y + spritesize);
+;main.c:82: move_sprite(character->spriteids[3], x + spritesize, y + spritesize);
 	dec	hl
 	ld	a, (hl)
 	ld	hl, #_spritesize
@@ -297,7 +316,7 @@ _movegamecharacter::
 	inc	bc
 	ld	a, (hl)
 	ld	(bc), a
-;main.c:82: move_sprite(character->spriteids[4], x, y + 2*spritesize);
+;main.c:83: move_sprite(character->spriteids[4], x, y + 2*spritesize);
 	ld	a, (#_spritesize)
 	add	a, a
 	push	af
@@ -329,7 +348,7 @@ _movegamecharacter::
 	dec	hl
 	ld	a, (hl)
 	ld	(bc), a
-;main.c:83: move_sprite(character->spriteids[5], x + spritesize, y + 2*spritesize);
+;main.c:84: move_sprite(character->spriteids[5], x + spritesize, y + 2*spritesize);
 	ld	a, (#_spritesize)
 	add	a, a
 	ldhl	sp,	#3
@@ -356,36 +375,36 @@ _movegamecharacter::
 	ld	a, b
 	ld	(hl+), a
 	ld	(hl), c
-;main.c:83: move_sprite(character->spriteids[5], x + spritesize, y + 2*spritesize);
-;main.c:84: }
+;main.c:84: move_sprite(character->spriteids[5], x + spritesize, y + 2*spritesize);
+;main.c:85: }
 	add	sp, #4
 	ret
-;main.c:86: void setupbit(INT8 init_x, INT8 init_y){
+;main.c:87: void setupbit(INT8 init_x, INT8 init_y){
 ;	---------------------------------
 ; Function setupbit
 ; ---------------------------------
 _setupbit::
-;main.c:87: bit.x = init_x;
+;main.c:88: bit.x = init_x;
 	ld	bc, #_bit+0
 	ld	de, #(_bit + 0x0006)
 	ldhl	sp,	#2
 	ld	a, (hl)
 	ld	(de), a
-;main.c:88: bit.y = init_y;
+;main.c:89: bit.y = init_y;
 	ld	de, #(_bit + 0x0007)
 	inc	hl
 	ld	a, (hl)
 	ld	(de), a
-;main.c:89: bit.height = 32;
+;main.c:90: bit.height = 32;
 	ld	hl, #(_bit + 0x0009)
 	ld	(hl), #0x20
-;main.c:90: bit.width = 24;
+;main.c:91: bit.width = 24;
 	ld	hl, #(_bit + 0x0008)
 	ld	(hl), #0x18
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0002)
 	ld	(hl), #0x00
-;main.c:94: bit.spriteids[0] = 0;
+;main.c:95: bit.spriteids[0] = 0;
 	xor	a, a
 	ld	(bc), a
 ;c:/gbdk/include/gb/gb.h:1050: shadow_OAM[nb].prop=prop;
@@ -394,7 +413,7 @@ _setupbit::
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0006)
 	ld	(hl), #0x01
-;main.c:97: bit.spriteids[1] = 1;
+;main.c:98: bit.spriteids[1] = 1;
 	ld	hl, #(_bit + 0x0001)
 	ld	(hl), #0x01
 ;c:/gbdk/include/gb/gb.h:1050: shadow_OAM[nb].prop=prop;
@@ -403,7 +422,7 @@ _setupbit::
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x000a)
 	ld	(hl), #0x02
-;main.c:100: bit.spriteids[2] = 2;
+;main.c:101: bit.spriteids[2] = 2;
 	ld	hl, #(_bit + 0x0002)
 	ld	(hl), #0x02
 ;c:/gbdk/include/gb/gb.h:1050: shadow_OAM[nb].prop=prop;
@@ -412,7 +431,7 @@ _setupbit::
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x000e)
 	ld	(hl), #0x03
-;main.c:103: bit.spriteids[3] = 3;
+;main.c:104: bit.spriteids[3] = 3;
 	ld	hl, #(_bit + 0x0003)
 	ld	(hl), #0x03
 ;c:/gbdk/include/gb/gb.h:1050: shadow_OAM[nb].prop=prop;
@@ -421,7 +440,7 @@ _setupbit::
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0012)
 	ld	(hl), #0x04
-;main.c:106: bit.spriteids[4] = 4; 
+;main.c:107: bit.spriteids[4] = 4; 
 	ld	hl, #(_bit + 0x0004)
 	ld	(hl), #0x04
 ;c:/gbdk/include/gb/gb.h:1050: shadow_OAM[nb].prop=prop;
@@ -430,13 +449,13 @@ _setupbit::
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0016)
 	ld	(hl), #0x05
-;main.c:109: bit.spriteids[5] = 5; 
+;main.c:110: bit.spriteids[5] = 5; 
 	ld	hl, #(_bit + 0x0005)
 	ld	(hl), #0x05
 ;c:/gbdk/include/gb/gb.h:1050: shadow_OAM[nb].prop=prop;
 	ld	hl, #(_shadow_OAM + 0x0017)
 	ld	(hl), #0x07
-;main.c:112: movegamecharacter(&bit, bit.x, bit.y); 
+;main.c:113: movegamecharacter(&bit, bit.x, bit.y); 
 	ld	a, (#(_bit + 0x0007) + 0)
 	ld	hl, #(_bit + 0x0006)
 	ld	h, (hl)
@@ -447,14 +466,14 @@ _setupbit::
 	push	bc
 	call	_movegamecharacter
 	add	sp, #4
-;main.c:114: }
+;main.c:115: }
 	ret
-;main.c:116: UINT8 setbit_forward(UINT8 step){
+;main.c:117: UINT8 setbit_forward(UINT8 step){
 ;	---------------------------------
 ; Function setbit_forward
 ; ---------------------------------
 _setbit_forward::
-;main.c:117: if (step == 1){
+;main.c:118: if (step == 1){
 	ldhl	sp,	#2
 	ld	a, (hl)
 	dec	a
@@ -462,41 +481,41 @@ _setbit_forward::
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0002)
 	ld	(hl), #0x00
-;main.c:119: bit.spriteids[0] = 0;
+;main.c:120: bit.spriteids[0] = 0;
 	ld	hl, #_bit
 	ld	(hl), #0x00
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0006)
 	ld	(hl), #0x01
-;main.c:121: bit.spriteids[1] = 1;
+;main.c:122: bit.spriteids[1] = 1;
 	ld	hl, #(_bit + 0x0001)
 	ld	(hl), #0x01
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x000a)
 	ld	(hl), #0x02
-;main.c:123: bit.spriteids[2] = 2;    
+;main.c:124: bit.spriteids[2] = 2;    
 	ld	hl, #(_bit + 0x0002)
 	ld	(hl), #0x02
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x000e)
 	ld	(hl), #0x03
-;main.c:125: bit.spriteids[3] = 3;  
+;main.c:126: bit.spriteids[3] = 3;  
 	ld	hl, #(_bit + 0x0003)
 	ld	(hl), #0x03
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0012)
 	ld	(hl), #0x06
-;main.c:127: bit.spriteids[4] = 4; 
+;main.c:128: bit.spriteids[4] = 4; 
 	ld	hl, #(_bit + 0x0004)
 	ld	(hl), #0x04
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0016)
 	ld	(hl), #0x07
-;main.c:129: bit.spriteids[5] = 5;
+;main.c:130: bit.spriteids[5] = 5;
 	ld	hl, #(_bit + 0x0005)
 	ld	(hl), #0x05
 00102$:
-;main.c:131: if (step == 0){
+;main.c:132: if (step == 0){
 	ldhl	sp,	#2
 	ld	a, (hl)
 	or	a, a
@@ -504,41 +523,41 @@ _setbit_forward::
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0002)
 	ld	(hl), #0x00
-;main.c:133: bit.spriteids[0] = 0;
+;main.c:134: bit.spriteids[0] = 0;
 	ld	hl, #_bit
 	ld	(hl), #0x00
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0006)
 	ld	(hl), #0x01
-;main.c:135: bit.spriteids[1] = 1;
+;main.c:136: bit.spriteids[1] = 1;
 	ld	hl, #(_bit + 0x0001)
 	ld	(hl), #0x01
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x000a)
 	ld	(hl), #0x02
-;main.c:137: bit.spriteids[2] = 2;    
+;main.c:138: bit.spriteids[2] = 2;    
 	ld	hl, #(_bit + 0x0002)
 	ld	(hl), #0x02
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x000e)
 	ld	(hl), #0x03
-;main.c:139: bit.spriteids[3] = 3;  
+;main.c:140: bit.spriteids[3] = 3;  
 	ld	hl, #(_bit + 0x0003)
 	ld	(hl), #0x03
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0012)
 	ld	(hl), #0x08
-;main.c:141: bit.spriteids[4] = 4; 
+;main.c:142: bit.spriteids[4] = 4; 
 	ld	hl, #(_bit + 0x0004)
 	ld	(hl), #0x04
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0016)
 	ld	(hl), #0x09
-;main.c:143: bit.spriteids[5] = 5;   
+;main.c:144: bit.spriteids[5] = 5;   
 	ld	hl, #(_bit + 0x0005)
 	ld	(hl), #0x05
 00104$:
-;main.c:145: return (step + 1)%2;
+;main.c:146: return (step + 1)%2;
 	ldhl	sp,	#2
 	ld	c, (hl)
 	ld	b, #0x00
@@ -548,14 +567,14 @@ _setbit_forward::
 	push	bc
 	call	__modsint
 	add	sp, #4
-;main.c:146: }
+;main.c:147: }
 	ret
-;main.c:148: UINT8 setbit_backward(UINT8 step){
+;main.c:149: UINT8 setbit_backward(UINT8 step){
 ;	---------------------------------
 ; Function setbit_backward
 ; ---------------------------------
 _setbit_backward::
-;main.c:149: if (step == 1){
+;main.c:150: if (step == 1){
 	ldhl	sp,	#2
 	ld	a, (hl)
 	dec	a
@@ -563,41 +582,41 @@ _setbit_backward::
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0002)
 	ld	(hl), #0x0a
-;main.c:151: bit.spriteids[0] = 0;
+;main.c:152: bit.spriteids[0] = 0;
 	ld	hl, #_bit
 	ld	(hl), #0x00
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0006)
 	ld	(hl), #0x0b
-;main.c:153: bit.spriteids[1] = 1;
+;main.c:154: bit.spriteids[1] = 1;
 	ld	hl, #(_bit + 0x0001)
 	ld	(hl), #0x01
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x000a)
 	ld	(hl), #0x0c
-;main.c:155: bit.spriteids[2] = 2;    
+;main.c:156: bit.spriteids[2] = 2;    
 	ld	hl, #(_bit + 0x0002)
 	ld	(hl), #0x02
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x000e)
 	ld	(hl), #0x0d
-;main.c:157: bit.spriteids[3] = 3;  
+;main.c:158: bit.spriteids[3] = 3;  
 	ld	hl, #(_bit + 0x0003)
 	ld	(hl), #0x03
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0012)
 	ld	(hl), #0x0e
-;main.c:159: bit.spriteids[4] = 4; 
+;main.c:160: bit.spriteids[4] = 4; 
 	ld	hl, #(_bit + 0x0004)
 	ld	(hl), #0x04
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0016)
 	ld	(hl), #0x0f
-;main.c:161: bit.spriteids[5] = 5;
+;main.c:162: bit.spriteids[5] = 5;
 	ld	hl, #(_bit + 0x0005)
 	ld	(hl), #0x05
 00102$:
-;main.c:163: if (step == 0){
+;main.c:164: if (step == 0){
 	ldhl	sp,	#2
 	ld	a, (hl)
 	or	a, a
@@ -605,41 +624,41 @@ _setbit_backward::
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0002)
 	ld	(hl), #0x0a
-;main.c:165: bit.spriteids[0] = 0;
+;main.c:166: bit.spriteids[0] = 0;
 	ld	hl, #_bit
 	ld	(hl), #0x00
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0006)
 	ld	(hl), #0x0b
-;main.c:167: bit.spriteids[1] = 1;
+;main.c:168: bit.spriteids[1] = 1;
 	ld	hl, #(_bit + 0x0001)
 	ld	(hl), #0x01
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x000a)
 	ld	(hl), #0x0c
-;main.c:169: bit.spriteids[2] = 2;    
+;main.c:170: bit.spriteids[2] = 2;    
 	ld	hl, #(_bit + 0x0002)
 	ld	(hl), #0x02
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x000e)
 	ld	(hl), #0x0d
-;main.c:171: bit.spriteids[3] = 3;  
+;main.c:172: bit.spriteids[3] = 3;  
 	ld	hl, #(_bit + 0x0003)
 	ld	(hl), #0x03
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0012)
 	ld	(hl), #0x10
-;main.c:173: bit.spriteids[4] = 4; 
+;main.c:174: bit.spriteids[4] = 4; 
 	ld	hl, #(_bit + 0x0004)
 	ld	(hl), #0x04
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0016)
 	ld	(hl), #0x11
-;main.c:175: bit.spriteids[5] = 5;   
+;main.c:176: bit.spriteids[5] = 5;   
 	ld	hl, #(_bit + 0x0005)
 	ld	(hl), #0x05
 00104$:
-;main.c:177: return (step + 1)%2;
+;main.c:178: return (step + 1)%2;
 	ldhl	sp,	#2
 	ld	c, (hl)
 	ld	b, #0x00
@@ -649,14 +668,14 @@ _setbit_backward::
 	push	bc
 	call	__modsint
 	add	sp, #4
-;main.c:178: }
+;main.c:179: }
 	ret
-;main.c:180: UINT8 setbit_right(UINT8 step){
+;main.c:181: UINT8 setbit_right(UINT8 step){
 ;	---------------------------------
 ; Function setbit_right
 ; ---------------------------------
 _setbit_right::
-;main.c:181: if (step == 1){
+;main.c:182: if (step == 1){
 	ldhl	sp,	#2
 	ld	a, (hl)
 	dec	a
@@ -664,41 +683,41 @@ _setbit_right::
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0002)
 	ld	(hl), #0x12
-;main.c:183: bit.spriteids[0] = 0;
+;main.c:184: bit.spriteids[0] = 0;
 	ld	hl, #_bit
 	ld	(hl), #0x00
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0006)
 	ld	(hl), #0x13
-;main.c:185: bit.spriteids[1] = 1;
+;main.c:186: bit.spriteids[1] = 1;
 	ld	hl, #(_bit + 0x0001)
 	ld	(hl), #0x01
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x000a)
 	ld	(hl), #0x14
-;main.c:187: bit.spriteids[2] = 2;    
+;main.c:188: bit.spriteids[2] = 2;    
 	ld	hl, #(_bit + 0x0002)
 	ld	(hl), #0x02
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x000e)
 	ld	(hl), #0x15
-;main.c:189: bit.spriteids[3] = 3;  
+;main.c:190: bit.spriteids[3] = 3;  
 	ld	hl, #(_bit + 0x0003)
 	ld	(hl), #0x03
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0012)
 	ld	(hl), #0x16
-;main.c:191: bit.spriteids[4] = 4; 
+;main.c:192: bit.spriteids[4] = 4; 
 	ld	hl, #(_bit + 0x0004)
 	ld	(hl), #0x04
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0016)
 	ld	(hl), #0x17
-;main.c:193: bit.spriteids[5] = 5;
+;main.c:194: bit.spriteids[5] = 5;
 	ld	hl, #(_bit + 0x0005)
 	ld	(hl), #0x05
 00102$:
-;main.c:195: if (step == 0){
+;main.c:196: if (step == 0){
 	ldhl	sp,	#2
 	ld	a, (hl)
 	or	a, a
@@ -706,41 +725,41 @@ _setbit_right::
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0002)
 	ld	(hl), #0x1e
-;main.c:197: bit.spriteids[0] = 0;
+;main.c:198: bit.spriteids[0] = 0;
 	ld	hl, #_bit
 	ld	(hl), #0x00
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0006)
 	ld	(hl), #0x1f
-;main.c:199: bit.spriteids[1] = 1;
+;main.c:200: bit.spriteids[1] = 1;
 	ld	hl, #(_bit + 0x0001)
 	ld	(hl), #0x01
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x000a)
 	ld	(hl), #0x20
-;main.c:201: bit.spriteids[2] = 2;    
+;main.c:202: bit.spriteids[2] = 2;    
 	ld	hl, #(_bit + 0x0002)
 	ld	(hl), #0x02
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x000e)
 	ld	(hl), #0x21
-;main.c:203: bit.spriteids[3] = 3;  
+;main.c:204: bit.spriteids[3] = 3;  
 	ld	hl, #(_bit + 0x0003)
 	ld	(hl), #0x03
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0012)
 	ld	(hl), #0x22
-;main.c:205: bit.spriteids[4] = 4; 
+;main.c:206: bit.spriteids[4] = 4; 
 	ld	hl, #(_bit + 0x0004)
 	ld	(hl), #0x04
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0016)
 	ld	(hl), #0x23
-;main.c:207: bit.spriteids[5] = 5;   
+;main.c:208: bit.spriteids[5] = 5;   
 	ld	hl, #(_bit + 0x0005)
 	ld	(hl), #0x05
 00104$:
-;main.c:209: return (step + 1)%2;
+;main.c:210: return (step + 1)%2;
 	ldhl	sp,	#2
 	ld	c, (hl)
 	ld	b, #0x00
@@ -750,14 +769,14 @@ _setbit_right::
 	push	bc
 	call	__modsint
 	add	sp, #4
-;main.c:210: }
+;main.c:211: }
 	ret
-;main.c:212: UINT8 setbit_left(UINT8 step){
+;main.c:213: UINT8 setbit_left(UINT8 step){
 ;	---------------------------------
 ; Function setbit_left
 ; ---------------------------------
 _setbit_left::
-;main.c:213: if (step == 1){
+;main.c:214: if (step == 1){
 	ldhl	sp,	#2
 	ld	a, (hl)
 	dec	a
@@ -765,41 +784,41 @@ _setbit_left::
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0002)
 	ld	(hl), #0x18
-;main.c:215: bit.spriteids[0] = 0;
+;main.c:216: bit.spriteids[0] = 0;
 	ld	hl, #_bit
 	ld	(hl), #0x00
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0006)
 	ld	(hl), #0x19
-;main.c:217: bit.spriteids[1] = 1;
+;main.c:218: bit.spriteids[1] = 1;
 	ld	hl, #(_bit + 0x0001)
 	ld	(hl), #0x01
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x000a)
 	ld	(hl), #0x1a
-;main.c:219: bit.spriteids[2] = 2;    
+;main.c:220: bit.spriteids[2] = 2;    
 	ld	hl, #(_bit + 0x0002)
 	ld	(hl), #0x02
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x000e)
 	ld	(hl), #0x1b
-;main.c:221: bit.spriteids[3] = 3;  
+;main.c:222: bit.spriteids[3] = 3;  
 	ld	hl, #(_bit + 0x0003)
 	ld	(hl), #0x03
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0012)
 	ld	(hl), #0x1c
-;main.c:223: bit.spriteids[4] = 4; 
+;main.c:224: bit.spriteids[4] = 4; 
 	ld	hl, #(_bit + 0x0004)
 	ld	(hl), #0x04
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0016)
 	ld	(hl), #0x1d
-;main.c:225: bit.spriteids[5] = 5;
+;main.c:226: bit.spriteids[5] = 5;
 	ld	hl, #(_bit + 0x0005)
 	ld	(hl), #0x05
 00102$:
-;main.c:227: if (step == 0){
+;main.c:228: if (step == 0){
 	ldhl	sp,	#2
 	ld	a, (hl)
 	or	a, a
@@ -807,41 +826,41 @@ _setbit_left::
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0002)
 	ld	(hl), #0x24
-;main.c:229: bit.spriteids[0] = 0;
+;main.c:230: bit.spriteids[0] = 0;
 	ld	hl, #_bit
 	ld	(hl), #0x00
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0006)
 	ld	(hl), #0x25
-;main.c:231: bit.spriteids[1] = 1;
+;main.c:232: bit.spriteids[1] = 1;
 	ld	hl, #(_bit + 0x0001)
 	ld	(hl), #0x01
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x000a)
 	ld	(hl), #0x26
-;main.c:233: bit.spriteids[2] = 2;    
+;main.c:234: bit.spriteids[2] = 2;    
 	ld	hl, #(_bit + 0x0002)
 	ld	(hl), #0x02
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x000e)
 	ld	(hl), #0x27
-;main.c:235: bit.spriteids[3] = 3;  
+;main.c:236: bit.spriteids[3] = 3;  
 	ld	hl, #(_bit + 0x0003)
 	ld	(hl), #0x03
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0012)
 	ld	(hl), #0x28
-;main.c:237: bit.spriteids[4] = 4; 
+;main.c:238: bit.spriteids[4] = 4; 
 	ld	hl, #(_bit + 0x0004)
 	ld	(hl), #0x04
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0016)
 	ld	(hl), #0x29
-;main.c:239: bit.spriteids[5] = 5;   
+;main.c:240: bit.spriteids[5] = 5;   
 	ld	hl, #(_bit + 0x0005)
 	ld	(hl), #0x05
 00104$:
-;main.c:241: return (step + 1)%2;
+;main.c:242: return (step + 1)%2;
 	ldhl	sp,	#2
 	ld	c, (hl)
 	ld	b, #0x00
@@ -851,9 +870,9 @@ _setbit_left::
 	push	bc
 	call	__modsint
 	add	sp, #4
-;main.c:242: }
+;main.c:243: }
 	ret
-;main.c:244: void reset_bit(){
+;main.c:245: void reset_bit(){
 ;	---------------------------------
 ; Function reset_bit
 ; ---------------------------------
@@ -861,52 +880,52 @@ _reset_bit::
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0002)
 	ld	(hl), #0x00
-;main.c:246: bit.spriteids[0] = 0;
+;main.c:247: bit.spriteids[0] = 0;
 	ld	hl, #_bit
 	ld	(hl), #0x00
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0006)
 	ld	(hl), #0x01
-;main.c:248: bit.spriteids[1] = 1;
+;main.c:249: bit.spriteids[1] = 1;
 	ld	hl, #(_bit + 0x0001)
 	ld	(hl), #0x01
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x000a)
 	ld	(hl), #0x02
-;main.c:250: bit.spriteids[2] = 2;    
+;main.c:251: bit.spriteids[2] = 2;    
 	ld	hl, #(_bit + 0x0002)
 	ld	(hl), #0x02
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x000e)
 	ld	(hl), #0x03
-;main.c:252: bit.spriteids[3] = 3;  
+;main.c:253: bit.spriteids[3] = 3;  
 	ld	hl, #(_bit + 0x0003)
 	ld	(hl), #0x03
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0012)
 	ld	(hl), #0x04
-;main.c:254: bit.spriteids[4] = 4; 
+;main.c:255: bit.spriteids[4] = 4; 
 	ld	hl, #(_bit + 0x0004)
 	ld	(hl), #0x04
 ;c:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
 	ld	hl, #(_shadow_OAM + 0x0016)
 	ld	(hl), #0x05
-;main.c:256: bit.spriteids[5] = 5;   
+;main.c:257: bit.spriteids[5] = 5;   
 	ld	hl, #(_bit + 0x0005)
 	ld	(hl), #0x05
-;main.c:257: }
+;main.c:258: }
 	ret
-;main.c:259: UINT8 special_tile(UINT16 player_loc){
+;main.c:260: UINT8 special_tile(UINT16 player_loc){
 ;	---------------------------------
 ; Function special_tile
 ; ---------------------------------
 _special_tile::
 	dec	sp
-;main.c:261: rtn = 0;
+;main.c:262: rtn = 0;
 	xor	a, a
 	ldhl	sp,	#0
 	ld	(hl), a
-;main.c:265: set_bkg_tiles(player_loc%20, player_loc/20, 1, 1, blankmap);
+;main.c:266: set_bkg_tiles(player_loc%20, player_loc/20, 1, 1, blankmap);
 	ld	hl, #0x0014
 	push	hl
 	ldhl	sp,	#5
@@ -929,7 +948,7 @@ _special_tile::
 	call	__moduint
 	add	sp, #4
 	pop	bc
-;main.c:262: if (player_loc == 329){
+;main.c:263: if (player_loc == 329){
 	ldhl	sp,	#3
 	ld	a, (hl)
 	sub	a, #0x49
@@ -938,10 +957,10 @@ _special_tile::
 	ld	a, (hl)
 	dec	a
 	jr	NZ, 00108$
-;main.c:264: has_key = 1;
+;main.c:265: has_key = 1;
 	ld	hl, #_has_key
 	ld	(hl), #0x01
-;main.c:265: set_bkg_tiles(player_loc%20, player_loc/20, 1, 1, blankmap);
+;main.c:266: set_bkg_tiles(player_loc%20, player_loc/20, 1, 1, blankmap);
 	ld	hl, #_blankmap
 	push	hl
 	ld	hl, #0x0101
@@ -950,12 +969,12 @@ _special_tile::
 	push	bc
 	call	_set_bkg_tiles
 	add	sp, #6
-;main.c:266: rtn = 1;
+;main.c:267: rtn = 1;
 	ldhl	sp,	#0
 	ld	(hl), #0x01
 	jr	00109$
 00108$:
-;main.c:268: else if (player_loc == 168 && has_key){
+;main.c:269: else if (player_loc == 168 && has_key){
 	ldhl	sp,	#3
 	ld	a, (hl)
 	sub	a, #0xa8
@@ -965,10 +984,10 @@ _special_tile::
 	ld	a, (#_has_key)
 	or	a, a
 	jr	Z, 00104$
-;main.c:270: open_door = 1;
+;main.c:271: open_door = 1;
 	ld	hl, #_open_door
 	ld	(hl), #0x01
-;main.c:271: set_bkg_tiles(player_loc%20, player_loc/20, 1, 1, blankmap);
+;main.c:272: set_bkg_tiles(player_loc%20, player_loc/20, 1, 1, blankmap);
 	ld	hl, #_blankmap
 	push	hl
 	ld	hl, #0x0101
@@ -977,12 +996,12 @@ _special_tile::
 	push	bc
 	call	_set_bkg_tiles
 	add	sp, #6
-;main.c:272: rtn = 1;
+;main.c:273: rtn = 1;
 	ldhl	sp,	#0
 	ld	(hl), #0x01
 	jr	00109$
 00104$:
-;main.c:274: else if (player_loc == 358){
+;main.c:275: else if (player_loc == 358){
 	ldhl	sp,	#3
 	ld	a, (hl)
 	sub	a, #0x66
@@ -991,26 +1010,26 @@ _special_tile::
 	ld	a, (hl)
 	dec	a
 	jr	NZ, 00109$
-;main.c:276: game_running = 0;
+;main.c:277: game_running = 0;
 	ld	hl, #_game_running
 	ld	(hl), #0x00
-;main.c:277: HIDE_SPRITES;
+;main.c:278: HIDE_SPRITES;
 	ldh	a, (_LCDC_REG+0)
 	and	a, #0xfd
 	ldh	(_LCDC_REG+0),a
-;main.c:278: printf("\n \n \n \n \n \n \n \n \n      YOU WIN!!!!");
+;main.c:279: printf("\n \n \n \n \n \n \n \n \n      YOU WIN!!!!");
 	ld	hl, #___str_0
 	push	hl
 	call	_printf
 	add	sp, #2
-;main.c:279: rtn = 1;
+;main.c:280: rtn = 1;
 	ldhl	sp,	#0
 	ld	(hl), #0x01
 00109$:
-;main.c:281: return rtn;
+;main.c:282: return rtn;
 	ldhl	sp,	#0
 	ld	e, (hl)
-;main.c:282: }
+;main.c:283: }
 	inc	sp
 	ret
 ___str_0:
@@ -1033,13 +1052,77 @@ ___str_0:
 	.db 0x0a
 	.ascii "      YOU WIN!!!!"
 	.db 0x00
-;main.c:284: UINT8 can_player_move(UINT16 newplayerx, UINT16 newplayery){
+;main.c:285: UBYTE is_walkable(unsigned char tile){
+;	---------------------------------
+; Function is_walkable
+; ---------------------------------
+_is_walkable::
+	dec	sp
+;main.c:286: UBYTE rtn = 0;
+	xor	a, a
+	ldhl	sp,	#0
+	ld	(hl), a
+;main.c:287: for (int i=0;i<2;i++){
+	ld	bc, #0x0000
+00105$:
+	ld	a, c
+	sub	a, #0x02
+	ld	a, b
+	rla
+	ccf
+	rra
+	sbc	a, #0x80
+	jr	NC, 00103$
+;main.c:288: if (tile == blankmap[i]){
+	ld	hl, #_blankmap
+	add	hl, bc
+	ld	e, (hl)
+	ldhl	sp,	#3
+	ld	a, (hl)
+	sub	a, e
+	jr	NZ, 00106$
+;main.c:289: rtn = 1;
+	ldhl	sp,	#0
+	ld	(hl), #0x01
+00106$:
+;main.c:287: for (int i=0;i<2;i++){
+	inc	bc
+	jr	00105$
+00103$:
+;main.c:292: return rtn;
+	ldhl	sp,	#0
+	ld	e, (hl)
+;main.c:293: }
+	inc	sp
+	ret
+;main.c:295: UINT8 can_player_move(UINT16 newplayerx, UINT16 newplayery, unsigned char *bk_col, unsigned int MapHeight, unsigned int MapWidth){
 ;	---------------------------------
 ; Function can_player_move
 ; ---------------------------------
 _can_player_move::
-	add	sp, #-6
-;main.c:288: indexTLx = (newplayerx/8)%BackgroundMapWidth;
+	add	sp, #-4
+;main.c:299: indexTLx = (newplayerx/8)%MapWidth;
+	ldhl	sp,#6
+	ld	a, (hl+)
+	ld	e, a
+	ld	d, (hl)
+	srl	d
+	rr	e
+	srl	d
+	rr	e
+	srl	d
+	rr	e
+	ldhl	sp,	#14
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	push	hl
+	push	de
+	call	__moduint
+	add	sp, #4
+	ld	c, e
+	ld	b, d
+;main.c:300: indexTLy = newplayery/8;
 	ldhl	sp,#8
 	ld	a, (hl+)
 	ld	e, a
@@ -1050,158 +1133,175 @@ _can_player_move::
 	rr	e
 	srl	d
 	rr	e
-	ld	hl, #0x0028
-	push	hl
+;main.c:302: tileindexTL = MapWidth*indexTLy + indexTLx; // x_width * y_index + x_index
+	push	bc
 	push	de
-	call	__moduint
+	ldhl	sp,	#18
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	push	hl
+	call	__mulint
 	add	sp, #4
-	ldhl	sp,	#4
+	pop	bc
 	ld	a, e
-	ld	(hl+), a
-	ld	(hl), d
-;main.c:289: indexTLy = newplayery/8;
-	ldhl	sp,#10
-	ld	a, (hl+)
+	add	a, c
 	ld	c, a
-	ld	b, (hl)
-	srl	b
-	rr	c
-	srl	b
-	rr	c
-	srl	b
-	rr	c
-;main.c:291: tileindexTL = BackgroundMapWidth*indexTLy + indexTLx; // x_width * y_index + x_index
-	ld	l, c
-	ld	h, b
-	add	hl, hl
-	add	hl, hl
-	add	hl, bc
-	add	hl, hl
-	add	hl, hl
-	add	hl, hl
-	ld	c, l
-	ld	b, h
-	ldhl	sp,	#4
-	ld	a, (hl+)
-	ld	h, (hl)
-	ld	l, a
-	add	hl, bc
-	ld	c, l
-	ld	b, h
-	ldhl	sp,	#4
-	ld	a, c
-	ld	(hl+), a
-	ld	(hl), b
-;main.c:293: result = 0; //special_tile(tileindexTL);
-	xor	a, a
-	ldhl	sp,	#2
-	ld	(hl), a
-;main.c:294: if (BackgroundMapPLN0[tileindexTL] == blankmap[0] && BackgroundMapPLN0[tileindexTL - 1] == blankmap[0]){
+	ld	a, d
+	adc	a, b
+	ld	b, a
+	inc	sp
+	inc	sp
+	push	bc
+;main.c:304: result = 0; //special_tile(tileindexTL);
+	ld	c, #0x00
+;main.c:305: if (is_walkable(bk_col[tileindexTL]) && is_walkable(bk_col[tileindexTL - 1])){
 ;c
-	ld	de, #_BackgroundMapPLN0
-	inc	hl
-	inc	hl
-	ld	a, (hl+)
-	ld	h, (hl)
-	ld	l, a
-	add	hl, de
-	ld	c, (hl)
-	ld	a, (#_blankmap + 0)
-	ldhl	sp,	#3
-	ld	(hl), a
-	ldhl	sp,	#3
-	ld	a, (hl)
-	sub	a, c
-	jr	NZ, 00102$
-	ldhl	sp,#4
+	ldhl	sp,#10
 	ld	a, (hl+)
 	ld	e, a
 	ld	d, (hl)
+	pop	hl
+	push	hl
+	add	hl, de
+	ld	e, l
+	ld	d, h
+	ld	a, (de)
+	push	bc
+	push	af
+	inc	sp
+	call	_is_walkable
+	inc	sp
+	ld	a, e
+	pop	bc
+	or	a, a
+	jr	Z, 00102$
+	pop	de
+	push	de
 	ld	hl, #0x0001
 	ld	a, e
 	sub	a, l
 	ld	e, a
 	ld	a, d
 	sbc	a, h
-	ldhl	sp,	#1
+	ldhl	sp,	#3
 	ld	(hl-), a
-	ld	(hl), e
 ;c
-	pop	de
-	push	de
-	ld	hl, #_BackgroundMapPLN0
-	add	hl, de
-	push	hl
-	ld	a, l
-	ldhl	sp,	#6
-	ld	(hl), a
-	pop	hl
-	ld	a, h
-	ldhl	sp,	#5
-	ld	(hl-), a
+	ld	a, e
+	ld	(hl+), a
+	dec	hl
 	ld	a, (hl+)
 	ld	e, a
 	ld	d, (hl)
-	ld	a, (de)
-	ld	(hl-), a
-	dec	hl
-	ld	a, (hl+)
-	inc	hl
-	sub	a, (hl)
-	jr	NZ, 00102$
-;main.c:295: result = 1;
-	ldhl	sp,	#2
-	ld	(hl), #0x01
-00102$:
-;main.c:297: if (newplayery < 16 || newplayery > 8 + BackgroundMapHeight*8){
 	ldhl	sp,	#10
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	add	hl, de
+	ld	e, l
+	ld	d, h
+	ld	a, (de)
+	push	bc
+	push	af
+	inc	sp
+	call	_is_walkable
+	inc	sp
+	ld	a, e
+	pop	bc
+	or	a, a
+	jr	Z, 00102$
+;main.c:306: result = 1;
+	ld	c, #0x01
+00102$:
+;main.c:308: if (newplayery < 16 || newplayery > 8 + MapHeight*8){
+	ldhl	sp,	#8
 	ld	a, (hl)
 	sub	a, #0x10
 	inc	hl
 	ld	a, (hl)
 	sbc	a, #0x00
 	jr	C, 00104$
-	ldhl	sp,	#10
-	ld	a, #0xa8
+	ldhl	sp,	#12
+	ld	a, (hl+)
+	ld	b, (hl)
+	add	a, a
+	rl	b
+	add	a, a
+	rl	b
+	add	a, a
+	rl	b
+	add	a, #0x08
+	ld	e, a
+	jr	NC, 00133$
+	inc	b
+00133$:
+	ldhl	sp,	#8
+	ld	a, e
 	sub	a, (hl)
 	inc	hl
-	ld	a, #0x00
+	ld	a, b
 	sbc	a, (hl)
 	jr	NC, 00105$
 00104$:
-;main.c:298: result = 0;
-	xor	a, a
-	ldhl	sp,	#2
-	ld	(hl), a
+;main.c:309: result = 0;
+	ld	c, #0x00
 00105$:
-;main.c:301: return result;
-	ldhl	sp,	#2
+;main.c:311: if (newplayerx < 8 || newplayerx > MapWidth*8){
+	ldhl	sp,	#6
+	ld	a, (hl)
+	sub	a, #0x08
+	inc	hl
+	ld	a, (hl)
+	sbc	a, #0x00
+	jr	C, 00107$
+	ldhl	sp,	#14
+	ld	a, (hl+)
+	ld	b, a
 	ld	e, (hl)
-;main.c:302: }
-	add	sp, #6
+	sla	b
+	rl	e
+	sla	b
+	rl	e
+	sla	b
+	rl	e
+	ldhl	sp,	#6
+	ld	a, b
+	sub	a, (hl)
+	inc	hl
+	ld	a, e
+	sbc	a, (hl)
+	jr	NC, 00108$
+00107$:
+;main.c:312: result = 0;
+	ld	c, #0x00
+00108$:
+;main.c:315: return result;
+	ld	e, c
+;main.c:316: }
+	add	sp, #4
 	ret
-;main.c:304: void walk_without_background_movement(INT8 move_x, INT8 move_y, UINT8 *step){
+;main.c:318: void walk_without_background_movement(INT8 move_x, INT8 move_y, UINT8 *step){
 ;	---------------------------------
 ; Function walk_without_background_movement
 ; ---------------------------------
 _walk_without_background_movement::
 	add	sp, #-3
-;main.c:305: while(move_x != 0){
+;main.c:319: while(move_x != 0){
 00104$:
-;main.c:306: bit.x += (move_x > 0 ? 2 : -2);
-;main.c:308: *step = (move_x > 0 ? setbit_right(*step) : setbit_left(*step));
+;main.c:320: bit.x += (move_x > 0 ? 2 : -2);
+;main.c:322: *step = (move_x > 0 ? setbit_right(*step) : setbit_left(*step));
 	ldhl	sp,	#7
 	ld	a, (hl+)
 	ld	e, (hl)
 	ldhl	sp,	#0
 	ld	(hl+), a
 	ld	(hl), e
-;main.c:305: while(move_x != 0){
+;main.c:319: while(move_x != 0){
 	ldhl	sp,	#5
 	ld	a, (hl)
 	or	a, a
 	jp	Z, 00140$
-;main.c:306: bit.x += (move_x > 0 ? 2 : -2);
+;main.c:320: bit.x += (move_x > 0 ? 2 : -2);
 	ld	hl, #(_bit + 0x0006)
 	ld	c, (hl)
 	ldhl	sp,	#5
@@ -1234,7 +1334,7 @@ _walk_without_background_movement::
 	ld	a, e
 	add	a, c
 	ld	(#(_bit + 0x0006)),a
-;main.c:307: if (move_x % 4 == 0 && move_x != 0){
+;main.c:321: if (move_x % 4 == 0 && move_x != 0){
 	ldhl	sp,	#5
 	ld	a, (hl)
 	ld	c, a
@@ -1253,7 +1353,7 @@ _walk_without_background_movement::
 	ld	a, (hl)
 	or	a, a
 	jr	Z, 00102$
-;main.c:308: *step = (move_x > 0 ? setbit_right(*step) : setbit_left(*step));
+;main.c:322: *step = (move_x > 0 ? setbit_right(*step) : setbit_left(*step));
 	pop	de
 	push	de
 	ld	a, (de)
@@ -1279,7 +1379,7 @@ _walk_without_background_movement::
 	push	hl
 	ld	(hl), a
 00102$:
-;main.c:310: move_x += (move_x > 0 ? -2 : 2);
+;main.c:324: move_x += (move_x > 0 ? -2 : 2);
 	ldhl	sp,	#2
 	ld	a, (hl)
 	or	a, a
@@ -1293,7 +1393,7 @@ _walk_without_background_movement::
 	ldhl	sp,	#5
 	add	a, (hl)
 	ld	(hl), a
-;main.c:311: movegamecharacter(&bit, bit.x, bit.y);
+;main.c:325: movegamecharacter(&bit, bit.x, bit.y);
 	ld	hl, #(_bit + 0x0007)
 	ld	b, (hl)
 	ld	a, (#(_bit + 0x0006) + 0)
@@ -1305,21 +1405,21 @@ _walk_without_background_movement::
 	push	hl
 	call	_movegamecharacter
 	add	sp, #4
-;main.c:312: performantdelay(2);
+;main.c:326: performantdelay(2);
 	ld	a, #0x02
 	push	af
 	inc	sp
 	call	_performantdelay
 	inc	sp
 	jp	00104$
-;main.c:314: while (move_y != 0){
+;main.c:328: while (move_y != 0){
 00140$:
 00110$:
 	ldhl	sp,	#6
 	ld	a, (hl)
 	or	a, a
 	jp	Z, 00113$
-;main.c:315: bit.y += (move_y > 0 ? 2 : -2);
+;main.c:329: bit.y += (move_y > 0 ? 2 : -2);
 	ld	hl, #(_bit + 0x0007)
 	ld	b, (hl)
 	ldhl	sp,	#6
@@ -1351,7 +1451,7 @@ _walk_without_background_movement::
 	ld	a, b
 	add	a, e
 	ld	(#(_bit + 0x0007)),a
-;main.c:316: if (move_y % 4 == 0 && move_y != 0){
+;main.c:330: if (move_y % 4 == 0 && move_y != 0){
 	ldhl	sp,	#6
 	ld	a, (hl)
 	ld	e, a
@@ -1372,12 +1472,12 @@ _walk_without_background_movement::
 	ld	a, (hl)
 	or	a, a
 	jr	Z, 00108$
-;main.c:308: *step = (move_x > 0 ? setbit_right(*step) : setbit_left(*step));
+;main.c:322: *step = (move_x > 0 ? setbit_right(*step) : setbit_left(*step));
 	pop	de
 	push	de
 	ld	a, (de)
 	ld	b, a
-;main.c:317: *step = (move_y >  0 ? setbit_forward(*step) : setbit_backward(*step));
+;main.c:331: *step = (move_y >  0 ? setbit_forward(*step) : setbit_backward(*step));
 	ld	a, c
 	or	a, a
 	jr	Z, 00123$
@@ -1402,7 +1502,7 @@ _walk_without_background_movement::
 	push	hl
 	ld	(hl), a
 00108$:
-;main.c:319: move_y += (move_y > 0 ? -2 : 2);
+;main.c:333: move_y += (move_y > 0 ? -2 : 2);
 	ld	a, c
 	or	a, a
 	jr	Z, 00125$
@@ -1415,7 +1515,7 @@ _walk_without_background_movement::
 	ldhl	sp,	#6
 	add	a, (hl)
 	ld	(hl), a
-;main.c:320: movegamecharacter(&bit, bit.x, bit.y);
+;main.c:334: movegamecharacter(&bit, bit.x, bit.y);
 	ld	a, (#(_bit + 0x0007) + 0)
 	ld	hl, #(_bit + 0x0006)
 	ld	b, (hl)
@@ -1427,7 +1527,7 @@ _walk_without_background_movement::
 	push	hl
 	call	_movegamecharacter
 	add	sp, #4
-;main.c:321: performantdelay(2);
+;main.c:335: performantdelay(2);
 	ld	a, #0x02
 	push	af
 	inc	sp
@@ -1435,22 +1535,22 @@ _walk_without_background_movement::
 	inc	sp
 	jp	00110$
 00113$:
-;main.c:323: }
+;main.c:337: }
 	add	sp, #3
 	ret
-;main.c:325: void walk_background_movement(INT8 move_x, INT8 move_y, UINT8 *step){
+;main.c:339: void walk_background_movement(INT8 move_x, INT8 move_y, UINT8 *step){
 ;	---------------------------------
 ; Function walk_background_movement
 ; ---------------------------------
 _walk_background_movement::
 	dec	sp
-;main.c:326: while(move_x != 0){
+;main.c:340: while(move_x != 0){
 00104$:
 	ldhl	sp,	#3
 	ld	a, (hl)
 	or	a, a
 	jp	Z, 00110$
-;main.c:327: scroll_bkg(move_x < 0 ? -2 : 2, 0);
+;main.c:341: scroll_bkg(move_x < 0 ? -2 : 2, 0);
 	bit	7, (hl)
 	jr	Z, 00117$
 	ld	bc, #0xfffe
@@ -1462,7 +1562,7 @@ _walk_background_movement::
 	ldh	a, (_SCX_REG+0)
 	add	a, c
 	ldh	(_SCX_REG+0),a
-;main.c:328: if (move_x % 4 == 0 && move_x != 0){
+;main.c:342: if (move_x % 4 == 0 && move_x != 0){
 	ldhl	sp,	#3
 	ld	a, (hl)
 	ld	c, a
@@ -1472,7 +1572,7 @@ _walk_background_movement::
 	ld	hl, #0x0004
 	push	hl
 	push	bc
-;main.c:329: *step = (move_x > 0 ? setbit_right(*step) : setbit_left(*step));
+;main.c:343: *step = (move_x > 0 ? setbit_right(*step) : setbit_left(*step));
 	call	__modsint
 	add	sp, #4
 	ld	c, e
@@ -1497,7 +1597,7 @@ _walk_background_movement::
 	rla
 	ldhl	sp,	#0
 	ld	(hl), a
-;main.c:328: if (move_x % 4 == 0 && move_x != 0){
+;main.c:342: if (move_x % 4 == 0 && move_x != 0){
 	ld	a, b
 	or	a, c
 	jr	NZ, 00102$
@@ -1505,7 +1605,7 @@ _walk_background_movement::
 	ld	a, (hl)
 	or	a, a
 	jr	Z, 00102$
-;main.c:329: *step = (move_x > 0 ? setbit_right(*step) : setbit_left(*step));
+;main.c:343: *step = (move_x > 0 ? setbit_right(*step) : setbit_left(*step));
 	ldhl	sp,#5
 	ld	a, (hl+)
 	ld	c, a
@@ -1534,7 +1634,7 @@ _walk_background_movement::
 	ld	a, e
 	ld	(bc), a
 00102$:
-;main.c:331: move_x += (move_x > 0 ? -2 : 2);
+;main.c:345: move_x += (move_x > 0 ? -2 : 2);
 	ldhl	sp,	#0
 	ld	a, (hl)
 	or	a, a
@@ -1548,20 +1648,20 @@ _walk_background_movement::
 	ldhl	sp,	#3
 	add	a, (hl)
 	ld	(hl), a
-;main.c:332: performantdelay(2);
+;main.c:346: performantdelay(2);
 	ld	a, #0x02
 	push	af
 	inc	sp
 	call	_performantdelay
 	inc	sp
 	jp	00104$
-;main.c:334: while (move_y != 0){
+;main.c:348: while (move_y != 0){
 00110$:
 	ldhl	sp,	#4
 	ld	a, (hl)
 	or	a, a
 	jp	Z, 00115$
-;main.c:335: scroll_bkg(0, move_y < 0 ? -2 : 2);
+;main.c:349: scroll_bkg(0, move_y < 0 ? -2 : 2);
 	bit	7, (hl)
 	jr	Z, 00123$
 	ld	bc, #0xfffe
@@ -1573,7 +1673,7 @@ _walk_background_movement::
 	ldh	a, (_SCY_REG+0)
 	add	a, c
 	ldh	(_SCY_REG+0),a
-;main.c:336: if (move_y % 4 == 0 && move_y != 0){
+;main.c:350: if (move_y % 4 == 0 && move_y != 0){
 	ldhl	sp,	#4
 	ld	a, (hl)
 	ld	c, a
@@ -1583,7 +1683,7 @@ _walk_background_movement::
 	ld	hl, #0x0004
 	push	hl
 	push	bc
-;main.c:337: *step = (move_y >  0 ? setbit_forward(*step) : setbit_backward(*step));
+;main.c:351: *step = (move_y >  0 ? setbit_forward(*step) : setbit_backward(*step));
 	call	__modsint
 	add	sp, #4
 	ld	c, e
@@ -1608,7 +1708,7 @@ _walk_background_movement::
 	rla
 	ldhl	sp,	#0
 	ld	(hl), a
-;main.c:336: if (move_y % 4 == 0 && move_y != 0){
+;main.c:350: if (move_y % 4 == 0 && move_y != 0){
 	ld	a, b
 	or	a, c
 	jr	NZ, 00108$
@@ -1616,7 +1716,7 @@ _walk_background_movement::
 	ld	a, (hl)
 	or	a, a
 	jr	Z, 00108$
-;main.c:337: *step = (move_y >  0 ? setbit_forward(*step) : setbit_backward(*step));
+;main.c:351: *step = (move_y >  0 ? setbit_forward(*step) : setbit_backward(*step));
 	inc	hl
 	ld	a, (hl+)
 	ld	c, a
@@ -1645,7 +1745,7 @@ _walk_background_movement::
 	ld	a, e
 	ld	(bc), a
 00108$:
-;main.c:339: move_y += (move_y > 0 ? -2 : 2);
+;main.c:353: move_y += (move_y > 0 ? -2 : 2);
 	ldhl	sp,	#0
 	ld	a, (hl)
 	or	a, a
@@ -1659,7 +1759,7 @@ _walk_background_movement::
 	ldhl	sp,	#4
 	add	a, (hl)
 	ld	(hl), a
-;main.c:340: performantdelay(2);
+;main.c:354: performantdelay(2);
 	ld	a, #0x02
 	push	af
 	inc	sp
@@ -1667,53 +1767,91 @@ _walk_background_movement::
 	inc	sp
 	jp	00110$
 00115$:
-;main.c:342: }
+;main.c:356: }
 	inc	sp
 	ret
-;main.c:344: void move(UINT8 *step, UINT16 *player_loc_x, UINT16 *player_loc_y){
+;main.c:358: void move(UINT8 *step, UINT16 *player_loc_x, UINT16 *player_loc_y, unsigned char *bk_col, unsigned int MapHeight, unsigned int MapWidth){
 ;	---------------------------------
 ; Function move
 ; ---------------------------------
 _move::
-	add	sp, #-6
-;main.c:346: switch (joypad())
+	add	sp, #-10
+;main.c:360: switch (joypad())
 	call	_joypad
-	ld	c, e
-;main.c:349: if (can_player_move(*player_loc_x - tile, *player_loc_y)){
-	ldhl	sp,	#12
+	push	hl
+	ldhl	sp,	#3
+	ld	(hl), e
+	pop	hl
+;main.c:363: if (can_player_move(*player_loc_x - tile, *player_loc_y, bk_col, MapHeight, MapWidth)){
+	ldhl	sp,	#16
 	ld	a, (hl+)
 	ld	e, (hl)
 	ldhl	sp,	#2
 	ld	(hl+), a
 	ld	(hl), e
-	ldhl	sp,	#10
+	ldhl	sp,	#14
+	ld	a, (hl+)
+	ld	e, (hl)
+	ldhl	sp,	#8
+	ld	(hl+), a
+	ld	(hl), e
+;main.c:364: if (*player_loc_x < 96 || *player_loc_x > MapWidth*8 - 80){
+	ldhl	sp,	#22
+	ld	a, (hl)
+	ldhl	sp,	#6
+	ld	(hl), a
+	ldhl	sp,	#23
+	ld	a, (hl)
+	ldhl	sp,	#7
+	ld	(hl), a
+	ld	a, #0x03
+00195$:
+	ldhl	sp,	#6
+	sla	(hl)
+	inc	hl
+	rl	(hl)
+	dec	a
+	jr	NZ, 00195$
+;main.c:373: *step = setbit_left(*step);
+	ldhl	sp,	#12
 	ld	a, (hl+)
 	ld	e, (hl)
 	ldhl	sp,	#4
 	ld	(hl+), a
 	ld	(hl), e
-;main.c:354: *step = setbit_left(*step);
-	ldhl	sp,	#8
-	ld	a, (hl+)
-	ld	e, (hl)
-	ldhl	sp,	#0
-	ld	(hl+), a
-	ld	(hl), e
-;main.c:346: switch (joypad())
-	ld	a, c
+;main.c:360: switch (joypad())
+	ldhl	sp,	#1
+	ld	a, (hl)
 	dec	a
-	jr	Z, 00105$
-	ld	a,c
-	cp	a,#0x02
-	jr	Z, 00101$
-	cp	a,#0x04
 	jp	Z,00109$
+	ldhl	sp,	#1
+	ld	a, (hl)
+	sub	a, #0x02
+	jr	Z, 00101$
+;main.c:394: if (*player_loc_y < 96 || *player_loc_y > MapHeight*8 - 56){
+	ldhl	sp,#20
+	ld	a, (hl+)
+	ld	c, a
+	ld	b, (hl)
+	sla	c
+	rl	b
+	sla	c
+	rl	b
+	sla	c
+	rl	b
+;main.c:360: switch (joypad())
+	ldhl	sp,	#1
+	ld	a, (hl)
+	sub	a, #0x04
+	jp	Z,00117$
+	ldhl	sp,	#1
+	ld	a, (hl)
 	sub	a, #0x08
-	jp	Z,00116$
-	jp	00125$
-;main.c:348: case (J_LEFT):
+	jp	Z,00124$
+	jp	00133$
+;main.c:362: case (J_LEFT):
 00101$:
-;main.c:349: if (can_player_move(*player_loc_x - tile, *player_loc_y)){
+;main.c:363: if (can_player_move(*player_loc_x - tile, *player_loc_y, bk_col, MapHeight, MapWidth)){
 	ldhl	sp,#2
 	ld	a, (hl+)
 	ld	e, a
@@ -1723,7 +1861,7 @@ _move::
 	inc	de
 	ld	a, (de)
 	ld	b, a
-	inc	hl
+	ldhl	sp,#8
 	ld	a, (hl+)
 	ld	e, a
 	ld	d, (hl)
@@ -1736,15 +1874,81 @@ _move::
 	add	hl, de
 	ld	e, l
 	ld	d, h
+	ldhl	sp,	#22
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	push	hl
+	ldhl	sp,	#22
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	push	hl
+	ldhl	sp,	#22
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	push	hl
 	push	bc
 	push	de
 	call	_can_player_move
-	add	sp, #4
+	add	sp, #10
 	ld	a, e
 	or	a, a
-	jr	Z, 00103$
-;main.c:350: walk_background_movement(-1*tile, 0, step);
-	ldhl	sp,	#8
+	jr	Z, 00107$
+;main.c:364: if (*player_loc_x < 96 || *player_loc_x > MapWidth*8 - 80){
+	ldhl	sp,#8
+	ld	a, (hl+)
+	ld	e, a
+	ld	d, (hl)
+	ld	a, (de)
+	ld	c, a
+	inc	de
+	ld	a, (de)
+	ld	b, a
+	ld	a, c
+	sub	a, #0x60
+	ld	a, b
+	sbc	a, #0x00
+	jr	C, 00102$
+	dec	hl
+	dec	hl
+	dec	hl
+	ld	a, (hl+)
+	ld	e, a
+	ld	d, (hl)
+	ld	hl, #0x0050
+	ld	a, e
+	sub	a, l
+	ld	e, a
+	ld	a, d
+	sbc	a, h
+	ldhl	sp,	#5
+	ld	(hl-), a
+	ld	(hl), e
+	ld	a, (hl)
+	sub	a, c
+	inc	hl
+	ld	a, (hl)
+	sbc	a, b
+	jr	NC, 00103$
+00102$:
+;main.c:365: walk_without_background_movement(-1*tile, 0, step);
+	ldhl	sp,	#12
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	push	hl
+	xor	a, a
+	ld	d,a
+	ld	e,#0xf8
+	push	de
+	call	_walk_without_background_movement
+	add	sp, #4
+	jr	00104$
+00103$:
+;main.c:368: walk_background_movement(-1*tile, 0, step);
+	ldhl	sp,	#12
 	ld	a, (hl+)
 	ld	h, (hl)
 	ld	l, a
@@ -1755,8 +1959,9 @@ _move::
 	push	de
 	call	_walk_background_movement
 	add	sp, #4
-;main.c:351: *player_loc_x -= tile;
-	ldhl	sp,#4
+00104$:
+;main.c:370: *player_loc_x -= tile;
+	ldhl	sp,#8
 	ld	a, (hl+)
 	ld	e, a
 	ld	d, (hl)
@@ -1778,25 +1983,29 @@ _move::
 	ld	a, c
 	ld	(hl+), a
 	ld	(hl), b
-	jp	00125$
-00103$:
-;main.c:354: *step = setbit_left(*step);
-	pop	de
-	push	de
+	jp	00133$
+00107$:
+;main.c:373: *step = setbit_left(*step);
+	ldhl	sp,#4
+	ld	a, (hl+)
+	ld	e, a
+	ld	d, (hl)
 	ld	a, (de)
 	push	af
 	inc	sp
 	call	_setbit_left
 	inc	sp
 	ld	c, e
-	pop	hl
-	push	hl
+	ldhl	sp,	#4
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
 	ld	(hl), c
-;main.c:356: break;
-	jp	00125$
-;main.c:358: case (J_RIGHT):
-00105$:
-;main.c:359: if (can_player_move(*player_loc_x + tile, *player_loc_y)){
+;main.c:375: break;
+	jp	00133$
+;main.c:377: case (J_RIGHT):
+00109$:
+;main.c:378: if (can_player_move(*player_loc_x + tile, *player_loc_y, bk_col, MapHeight, MapWidth)){
 	ldhl	sp,#2
 	ld	a, (hl+)
 	ld	e, a
@@ -1806,7 +2015,7 @@ _move::
 	inc	de
 	ld	a, (de)
 	ld	b, a
-	inc	hl
+	ldhl	sp,#8
 	ld	a, (hl+)
 	ld	e, a
 	ld	d, (hl)
@@ -1817,255 +2026,32 @@ _move::
 	ld	h, a
 	ld	de, #0x0008
 	add	hl, de
-	push	bc
-	push	hl
-	call	_can_player_move
-	add	sp, #4
-	ld	a, e
-	or	a, a
-	jr	Z, 00107$
-;main.c:360: walk_background_movement(tile, 0, step);
-	ldhl	sp,	#8
+	ld	e, l
+	ld	d, h
+	ldhl	sp,	#22
 	ld	a, (hl+)
 	ld	h, (hl)
 	ld	l, a
 	push	hl
-	xor	a, a
-	ld	d,a
-	ld	e,#0x08
-	push	de
-	call	_walk_background_movement
-	add	sp, #4
-;main.c:361: *player_loc_x += tile;
-	ldhl	sp,#4
-	ld	a, (hl+)
-	ld	e, a
-	ld	d, (hl)
-	ld	a, (de)
-	ld	b, a
-	inc	de
-	ld	a, (de)
-	ld	c, a
-	ld	a, b
-	add	a, #0x08
-	ld	b, a
-	jr	NC, 00181$
-	inc	c
-00181$:
-	dec	hl
+	ldhl	sp,	#22
 	ld	a, (hl+)
 	ld	h, (hl)
 	ld	l, a
-	ld	a, b
-	ld	(hl+), a
-	ld	(hl), c
-	jp	00125$
-00107$:
-;main.c:364: *step = setbit_right(*step);
-	pop	de
-	push	de
-	ld	a, (de)
-	push	af
-	inc	sp
-	call	_setbit_right
-	inc	sp
-	ld	c, e
-	pop	hl
 	push	hl
-	ld	(hl), c
-;main.c:366: break;
-	jp	00125$
-;main.c:368: case (J_UP):
-00109$:
-;main.c:369: if (can_player_move(*player_loc_x, *player_loc_y - tile)){
-	ldhl	sp,#2
+	ldhl	sp,	#22
 	ld	a, (hl+)
-	ld	e, a
-	ld	d, (hl)
-	ld	a, (de)
-	ld	c, a
-	inc	de
-	ld	a, (de)
-	ld	b, a
-	ld	a, c
-	add	a, #0xf8
-	ld	c, a
-	ld	a, b
-	adc	a, #0xff
-	ld	b, a
-	inc	hl
-	ld	a, (hl+)
-	ld	e, a
-	ld	d, (hl)
-	ld	a, (de)
+	ld	h, (hl)
 	ld	l, a
-	inc	de
-	ld	a, (de)
-	ld	h, a
-	push	bc
 	push	hl
+	push	bc
+	push	de
 	call	_can_player_move
-	add	sp, #4
+	add	sp, #10
 	ld	a, e
 	or	a, a
 	jr	Z, 00115$
-;main.c:370: if (*player_loc_y < 96 || *player_loc_y > BackgroundMapHeight*8 - 56){
-	ldhl	sp,#2
-	ld	a, (hl+)
-	ld	e, a
-	ld	d, (hl)
-	ld	a, (de)
-	inc	hl
-	ld	(hl+), a
-	inc	de
-	ld	a, (de)
-	ld	(hl-), a
-	ld	a, (hl)
-	sub	a, #0x60
-	inc	hl
-	ld	a, (hl)
-	sbc	a, #0x00
-	jr	C, 00110$
-	ldhl	sp,	#4
-	ld	a, #0x68
-	sub	a, (hl)
-	inc	hl
-	ld	a, #0x00
-	sbc	a, (hl)
-	jr	NC, 00111$
-00110$:
-;main.c:371: walk_without_background_movement(0, -1*tile, step);
-	ldhl	sp,	#8
-	ld	a, (hl+)
-	ld	h, (hl)
-	ld	l, a
-	push	hl
-	ld	a, #0xf8
-	push	af
-	inc	sp
-	xor	a, a
-	push	af
-	inc	sp
-	call	_walk_without_background_movement
-	add	sp, #4
-;main.c:372: *player_loc_y -= 8;
-	ldhl	sp,#2
-	ld	a, (hl+)
-	ld	e, a
-	ld	d, (hl)
-	ld	a, (de)
-	ld	c, a
-	inc	de
-	ld	a, (de)
-	ld	b, a
-	ld	a, c
-	add	a, #0xf8
-	ld	c, a
-	ld	a, b
-	adc	a, #0xff
-	ld	b, a
-	dec	hl
-	ld	a, (hl+)
-	ld	h, (hl)
-	ld	l, a
-	ld	a, c
-	ld	(hl+), a
-	ld	(hl), b
-	jr	00115$
-00111$:
-;main.c:375: walk_background_movement(0, -1*tile, step);
-	ldhl	sp,	#8
-	ld	a, (hl+)
-	ld	h, (hl)
-	ld	l, a
-	push	hl
-	ld	a, #0xf8
-	push	af
-	inc	sp
-	xor	a, a
-	push	af
-	inc	sp
-	call	_walk_background_movement
-	add	sp, #4
-;main.c:376: *player_loc_y -= 8;
-	ldhl	sp,#2
-	ld	a, (hl+)
-	ld	e, a
-	ld	d, (hl)
-	ld	a, (de)
-	ld	c, a
-	inc	de
-	ld	a, (de)
-	ld	b, a
-	ld	a, c
-	add	a, #0xf8
-	ld	c, a
-	ld	a, b
-	adc	a, #0xff
-	ld	b, a
-	dec	hl
-	ld	a, (hl+)
-	ld	h, (hl)
-	ld	l, a
-	ld	a, c
-	ld	(hl+), a
-	ld	(hl), b
-00115$:
-;main.c:379: *step = setbit_backward(*step);
-	pop	de
-	push	de
-	ld	a, (de)
-	push	af
-	inc	sp
-	call	_setbit_backward
-	inc	sp
-	ld	c, e
-	pop	hl
-	push	hl
-	ld	(hl), c
-;main.c:380: break;
-	jp	00125$
-;main.c:382: case (J_DOWN):
-00116$:
-;main.c:383: if (can_player_move(*player_loc_x, *player_loc_y + tile)){
-	ldhl	sp,#2
-	ld	a, (hl+)
-	ld	e, a
-	ld	d, (hl)
-	ld	a, (de)
-	ld	l, a
-	inc	de
-	ld	a, (de)
-	ld	b, a
-	ld	a, l
-	add	a, #0x08
-	ld	c, a
-	jr	NC, 00182$
-	inc	b
-00182$:
-	ldhl	sp,#4
-	ld	a, (hl+)
-	ld	e, a
-	ld	d, (hl)
-	ld	a, (de)
-	dec	hl
-	ld	(hl+), a
-	inc	de
-	ld	a, (de)
-	ld	(hl), a
-	push	bc
-	dec	hl
-	ld	a, (hl+)
-	ld	h, (hl)
-	ld	l, a
-	push	hl
-	call	_can_player_move
-	add	sp, #4
-	ld	a, e
-	or	a, a
-	jr	Z, 00122$
-;main.c:384: if (*player_loc_y < 88 || *player_loc_y > BackgroundMapHeight*8 - 64){
-	ldhl	sp,#2
+;main.c:379: if (*player_loc_x < 88 || *player_loc_x > MapWidth*8 - 88){
+	ldhl	sp,#8
 	ld	a, (hl+)
 	ld	e, a
 	ld	d, (hl)
@@ -2078,15 +2064,362 @@ _move::
 	sub	a, #0x58
 	ld	a, b
 	sbc	a, #0x00
-	jr	C, 00117$
-	ld	a, #0x60
-	cp	a, c
-	ld	a, #0x00
+	jr	C, 00110$
+	dec	hl
+	dec	hl
+	dec	hl
+	ld	a, (hl+)
+	ld	e, a
+	ld	d, (hl)
+	ld	hl, #0x0058
+	ld	a, e
+	sub	a, l
+	ld	e, a
+	ld	a, d
+	sbc	a, h
+	ldhl	sp,	#5
+	ld	(hl-), a
+	ld	(hl), e
+	ld	a, (hl)
+	sub	a, c
+	inc	hl
+	ld	a, (hl)
 	sbc	a, b
-	jr	NC, 00118$
+	jr	NC, 00111$
+00110$:
+;main.c:380: walk_without_background_movement(tile, 0, step);
+	ldhl	sp,	#12
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	push	hl
+	xor	a, a
+	ld	d,a
+	ld	e,#0x08
+	push	de
+	call	_walk_without_background_movement
+	add	sp, #4
+	jr	00112$
+00111$:
+;main.c:383: walk_background_movement(tile, 0, step);
+	ldhl	sp,	#12
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	push	hl
+	xor	a, a
+	ld	d,a
+	ld	e,#0x08
+	push	de
+	call	_walk_background_movement
+	add	sp, #4
+00112$:
+;main.c:385: *player_loc_x += tile;
+	ldhl	sp,#8
+	ld	a, (hl+)
+	ld	e, a
+	ld	d, (hl)
+	ld	a, (de)
+	ld	b, a
+	inc	de
+	ld	a, (de)
+	ld	c, a
+	ld	a, b
+	add	a, #0x08
+	ld	b, a
+	jr	NC, 00201$
+	inc	c
+00201$:
+	dec	hl
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	ld	a, b
+	ld	(hl+), a
+	ld	(hl), c
+	jp	00133$
+00115$:
+;main.c:388: *step = setbit_right(*step);
+	ldhl	sp,#4
+	ld	a, (hl+)
+	ld	e, a
+	ld	d, (hl)
+	ld	a, (de)
+	push	af
+	inc	sp
+	call	_setbit_right
+	inc	sp
+	ld	c, e
+	ldhl	sp,	#4
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	ld	(hl), c
+;main.c:390: break;
+	jp	00133$
+;main.c:392: case (J_UP):
 00117$:
-;main.c:385: walk_without_background_movement(0, tile, step);
+;main.c:393: if (can_player_move(*player_loc_x, *player_loc_y - tile, bk_col, MapHeight, MapWidth)){
+	ldhl	sp,#2
+	ld	a, (hl+)
+	ld	e, a
+	ld	d, (hl)
+	ld	a, (de)
+	ldhl	sp,	#0
+	ld	(hl+), a
+	inc	de
+	ld	a, (de)
+	ld	(hl), a
+	pop	de
+	push	de
+	ld	hl, #0x0008
+	ld	a, e
+	sub	a, l
+	ld	e, a
+	ld	a, d
+	sbc	a, h
+	ldhl	sp,	#7
+	ld	(hl-), a
+	ld	(hl), e
+	ldhl	sp,#8
+	ld	a, (hl+)
+	ld	e, a
+	ld	d, (hl)
+	ld	a, (de)
+	dec	hl
+	ld	(hl+), a
+	inc	de
+	ld	a, (de)
+	ld	(hl), a
+	push	bc
+	ldhl	sp,	#24
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	push	hl
+	ldhl	sp,	#24
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	push	hl
+	ldhl	sp,	#24
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	push	hl
+	ldhl	sp,	#14
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	push	hl
+	ldhl	sp,	#18
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	push	hl
+	call	_can_player_move
+	add	sp, #10
+	ld	a, e
+	pop	bc
+	or	a, a
+	jr	Z, 00123$
+;main.c:394: if (*player_loc_y < 96 || *player_loc_y > MapHeight*8 - 56){
+	ldhl	sp,#2
+	ld	a, (hl+)
+	ld	e, a
+	ld	d, (hl)
+	ld	a, (de)
+	ld	l, a
+	inc	de
+	ld	a, (de)
+	ld	h, a
+	ld	a, l
+	sub	a, #0x60
+	ld	a, h
+	sbc	a, #0x00
+	jr	C, 00118$
+	ld	a, c
+	add	a, #0xc8
+	ld	c, a
+	ld	a, b
+	adc	a, #0xff
+	ld	b, a
+	ld	a, c
+	sub	a, l
+	ld	a, b
+	sbc	a, h
+	jr	NC, 00119$
+00118$:
+;main.c:395: walk_without_background_movement(0, -1*tile, step);
+	ldhl	sp,	#12
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	push	hl
+	ld	a, #0xf8
+	push	af
+	inc	sp
+	xor	a, a
+	push	af
+	inc	sp
+	call	_walk_without_background_movement
+	add	sp, #4
+	jr	00120$
+00119$:
+;main.c:398: walk_background_movement(0, -1*tile, step);
+	ldhl	sp,	#12
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	push	hl
+	ld	a, #0xf8
+	push	af
+	inc	sp
+	xor	a, a
+	push	af
+	inc	sp
+	call	_walk_background_movement
+	add	sp, #4
+00120$:
+;main.c:400: *player_loc_y -= 8;
+	ldhl	sp,#2
+	ld	a, (hl+)
+	ld	e, a
+	ld	d, (hl)
+	ld	a, (de)
+	ld	c, a
+	inc	de
+	ld	a, (de)
+	ld	b, a
+	ld	a, c
+	add	a, #0xf8
+	ld	c, a
+	ld	a, b
+	adc	a, #0xff
+	ld	b, a
+	dec	hl
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	ld	a, c
+	ld	(hl+), a
+	ld	(hl), b
+00123$:
+;main.c:402: *step = setbit_backward(*step);
+	ldhl	sp,#4
+	ld	a, (hl+)
+	ld	e, a
+	ld	d, (hl)
+	ld	a, (de)
+	push	af
+	inc	sp
+	call	_setbit_backward
+	inc	sp
+	ld	c, e
+	ldhl	sp,	#4
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	ld	(hl), c
+;main.c:403: break;
+	jp	00133$
+;main.c:405: case (J_DOWN):
+00124$:
+;main.c:406: if (can_player_move(*player_loc_x, *player_loc_y + tile, bk_col, MapHeight, MapWidth)){
+	ldhl	sp,#2
+	ld	a, (hl+)
+	ld	e, a
+	ld	d, (hl)
+	ld	a, (de)
+	inc	hl
+	ld	(hl+), a
+	inc	de
+	ld	a, (de)
+;c
+	ld	(hl-), a
+	ld	a, (hl+)
+	ld	e, a
+	ld	d, (hl)
+	ld	hl, #0x0008
+	add	hl, de
+	push	hl
+	ld	a, l
 	ldhl	sp,	#8
+	ld	(hl), a
+	pop	hl
+	ld	a, h
+	ldhl	sp,	#7
+	ld	(hl+), a
+	ld	a, (hl+)
+	ld	e, a
+	ld	d, (hl)
+	ld	a, (de)
+	dec	hl
+	ld	(hl+), a
+	inc	de
+	ld	a, (de)
+	ld	(hl), a
+	push	bc
+	ldhl	sp,	#24
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	push	hl
+	ldhl	sp,	#24
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	push	hl
+	ldhl	sp,	#24
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	push	hl
+	ldhl	sp,	#14
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	push	hl
+	ldhl	sp,	#18
+	ld	a, (hl+)
+	ld	h, (hl)
+	ld	l, a
+	push	hl
+	call	_can_player_move
+	add	sp, #10
+	ld	a, e
+	pop	bc
+	or	a, a
+	jr	Z, 00130$
+;main.c:407: if (*player_loc_y < 88 || *player_loc_y > MapHeight*8 - 64){
+	ldhl	sp,#2
+	ld	a, (hl+)
+	ld	e, a
+	ld	d, (hl)
+	ld	a, (de)
+	ld	l, a
+	inc	de
+	ld	a, (de)
+	ld	h, a
+	ld	a, l
+	sub	a, #0x58
+	ld	a, h
+	sbc	a, #0x00
+	jr	C, 00125$
+	ld	a, c
+	add	a, #0xc0
+	ld	c, a
+	ld	a, b
+	adc	a, #0xff
+	ld	b, a
+	ld	a, c
+	sub	a, l
+	ld	a, b
+	sbc	a, h
+	jr	NC, 00126$
+00125$:
+;main.c:408: walk_without_background_movement(0, tile, step);
+	ldhl	sp,	#12
 	ld	a, (hl+)
 	ld	h, (hl)
 	ld	l, a
@@ -2099,31 +2432,10 @@ _move::
 	inc	sp
 	call	_walk_without_background_movement
 	add	sp, #4
-;main.c:386: *player_loc_y += 8;
-	ldhl	sp,#2
-	ld	a, (hl+)
-	ld	e, a
-	ld	d, (hl)
-	ld	a, (de)
-	ld	c, a
-	inc	de
-	ld	a, (de)
-	ld	b, a
-	ld	hl, #0x0008
-	add	hl, bc
-	ld	c, l
-	ld	b, h
-	ldhl	sp,	#2
-	ld	a, (hl+)
-	ld	h, (hl)
-	ld	l, a
-	ld	a, c
-	ld	(hl+), a
-	ld	(hl), b
-	jr	00122$
-00118$:
-;main.c:389: walk_background_movement(0, tile, step);
-	ldhl	sp,	#8
+	jr	00127$
+00126$:
+;main.c:411: walk_background_movement(0, tile, step);
+	ldhl	sp,	#12
 	ld	a, (hl+)
 	ld	h, (hl)
 	ld	l, a
@@ -2136,20 +2448,23 @@ _move::
 	inc	sp
 	call	_walk_background_movement
 	add	sp, #4
-;main.c:390: *player_loc_y += 8;
+00127$:
+;main.c:413: *player_loc_y += 8;
 	ldhl	sp,#2
 	ld	a, (hl+)
 	ld	e, a
 	ld	d, (hl)
 	ld	a, (de)
-	ld	c, a
+	ld	l, a
 	inc	de
 	ld	a, (de)
 	ld	b, a
-	ld	hl, #0x0008
-	add	hl, bc
-	ld	c, l
-	ld	b, h
+	ld	a, l
+	add	a, #0x08
+	ld	c, a
+	jr	NC, 00202$
+	inc	b
+00202$:
 	ldhl	sp,	#2
 	ld	a, (hl+)
 	ld	h, (hl)
@@ -2157,20 +2472,20 @@ _move::
 	ld	a, c
 	ld	(hl+), a
 	ld	(hl), b
-00122$:
-;main.c:393: reset_bit();
+00130$:
+;main.c:415: reset_bit();
 	call	_reset_bit
-;main.c:398: }
-00125$:
-;main.c:399: }
-	add	sp, #6
+;main.c:420: }
+00133$:
+;main.c:421: }
+	add	sp, #10
 	ret
-;main.c:401: void setup_map(UWORD *pallete, unsigned char *map_data, unsigned char *tiles_1, unsigned char *tiles_0, int character_x, int character_y, int data_size){
+;main.c:423: void setup_map(UWORD *pallete, unsigned char *map_data, unsigned char *tiles_1, unsigned char *tiles_0, int character_x, int character_y, int data_size, unsigned int MapHeight, unsigned int MapWidth){
 ;	---------------------------------
 ; Function setup_map
 ; ---------------------------------
 _setup_map::
-;main.c:403: set_bkg_palette(0, 8, pallete);
+;main.c:425: set_bkg_palette(0, 8, pallete);
 	pop	bc
 	pop	hl
 	push	hl
@@ -2184,7 +2499,7 @@ _setup_map::
 	inc	sp
 	call	_set_bkg_palette
 	add	sp, #4
-;main.c:404: set_bkg_data(0, data_size, map_data);
+;main.c:426: set_bkg_data(0, data_size, map_data);
 	ldhl	sp,	#14
 	ld	b, (hl)
 	ldhl	sp,	#4
@@ -2199,17 +2514,25 @@ _setup_map::
 	inc	sp
 	call	_set_bkg_data
 	add	sp, #4
-;main.c:405: VBK_REG = 1;
+;main.c:427: VBK_REG = 1;
 	ld	a, #0x01
 	ldh	(_VBK_REG+0),a
-;main.c:406: set_bkg_tiles(0, 0, BackgroundMapWidth, BackgroundMapHeight, tiles_1);
+;main.c:428: set_bkg_tiles(0, 0, MapWidth, MapHeight, tiles_1);
+	ldhl	sp,	#16
+	ld	a, (hl+)
+	ld	b, a
+	inc	hl
+	ld	c, (hl)
 	ldhl	sp,	#6
 	ld	a, (hl+)
 	ld	h, (hl)
 	ld	l, a
 	push	hl
-	ld	de, #0x1428
-	push	de
+	push	bc
+	inc	sp
+	ld	a, c
+	push	af
+	inc	sp
 	xor	a, a
 	push	af
 	inc	sp
@@ -2218,17 +2541,16 @@ _setup_map::
 	inc	sp
 	call	_set_bkg_tiles
 	add	sp, #6
-;main.c:407: VBK_REG = 0;
+;main.c:429: VBK_REG = 0;
 	ld	a, #0x00
 	ldh	(_VBK_REG+0),a
-;main.c:408: set_bkg_tiles(0, 0, BackgroundMapWidth, BackgroundMapHeight, tiles_0);
+;main.c:430: set_bkg_tiles(0, 0, MapWidth, MapHeight, tiles_0);
 	ldhl	sp,	#8
 	ld	a, (hl+)
 	ld	h, (hl)
 	ld	l, a
 	push	hl
-	ld	de, #0x1428
-	push	de
+	push	bc
 	xor	a, a
 	push	af
 	inc	sp
@@ -2237,11 +2559,11 @@ _setup_map::
 	inc	sp
 	call	_set_bkg_tiles
 	add	sp, #6
-;main.c:409: SHOW_BKG;
+;main.c:431: SHOW_BKG;
 	ldh	a, (_LCDC_REG+0)
 	or	a, #0x01
 	ldh	(_LCDC_REG+0),a
-;main.c:412: set_sprite_palette(0,8, &spritepalette[0]);
+;main.c:434: set_sprite_palette(0,8, &spritepalette[0]);
 	ld	hl, #_spritepalette
 	push	hl
 	ld	a, #0x08
@@ -2252,7 +2574,7 @@ _setup_map::
 	inc	sp
 	call	_set_sprite_palette
 	add	sp, #4
-;main.c:413: set_sprite_data(0, 43, GameSprites);
+;main.c:435: set_sprite_data(0, 43, GameSprites);
 	ld	hl, #_GameSprites
 	push	hl
 	ld	a, #0x2b
@@ -2263,7 +2585,7 @@ _setup_map::
 	inc	sp
 	call	_set_sprite_data
 	add	sp, #4
-;main.c:414: setupbit(character_x, character_y);
+;main.c:436: setupbit(character_x, character_y);
 	ldhl	sp,	#12
 	ld	a, (hl-)
 	ld	b, a
@@ -2275,7 +2597,7 @@ _setup_map::
 	inc	sp
 	call	_setupbit
 	add	sp, #2
-;main.c:415: player_location[0] = character_x;
+;main.c:437: player_location[0] = character_x;
 	ld	de, #_player_location
 	ldhl	sp,	#10
 	ld	a, (hl)
@@ -2284,7 +2606,7 @@ _setup_map::
 	inc	hl
 	ld	a, (hl)
 	ld	(de), a
-;main.c:416: player_location[1] = character_y;
+;main.c:438: player_location[1] = character_y;
 	ld	de, #(_player_location + 0x0002)
 	inc	hl
 	ld	a, (hl)
@@ -2293,70 +2615,82 @@ _setup_map::
 	inc	hl
 	ld	a, (hl)
 	ld	(de), a
-;main.c:417: SHOW_SPRITES;
+;main.c:439: SHOW_SPRITES;
 	ldh	a, (_LCDC_REG+0)
 	or	a, #0x02
 	ldh	(_LCDC_REG+0),a
-;main.c:418: DISPLAY_ON;
+;main.c:440: DISPLAY_ON;
 	ldh	a, (_LCDC_REG+0)
 	or	a, #0x80
 	ldh	(_LCDC_REG+0),a
-;main.c:419: }
+;main.c:441: }
 	ret
-;main.c:421: void main(){
+;main.c:443: void main(){
 ;	---------------------------------
 ; Function main
 ; ---------------------------------
 _main::
 	dec	sp
-;main.c:422: setup_map(backgroundpalette, BackgroundData, BackgroundMapPLN1, BackgroundMapPLN0, 88, 88, 14);
-	ld	hl, #0x000e
+;main.c:444: unsigned char* bk_collision = Lvl1BackgroundMapPLN0;
+;main.c:445: unsigned char* bk_tiles = Lvl1BackgroundMapPLN1;
+;main.c:449: setup_map(backgroundpalette, Lvl1BackgroundData, bk_tiles, bk_collision, 88, 88, 127, MapHeight, MapWidth);
+	ld	hl, #0x0017
+	push	hl
+	ld	l, #0x14
+	push	hl
+	ld	l, #0x7f
 	push	hl
 	ld	l, #0x58
 	push	hl
 	ld	l, #0x58
 	push	hl
-	ld	hl, #_BackgroundMapPLN0
+	ld	hl, #_Lvl1BackgroundMapPLN0
 	push	hl
-	ld	hl, #_BackgroundMapPLN1
+	ld	hl, #_Lvl1BackgroundMapPLN1
 	push	hl
-	ld	hl, #_BackgroundData
+	ld	hl, #_Lvl1BackgroundData
 	push	hl
 	ld	hl, #_backgroundpalette
 	push	hl
 	call	_setup_map
-	add	sp, #14
-;main.c:424: game_running = 1;
+	add	sp, #18
+;main.c:451: game_running = 1;
 	ld	hl, #_game_running
 	ld	(hl), #0x01
-;main.c:425: UINT8 step = 0;
+;main.c:452: UINT8 step = 0;
 	xor	a, a
 	ldhl	sp,	#0
 	ld	(hl), a
-;main.c:427: while(game_running){
+;main.c:454: while(game_running){
 00101$:
 	ld	a, (#_game_running)
 	or	a, a
 	jr	Z, 00104$
-;main.c:428: move(&step, &player_location[0], &player_location[1]);
+;main.c:455: move(&step, &player_location[0], &player_location[1], bk_collision, MapHeight, MapWidth);
 	ldhl	sp,	#0
 	ld	c, l
 	ld	b, h
+	ld	hl, #0x0017
+	push	hl
+	ld	l, #0x14
+	push	hl
+	ld	hl, #_Lvl1BackgroundMapPLN0
+	push	hl
 	ld	hl, #(_player_location + 0x0002)
 	push	hl
 	ld	hl, #_player_location
 	push	hl
 	push	bc
 	call	_move
-	add	sp, #6
-;main.c:429: delay(100);
+	add	sp, #12
+;main.c:456: delay(100);
 	ld	hl, #0x0064
 	push	hl
 	call	_delay
 	add	sp, #2
 	jr	00101$
 00104$:
-;main.c:431: }
+;main.c:460: }
 	inc	sp
 	ret
 	.area _CODE
