@@ -63,10 +63,10 @@
 #define NewBackgroundDataCGBPal1c3 0
 
 /* Gameboy Color palette 2 */
-#define NewBackgroundDataCGBPal2c0 11055
-#define NewBackgroundDataCGBPal2c1 1355
-#define NewBackgroundDataCGBPal2c2 5605
-#define NewBackgroundDataCGBPal2c3 480
+#define NewBackgroundDataCGBPal2c0 2452
+#define NewBackgroundDataCGBPal2c1 1329
+#define NewBackgroundDataCGBPal2c2 1441
+#define NewBackgroundDataCGBPal2c3 1345
 
 /* Gameboy Color palette 3 */
 #define NewBackgroundDataCGBPal3c0 11055
@@ -93,10 +93,10 @@
 #define NewBackgroundDataCGBPal6c3 1196
 
 /* Gameboy Color palette 7 */
-#define NewBackgroundDataCGBPal7c0 6076
-#define NewBackgroundDataCGBPal7c1 8935
-#define NewBackgroundDataCGBPal7c2 6596
-#define NewBackgroundDataCGBPal7c3 5344
+#define NewBackgroundDataCGBPal7c0 21140
+#define NewBackgroundDataCGBPal7c1 2688
+#define NewBackgroundDataCGBPal7c2 127
+#define NewBackgroundDataCGBPal7c3 28672
 /* CGBpalette entries. */
 extern unsigned char NewBackgroundDataCGB[];
 /* Start of tile array. */
