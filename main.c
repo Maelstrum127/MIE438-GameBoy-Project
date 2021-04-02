@@ -6,6 +6,13 @@
 #include "Final_Backgrounds/Lvl1BackgroundData.h"
 #include "GameCharacter.c"
 #include "GameSprites.h"
+// #include "Dialogue/letter2Data.c"
+// #include "Dialogue/test_dialogue.c"
+// #include "Dialogue/test2_dialogue.c"
+// #include "Dialogue/test3_dialogue.c"
+// #include "Splashscreens/intro1.c"
+// #include "Splashscreens/intro2.c"
+// #include "Splashscreens/intro3.c"
 
 const unsigned char blankmap[15] = {0x51, 0x52};
 UINT16 player_location[2];
@@ -440,12 +447,43 @@ void setup_map(UWORD *pallete, unsigned char *map_data, unsigned char *tiles_1, 
     DISPLAY_ON;
 }
 
+// void setup_splashscreen(){
+//     set_win_data(0,40,Letter2Data);
+//     set_win_tiles(0,0,Intro1MapWidth,Intro1MapHeight,Intro1Map);
+//     SHOW_WIN;
+//     DISPLAY_ON;
+//     waitpad(J_START);
+//     waitpadup(); 
+//     set_win_tiles(0,0,Intro2MapWidth,Intro2MapHeight,Intro2Map);
+//     waitpad(J_START);
+//     waitpadup(); 
+//     set_win_tiles(0,0,Intro3MapWidth,Intro3MapHeight,Intro3Map);
+//     waitpad(J_START);
+//     waitpadup(); 
+//     HIDE_WIN;
+// }
+
+// void setup_dialogue(){
+//     //set_win_data(0,40,Letter2Data);
+//     set_win_tiles(0,0,Test1Width,Test1Height,Test1);
+//     move_win(7, 120);
+//     SHOW_WIN;
+//     waitpad(J_START);
+//     waitpadup(); 
+//     set_win_tiles(0,0,Test2Width,Test2Height,Test2);
+//     move_win(7, 120);
+//     waitpad(J_START);
+//     waitpadup(); 
+//     set_win_tiles(0,0,Test3Width,Test3Height,Test3);
+//     move_win(7, 120);
+// }
+
 void main(){
     unsigned char* bk_collision = Lvl1BackgroundMapPLN0;
     unsigned char* bk_tiles = Lvl1BackgroundMapPLN1;
     unsigned int MapHeight = Lvl1BackgroundMapHeight;
     unsigned int MapWidth = Lvl1BackgroundMapWidth;
-
+    
     setup_map(backgroundpalette, Lvl1BackgroundData, bk_tiles, bk_collision, 88, 88, 127, MapHeight, MapWidth);
 
     game_running = 1;
@@ -455,4 +493,30 @@ void main(){
         move(&step, &player_location[0], &player_location[1], bk_collision, MapHeight, MapWidth);
         delay(100);
     }
+    /*
+    UINT8 state = 0;
+    UINT8 step = 0;
+    game_running = 1;
+
+    while(game_running){
+        switch(state){
+            case 0: 
+                setup_splashscreen();
+                setup_map(backgroundpalette, Lvl1BackgroundData, bk_tiles, bk_collision, 88, 88, 127, MapHeight, MapWidth);
+                state = 1;
+                break;
+            case 1:
+                move(&step, &player_location[0], &player_location[1], bk_collision, MapHeight, MapWidth);
+                if ((player_location[0] < 80 && player_location[0] > 60) && (player_location[1] < 100 && player_location[1] > 85)){
+                    state = 2;
+                } 
+                break;
+            case 2:
+                setup_dialogue();
+                break;
+        }
+        delay(100);
+    }
+    */
+
 }
