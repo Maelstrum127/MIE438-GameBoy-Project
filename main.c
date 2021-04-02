@@ -84,6 +84,48 @@ void movegamecharacter(struct GameCharacter* character, UINT8 x, UINT8 y){
     move_sprite(character->spriteids[5], x + spritesize, y + 2*spritesize);
 }
 
+void movegamecharacter_frog(struct GameCharacter_square* character, UINT8 x, UINT8 y){
+    move_sprite(character->spriteids[0], x, y);
+    move_sprite(character->spriteids[1], x + spritesize, y);
+    move_sprite(character->spriteids[2], x, y + spritesize);
+    move_sprite(character->spriteids[3], x + spritesize, y + spritesize);
+}
+
+void setupfrog(){
+    frog.x = 80;
+    frog.y = 80;
+    frog.height = 16;
+    frog.width = 16;
+
+    // load frog sprites
+    set_sprite_tile(6,42);
+    frog.spriteids[0] = 6;
+    set_sprite_prop(6,2);
+    set_sprite_tile(7,43);
+    frog.spriteids[1] = 7;
+    set_sprite_prop(7,2);
+    set_sprite_tile(8,44);
+    frog.spriteids[2] = 8;
+    set_sprite_prop(8,6);    
+    set_sprite_tile(9,45);
+    frog.spriteids[3] = 9;
+    set_sprite_prop(9,6);  
+
+    movegamecharacter_frog(&frog, frog.x, frog.y); 
+}
+
+UINT8 setfrog_bounce(UINT8 step){
+    if (step == 1){
+    set_sprite_tile(6,42);
+    set_sprite_tile(7,43);
+    }
+    if (step == 0){
+    set_sprite_tile(6,46);
+    set_sprite_tile(7,47);
+    }
+return (step + 1)%2; 
+}
+
 void setupbit(INT8 init_x, INT8 init_y){
     bit.x = init_x;
     bit.y = init_y;
@@ -434,6 +476,7 @@ void setup_map(UWORD *pallete, unsigned char *map_data, unsigned char *tiles_1, 
     set_sprite_palette(0,8, &spritepalette[0]);
     set_sprite_data(0, 43, GameSprites);
     setupbit(character_x, character_y);
+    setupfrog();
     player_location[0] = character_x;
     player_location[1] = character_y;
     SHOW_SPRITES;
@@ -445,7 +488,6 @@ void main(){
     unsigned char* bk_tiles = Lvl1BackgroundMapPLN1;
     unsigned int MapHeight = Lvl1BackgroundMapHeight;
     unsigned int MapWidth = Lvl1BackgroundMapWidth;
-
     setup_map(backgroundpalette, Lvl1BackgroundData, bk_tiles, bk_collision, 88, 88, 127, MapHeight, MapWidth);
 
     game_running = 1;
@@ -453,6 +495,7 @@ void main(){
 
     while(game_running){
         move(&step, &player_location[0], &player_location[1], bk_collision, MapHeight, MapWidth);
+        step = setfrog_bounce(step);
         delay(100);
     }
 }
