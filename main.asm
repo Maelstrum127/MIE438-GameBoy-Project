@@ -2690,7 +2690,7 @@ _main::
 	add	sp, #2
 	jr	00101$
 00104$:
-;main.c:460: }
+;main.c:458: }
 	inc	sp
 	ret
 	.area _CODE

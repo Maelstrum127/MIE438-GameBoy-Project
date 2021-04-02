@@ -2,8 +2,8 @@
 #include <gb/font.h>
 #include <stdio.h>
 #include <gb/cgb.h>
-#include "Lvl1BackgroundMap.h"
-#include "Lvl1BackgroundData.h"
+#include "Final_Backgrounds/Lvl1BackgroundMap.h"
+#include "Final_Backgrounds/Lvl1BackgroundData.h"
 #include "GameCharacter.c"
 #include "GameSprites.h"
 
