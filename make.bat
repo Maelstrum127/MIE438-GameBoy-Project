@@ -1,5 +1,4 @@
- 
-C:\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -c -o Lvl1BackgroundData.o Backgrounds/Lvl1BackgroundData.c 
+ C:\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -c -o Lvl1BackgroundData.o Backgrounds/Lvl1BackgroundData.c 
 C:\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -c -o Lvl1BackgroundMap.o Backgrounds/Lvl1BackgroundMap.c 
 C:\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -c -o GameSprites.o Sprites/GameSprites.c 
 C:\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -DUSE_SFR_FOR_REG -c -o main.o main.c

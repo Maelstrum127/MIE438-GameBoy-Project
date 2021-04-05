@@ -9,7 +9,6 @@
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _main
-	.globl _setup_dialogues
 	.globl _do_game_play
 	.globl _set_win_tiles
 	.globl _set_win_data
@@ -27,6 +26,7 @@
 	.globl _Intro1Map
 	.globl _setup_windows
 	.globl _setup_splashscreen
+	.globl _setup_dialogues
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -3190,14 +3190,14 @@ _Diag4::
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;main.c:29: void setup_windows(unsigned char *win_data, unsigned char *win_map, int data_size, unsigned int MapHeight, unsigned int MapWidth, unsigned int MapX, unsigned int MapY){
+;main.c:30: void setup_windows(unsigned char *win_data, unsigned char *win_map, int data_size, unsigned int MapHeight, unsigned int MapWidth, unsigned int MapX, unsigned int MapY){
 ;	---------------------------------
 ; Function setup_windows
 ; ---------------------------------
 _setup_windows::
-;main.c:30: DISPLAY_OFF;
+;main.c:31: DISPLAY_OFF;
 	call	_display_off
-;main.c:31: set_win_data(0,data_size,win_data);
+;main.c:32: set_win_data(0,data_size,win_data);
 	ldhl	sp,	#6
 	ld	a, (hl)
 	pop	bc
@@ -3212,7 +3212,7 @@ _setup_windows::
 	inc	sp
 	call	_set_win_data
 	add	sp, #4
-;main.c:32: set_win_tiles(0,0,MapWidth,MapHeight,win_map);
+;main.c:33: set_win_tiles(0,0,MapWidth,MapHeight,win_map);
 	ldhl	sp,	#8
 	ld	a, (hl+)
 	ld	d, a
@@ -3233,7 +3233,7 @@ _setup_windows::
 	inc	sp
 	call	_set_win_tiles
 	add	sp, #6
-;main.c:33: move_win(MapX, MapY);
+;main.c:34: move_win(MapX, MapY);
 	ldhl	sp,	#14
 	ld	a, (hl-)
 	ld	c, a
@@ -3243,31 +3243,31 @@ _setup_windows::
 ;C:/gbdk/include/gb/gb.h:893: WX_REG=x, WY_REG=y;
 	ld	a, c
 	ldh	(_WY_REG+0),a
-;main.c:34: wait_vbl_done();
+;main.c:35: wait_vbl_done();
 	call	_wait_vbl_done
-;main.c:35: SHOW_WIN;
+;main.c:36: SHOW_WIN;
 	ldh	a, (_LCDC_REG+0)
 	or	a, #0x20
 	ldh	(_LCDC_REG+0),a
-;main.c:36: DISPLAY_ON;
+;main.c:37: DISPLAY_ON;
 	ldh	a, (_LCDC_REG+0)
 	or	a, #0x80
 	ldh	(_LCDC_REG+0),a
-;main.c:37: waitpad(J_START);
+;main.c:38: waitpad(J_START);
 	ld	a, #0x80
 	push	af
 	inc	sp
 	call	_waitpad
 	inc	sp
-;main.c:38: waitpadup(); 
-;main.c:39: }
+;main.c:39: waitpadup(); 
+;main.c:40: }
 	jp  _waitpadup
-;main.c:41: void setup_splashscreen(){
+;main.c:42: void setup_splashscreen(){
 ;	---------------------------------
 ; Function setup_splashscreen
 ; ---------------------------------
 _setup_splashscreen::
-;main.c:42: setup_windows(Letter2Data, Intro1Map, 40, Intro1MapHeight, Intro1MapWidth, 7, 7);
+;main.c:43: setup_windows(Letter2Data, Intro1Map, 40, Intro1MapHeight, Intro1MapWidth, 7, 7);
 	ld	hl, #0x0007
 	push	hl
 	ld	l, #0x07
@@ -3284,7 +3284,7 @@ _setup_splashscreen::
 	push	hl
 	call	_setup_windows
 	add	sp, #14
-;main.c:43: setup_windows(Letter2Data, Intro2Map, 40, Intro2MapHeight, Intro2MapWidth, 7, 7);
+;main.c:44: setup_windows(Letter2Data, Intro2Map, 40, Intro2MapHeight, Intro2MapWidth, 7, 7);
 	ld	hl, #0x0007
 	push	hl
 	ld	l, #0x07
@@ -3301,7 +3301,7 @@ _setup_splashscreen::
 	push	hl
 	call	_setup_windows
 	add	sp, #14
-;main.c:44: setup_windows(Letter2Data, Intro3Map, 40, Intro3MapHeight, Intro3MapWidth, 7, 7);
+;main.c:45: setup_windows(Letter2Data, Intro3Map, 40, Intro3MapHeight, Intro3MapWidth, 7, 7);
 	ld	hl, #0x0007
 	push	hl
 	ld	l, #0x07
@@ -3318,18 +3318,18 @@ _setup_splashscreen::
 	push	hl
 	call	_setup_windows
 	add	sp, #14
-;main.c:45: HIDE_WIN;
+;main.c:46: HIDE_WIN;
 	ldh	a, (_LCDC_REG+0)
 	and	a, #0xdf
 	ldh	(_LCDC_REG+0),a
-;main.c:46: }
+;main.c:47: }
 	ret
-;main.c:48: void setup_dialogues(){
+;main.c:49: void setup_dialogues(){
 ;	---------------------------------
 ; Function setup_dialogues
 ; ---------------------------------
 _setup_dialogues::
-;main.c:49: setup_windows(Letter2Data, Diag1, 41, Diag1Height, Diag1Width, 7, 104);
+;main.c:50: setup_windows(Letter2Data, Diag1, 41, Diag1Height, Diag1Width, 7, 104);
 	ld	hl, #0x0068
 	push	hl
 	ld	l, #0x07
@@ -3346,7 +3346,7 @@ _setup_dialogues::
 	push	hl
 	call	_setup_windows
 	add	sp, #14
-;main.c:50: setup_windows(Letter2Data, Diag2, 41, Diag2Height, Diag2Width, 7, 104);
+;main.c:51: setup_windows(Letter2Data, Diag2, 41, Diag2Height, Diag2Width, 7, 104);
 	ld	hl, #0x0068
 	push	hl
 	ld	l, #0x07
@@ -3363,7 +3363,7 @@ _setup_dialogues::
 	push	hl
 	call	_setup_windows
 	add	sp, #14
-;main.c:51: setup_windows(Letter2Data, Diag3, 41, Diag3Height, Diag3Width, 7, 104);
+;main.c:52: setup_windows(Letter2Data, Diag3, 41, Diag3Height, Diag3Width, 7, 104);
 	ld	hl, #0x0068
 	push	hl
 	ld	l, #0x07
@@ -3380,7 +3380,7 @@ _setup_dialogues::
 	push	hl
 	call	_setup_windows
 	add	sp, #14
-;main.c:52: setup_windows(Letter2Data, Diag4, 41, Diag4Height, Diag4Width, 7, 104);
+;main.c:53: setup_windows(Letter2Data, Diag4, 41, Diag4Height, Diag4Width, 7, 104);
 	ld	hl, #0x0068
 	push	hl
 	ld	l, #0x07
@@ -3397,41 +3397,41 @@ _setup_dialogues::
 	push	hl
 	call	_setup_windows
 	add	sp, #14
-;main.c:53: HIDE_WIN;
+;main.c:54: HIDE_WIN;
 	ldh	a, (_LCDC_REG+0)
 	and	a, #0xdf
 	ldh	(_LCDC_REG+0),a
-;main.c:54: }
+;main.c:55: }
 	ret
-;main.c:55: void main()
+;main.c:56: void main()
 ;	---------------------------------
 ; Function main
 ; ---------------------------------
 _main::
-;main.c:57: ENABLE_RAM_MBC1;
+;main.c:58: ENABLE_RAM_MBC1;
 	ld	hl, #0x0000
 	ld	(hl), #0x0a
-;main.c:58: SWITCH_ROM_MBC1(0);
+;main.c:59: SWITCH_ROM_MBC1(0);
 	ld	a, #0x00
 	ldh	(__current_bank+0),a
 	ld	h, #0x20
 	ld	(hl), #0x00
-;main.c:59: setup_splashscreen();
+;main.c:60: setup_splashscreen();
 	call	_setup_splashscreen
-;main.c:61: SWITCH_ROM_MBC1(2);
+;main.c:62: SWITCH_ROM_MBC1(2);
 	ld	a, #0x02
 	ldh	(__current_bank+0),a
 	ld	hl, #0x2000
 	ld	(hl), #0x02
-;main.c:62: do_game_play();
+;main.c:63: do_game_play();
 	call	_do_game_play
-;main.c:64: SWITCH_ROM_MBC1(0);
+;main.c:65: SWITCH_ROM_MBC1(0);
 	ld	a, #0x00
 	ldh	(__current_bank+0),a
 	ld	hl, #0x2000
 	ld	(hl), #0x00
-;main.c:65: setup_dialogues();
-;main.c:66: }
+;main.c:66: setup_dialogues();
+;main.c:67: }
 	jp  _setup_dialogues
 	.area _CODE
 	.area _CABS (ABS)
