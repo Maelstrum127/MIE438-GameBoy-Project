@@ -1,13 +1,13 @@
 /*
 
- INTRO3.H
+ DIAG3.H
 
  Map Include File.
 
  Info:
    Section       : 
    Bank          : 0
-   Map size      : 20 x 9
+   Map size      : 20 x 5
    Tile set      : C:\Users\julia\Documents\U of T\Year3\MIE438\tiles\menu_whiteonblack.gbr
    Plane count   : 1 plane (8 bits)
    Plane order   : Tiles are continues
@@ -18,10 +18,10 @@
 
 */
 
-#define Intro3MapWidth 20
-#define Intro3MapHeight 9
-#define Intro3MapBank 0
+#define Diag3Width 20
+#define Diag3Height 5
+#define Diag3Bank 0
 
-extern unsigned char Intro3Map[];
+extern unsigned char Diag3[];
 
-/* End of INTRO3.H */
+/* End of DIAG3.H */

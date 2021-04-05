@@ -7,7 +7,7 @@
  Info:
    Section       : 
    Bank          : 0
-   Map size      : 20 x 18
+   Map size      : 20 x 3
    Tile set      : C:\Users\julia\Documents\U of T\Year3\MIE438\tiles\menu_whiteonblack.gbr
    Plane count   : 1 plane (8 bits)
    Plane order   : Tiles are continues
@@ -19,7 +19,7 @@
 */
 
 #define Intro1MapWidth 20
-#define Intro1MapHeight 18
+#define Intro1MapHeight 3
 #define Intro1MapBank 0
 
 extern unsigned char Intro1Map[];

@@ -1,13 +1,13 @@
 /*
 
- TEST3_DIALOGUE.H
+ DIAG4.H
 
  Map Include File.
 
  Info:
    Section       : 
    Bank          : 0
-   Map size      : 20 x 3
+   Map size      : 20 x 5
    Tile set      : C:\Users\julia\Documents\U of T\Year3\MIE438\tiles\menu_whiteonblack.gbr
    Plane count   : 1 plane (8 bits)
    Plane order   : Tiles are continues
@@ -18,10 +18,10 @@
 
 */
 
-#define Test3Width 20
-#define Test3Height 3
-#define Test3Bank 0
+#define Diag4Width 20
+#define Diag4Height 5
+#define Diag4Bank 0
 
-extern unsigned char Test3[];
+extern unsigned char Diag4[];
 
-/* End of TEST3_DIALOGUE.H */
+/* End of DIAG4.H */
