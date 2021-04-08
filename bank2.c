@@ -442,6 +442,51 @@ void setup_map(UWORD *pallete, unsigned char *map_data, unsigned char *tiles_1, 
     DISPLAY_ON;
 }
 
+void pongJoypadDetection(UINT8 *step){
+    if (joypad() & J_LEFT){
+        bit.x -=1;
+        *step = setbit_left(*step);
+    }
+    if (joypad() & J_RIGHT){
+        bit.x += 1;
+        *step = setbit_right(*step);
+    }
+    movegamecharacter(&bit, bit.x, bit.y);
+}
+
+void combatHeatJoypadDetection(UINT8 *step){
+
+    if (joypad() & J_LEFT){
+        bit.x -= 4;
+        *step = setbit_left(*step);
+        movegamecharacter(&bit, bit.x, bit.y);
+    }
+    if (joypad() & J_RIGHT){
+        bit.x += 4;
+        *step = setbit_right(*step);
+        movegamecharacter(&bit, bit.x, bit.y);
+    }
+
+    if (joypad() & J_UP){
+        bit.y -= 4;
+        *step = setbit_backward(*step);
+        movegamecharacter(&bit, bit.x, bit.y);
+    }
+    if (joypad() & J_DOWN){
+        bit.y += 4;
+        *step = setbit_forward(*step);
+        movegamecharacter(&bit, bit.x, bit.y);
+    }
+}
+
+struct GameCharacter* returnBitAddress(){
+    return &bit;
+}
+
+void setupBitPong(){
+    bit.width = 8;
+}
+
 void do_game_play(){
     unsigned char* bk_collision = Lvl1BackgroundMapPLN0;
     unsigned char* bk_tiles = Lvl1BackgroundMapPLN1;
