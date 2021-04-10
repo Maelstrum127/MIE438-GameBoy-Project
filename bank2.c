@@ -10,6 +10,9 @@
 const unsigned char blankmap[15] = {0x51, 0x52};
 UINT16 player_location[2];
 
+struct GameCharacter bit;
+UBYTE spritesize = 8;
+
 const UWORD backgroundpalette[] = {
     Lvl1BackgroundDataCGBPal0c0, Lvl1BackgroundDataCGBPal0c1, Lvl1BackgroundDataCGBPal0c2, Lvl1BackgroundDataCGBPal0c3,
     Lvl1BackgroundDataCGBPal1c0, Lvl1BackgroundDataCGBPal1c1, Lvl1BackgroundDataCGBPal1c2, Lvl1BackgroundDataCGBPal1c3,
@@ -21,8 +24,6 @@ const UWORD backgroundpalette[] = {
     Lvl1BackgroundDataCGBPal7c0, Lvl1BackgroundDataCGBPal7c1, Lvl1BackgroundDataCGBPal7c2, Lvl1BackgroundDataCGBPal7c3,
 };
 
-struct GameCharacter bit;
-UBYTE spritesize = 8;
 
 const UWORD spritepalette[] = {
     GameSpritesCGBPal0c0,
@@ -74,6 +75,7 @@ void performantdelay(UINT8 numloops){
         wait_vbl_done();
     }
 }
+
 
 void movegamecharacter(struct GameCharacter* character, UINT8 x, UINT8 y){
     move_sprite(character->spriteids[0], x, y);
@@ -432,9 +434,9 @@ void setup_map(UWORD *pallete, unsigned char *map_data, unsigned char *tiles_1, 
     SHOW_BKG;
     DISPLAY_ON;
    
-    // setup character sprite
+    // // setup character sprite
     set_sprite_palette(0,8, &spritepalette[0]);
-    set_sprite_data(0, 43, GameSprites);
+    set_sprite_data(0, 46, GameSprites);
     setupbit(character_x, character_y);
     player_location[0] = character_x;
     player_location[1] = character_y;

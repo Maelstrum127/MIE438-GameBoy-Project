@@ -25,7 +25,9 @@ void setup_map(UWORD *pallete, unsigned char *map_data, unsigned char *tiles_1, 
 void do_game_play();
 
 // bank 3
-
+void load_sprite_data();
+void movegamecharacter_frog(struct GameCharacter_square* character, UINT8 x, UINT8 y);
+void setupfrog();
 
 void setup_windows(unsigned char *win_data, unsigned char *win_map, int data_size, unsigned int MapHeight, unsigned int MapWidth, unsigned int MapX, unsigned int MapY){
     DISPLAY_OFF;
@@ -58,6 +60,10 @@ void main()
 	ENABLE_RAM_MBC1;
     SWITCH_ROM_MBC1(0);
     setup_splashscreen();
+
+    SWITCH_ROM_MBC1(3);
+    //load_sprite_data();
+    setupfrog();
 
 	SWITCH_ROM_MBC1(2);
 	do_game_play();
