@@ -2,71 +2,17 @@
 #include <gb/font.h>
 #include <stdio.h>
 #include <gb/cgb.h>
+#include "flags.h"
 #include "Backgrounds/Lvl1BackgroundMap.h"
 #include "Backgrounds/Lvl1BackgroundData.h"
 #include "GameCharacter.c"
 #include "Sprites/GameSprites.h"
 
 const unsigned char blankmap[15] = {0x51, 0x52};
-UINT16 player_location[2];
 
 struct GameCharacter bit;
 UBYTE spritesize = 8;
 
-const UWORD backgroundpalette[] = {
-    Lvl1BackgroundDataCGBPal0c0, Lvl1BackgroundDataCGBPal0c1, Lvl1BackgroundDataCGBPal0c2, Lvl1BackgroundDataCGBPal0c3,
-    Lvl1BackgroundDataCGBPal1c0, Lvl1BackgroundDataCGBPal1c1, Lvl1BackgroundDataCGBPal1c2, Lvl1BackgroundDataCGBPal1c3,
-    Lvl1BackgroundDataCGBPal2c0, Lvl1BackgroundDataCGBPal2c1, Lvl1BackgroundDataCGBPal2c2, Lvl1BackgroundDataCGBPal2c3,
-    Lvl1BackgroundDataCGBPal3c0, Lvl1BackgroundDataCGBPal3c1, Lvl1BackgroundDataCGBPal3c2, Lvl1BackgroundDataCGBPal3c3,
-    Lvl1BackgroundDataCGBPal4c0, Lvl1BackgroundDataCGBPal4c1, Lvl1BackgroundDataCGBPal4c2, Lvl1BackgroundDataCGBPal4c3,
-    Lvl1BackgroundDataCGBPal5c0, Lvl1BackgroundDataCGBPal5c1, Lvl1BackgroundDataCGBPal5c2, Lvl1BackgroundDataCGBPal5c3,
-    Lvl1BackgroundDataCGBPal6c0, Lvl1BackgroundDataCGBPal6c1, Lvl1BackgroundDataCGBPal6c2, Lvl1BackgroundDataCGBPal6c3,
-    Lvl1BackgroundDataCGBPal7c0, Lvl1BackgroundDataCGBPal7c1, Lvl1BackgroundDataCGBPal7c2, Lvl1BackgroundDataCGBPal7c3,
-};
-
-
-const UWORD spritepalette[] = {
-    GameSpritesCGBPal0c0,
-    GameSpritesCGBPal0c1,
-    GameSpritesCGBPal0c2,
-    GameSpritesCGBPal0c3,
-
-    GameSpritesCGBPal1c0,
-    GameSpritesCGBPal1c1,
-    GameSpritesCGBPal1c2,
-    GameSpritesCGBPal1c3,
-
-
-    GameSpritesCGBPal2c0,
-    GameSpritesCGBPal2c1,
-    GameSpritesCGBPal2c2,
-    GameSpritesCGBPal2c3,
-
-    GameSpritesCGBPal3c0,
-    GameSpritesCGBPal3c1,
-    GameSpritesCGBPal3c2,
-    GameSpritesCGBPal3c3,
-
-    GameSpritesCGBPal4c0,
-    GameSpritesCGBPal4c1,
-    GameSpritesCGBPal4c2,
-    GameSpritesCGBPal4c3,
-
-    GameSpritesCGBPal5c0,
-    GameSpritesCGBPal5c1,
-    GameSpritesCGBPal5c2,
-    GameSpritesCGBPal5c3,
-
-    GameSpritesCGBPal6c0,
-    GameSpritesCGBPal6c1,
-    GameSpritesCGBPal6c2,
-    GameSpritesCGBPal6c3,
-
-    GameSpritesCGBPal7c0,
-    GameSpritesCGBPal7c1,
-    GameSpritesCGBPal7c2,
-    GameSpritesCGBPal7c3,
-};
 UBYTE has_key, open_door, game_running;
 
 void performantdelay(UINT8 numloops){
@@ -422,43 +368,19 @@ void move(UINT8 *step, UINT16 *player_loc_x, UINT16 *player_loc_y, unsigned char
     }
 }
 
-void setup_map(UWORD *pallete, unsigned char *map_data, unsigned char *tiles_1, unsigned char *tiles_0, int character_x, int character_y, int data_size, unsigned int MapHeight, unsigned int MapWidth){
-    // setup background
-    DISPLAY_OFF;
-    set_bkg_palette(0, 8, pallete);
-    set_bkg_data(0, data_size, map_data);
-    VBK_REG = 1;
-    set_bkg_tiles(0, 0, MapWidth, MapHeight, tiles_1);
-    VBK_REG = 0;
-    set_bkg_tiles(0, 0, MapWidth, MapHeight, tiles_0);
-    SHOW_BKG;
-    DISPLAY_ON;
-   
-    // // setup character sprite
-    set_sprite_palette(0,8, &spritepalette[0]);
-    set_sprite_data(0, 46, GameSprites);
-    setupbit(character_x, character_y);
-    player_location[0] = character_x;
-    player_location[1] = character_y;
-    SHOW_SPRITES;
-    DISPLAY_ON;
-}
-
-void do_game_play(){
-    unsigned char* bk_collision = Lvl1BackgroundMapPLN0;
-    unsigned char* bk_tiles = Lvl1BackgroundMapPLN1;
-    unsigned int MapHeight = Lvl1BackgroundMapHeight;
-    unsigned int MapWidth = Lvl1BackgroundMapWidth;
-    
-    setup_map(backgroundpalette, Lvl1BackgroundData, bk_tiles, bk_collision, 88, 88, 127, MapHeight, MapWidth);
+void do_game_play(unsigned char* bk_collision, unsigned int MapHeight, unsigned int MapWidth){
     //set_win_data(0,40,Letter2Data);
     game_running = 1;
     UINT8 step = 0;
 
     while(game_running){
         move(&step, &player_location[0], &player_location[1], bk_collision, MapHeight, MapWidth);
-        if ((player_location[0] < 104 && player_location[0] > 88) && (player_location[1] < 40 && player_location[1] > 24)){
-            break;
-        } 
+        if (frog_talk){
+            if ((player_location[0] < 104 && player_location[0] > 88) && (player_location[1] < 40 && player_location[1] > 24)){
+                frog_talk = 0;
+                break;
+            } 
+        }
+        performantdelay(10);
     }
 }
