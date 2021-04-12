@@ -5,6 +5,9 @@
 #include <gb/console.h>
 #include "combatLevels.c"
 
+#define BackWidth 1
+#define BackHeight 1
+#define BackBank 0
 
 
 enemyCharacter enemies[8];

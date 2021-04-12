@@ -11,6 +11,8 @@
 #include "Dialogues/Diag3.c"
 #include "Dialogues/Diag4.c"
 
+const unsigned char blankmap3[15] = {0x51, 0x52};
+
 // bank 0
 void setup_windows(unsigned char *win_data, unsigned char *win_map, int data_size, unsigned int MapHeight, unsigned int MapWidth, unsigned int MapX, unsigned int MapY);
 void setup_splashscreen();
@@ -133,8 +135,7 @@ _Bool levelPongOne(UINT8 *step){
             SHOW_SPRITES;
             DISPLAY_ON;
 
-            performantdelay(100);
-            
+            performantdelay(100);        
             printf(" ");
             gotoxy(0, 7);
             printf("  Your lives: %d\n  Enemy lives: %d\n  Use A to continue", bitLives, enemyLives);
