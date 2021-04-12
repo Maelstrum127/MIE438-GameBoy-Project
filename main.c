@@ -85,6 +85,7 @@ void do_game_play(unsigned char* bk_collision, unsigned int MapHeight, unsigned 
 // bank 3
 void load_sprite_data();
 void movegamecharacter_frog(struct GameCharacter_square* character, UINT8 x, UINT8 y);
+//void scroll_frog(int x, int y);
 void setupfrog();
 
 void setup_windows(unsigned char *win_data, unsigned char *win_map, int data_size, unsigned int MapHeight, unsigned int MapWidth, unsigned int MapX, unsigned int MapY){
@@ -137,6 +138,14 @@ void setup_characters(int character_x, int character_y){
     player_location[0] = character_x;
     player_location[1] = character_y;
     SHOW_SPRITES;
+}
+
+extern struct GameCharacter_square frog;
+void scroll_frog(int x, int y){
+    scroll_sprite(frog.spriteids[0], x, y);
+    scroll_sprite(frog.spriteids[1], x, y);
+    scroll_sprite(frog.spriteids[2], x, y);
+    scroll_sprite(frog.spriteids[3], x, y);
 }
 
 void main()

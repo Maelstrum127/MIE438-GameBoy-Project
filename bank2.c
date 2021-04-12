@@ -7,13 +7,18 @@
 #include "Backgrounds/Lvl1BackgroundData.h"
 #include "GameCharacter.c"
 #include "Sprites/GameSprites.h"
+//#include "bank3.c"
 
 const unsigned char blankmap[15] = {0x51, 0x52};
 
 struct GameCharacter bit;
+extern struct GameCharacter_square frog;
 UBYTE spritesize = 8;
 
 UBYTE has_key, open_door, game_running;
+
+extern void movegamecharacter_frog(struct GameCharacter_square* character, UINT8 x, UINT8 y);
+extern void scroll_frog(int x, int y);
 
 void performantdelay(UINT8 numloops){
     UINT8 i;
@@ -21,7 +26,6 @@ void performantdelay(UINT8 numloops){
         wait_vbl_done();
     }
 }
-
 
 void movegamecharacter(struct GameCharacter* character, UINT8 x, UINT8 y){
     move_sprite(character->spriteids[0], x, y);
@@ -290,6 +294,9 @@ void walk_background_movement(INT8 move_x, INT8 move_y, UINT8 *step){
         if (move_x % 4 == 0 && move_x != 0){
             *step = (move_x > 0 ? setbit_right(*step) : setbit_left(*step));
         }
+        for (int i = 0; i < 2; i++){
+            scroll_frog((move_x > 0 ? -1 : 1), 0);
+        }
         move_x += (move_x > 0 ? -2 : 2);
         performantdelay(2);
     }
@@ -297,6 +304,9 @@ void walk_background_movement(INT8 move_x, INT8 move_y, UINT8 *step){
         scroll_bkg(0, move_y < 0 ? -2 : 2);
         if (move_y % 4 == 0 && move_y != 0){
             *step = (move_y >  0 ? setbit_forward(*step) : setbit_backward(*step));
+        }
+        for (int i = 0; i < 2; i++){
+            scroll_frog(0, (move_y > 0 ? -1 : 1));
         }
         move_y += (move_y > 0 ? -2 : 2);
         performantdelay(2);
@@ -374,13 +384,32 @@ void do_game_play(unsigned char* bk_collision, unsigned int MapHeight, unsigned 
     UINT8 step = 0;
 
     while(game_running){
-        move(&step, &player_location[0], &player_location[1], bk_collision, MapHeight, MapWidth);
         if (frog_talk){
-            if ((player_location[0] < 104 && player_location[0] > 88) && (player_location[1] < 40 && player_location[1] > 24)){
-                frog_talk = 0;
+            if ((player_location[0] == 96 || player_location[0] == 88 || player_location[0] == 80 || player_location[0] == 72) && (player_location[1] == 32)){
+                frog_talk = 0; //3 steps right then up
                 break;
             } 
         }
+        else{
+            walk_without_background_movement(8, 0, &step);
+            performantdelay(8);
+            walk_without_background_movement(8, 0, &step);
+            performantdelay(8);
+            walk_without_background_movement(8, 0, &step);
+            performantdelay(8);
+            walk_without_background_movement(0, -8, &step);
+            performantdelay(8);
+            walk_without_background_movement(0, -8, &step);
+            performantdelay(8);
+            walk_without_background_movement(0, -8, &step);
+            performantdelay(8);
+            walk_without_background_movement(0, -8, &step);
+            performantdelay(8);
+            walk_without_background_movement(0, -8, &step);
+            performantdelay(8);
+            break;
+        }
+        move(&step, &player_location[0], &player_location[1], bk_collision, MapHeight, MapWidth);
         performantdelay(10);
     }
 }

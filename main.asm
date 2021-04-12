@@ -9,6 +9,7 @@
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _main
+	.globl _scroll_frog
 	.globl _setup_characters
 	.globl _setup_map
 	.globl _setupfrog
@@ -3201,14 +3202,14 @@ _Diag4::
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;main.c:90: void setup_windows(unsigned char *win_data, unsigned char *win_map, int data_size, unsigned int MapHeight, unsigned int MapWidth, unsigned int MapX, unsigned int MapY){
+;main.c:91: void setup_windows(unsigned char *win_data, unsigned char *win_map, int data_size, unsigned int MapHeight, unsigned int MapWidth, unsigned int MapX, unsigned int MapY){
 ;	---------------------------------
 ; Function setup_windows
 ; ---------------------------------
 _setup_windows::
-;main.c:91: DISPLAY_OFF;
+;main.c:92: DISPLAY_OFF;
 	call	_display_off
-;main.c:92: set_win_data(0,data_size,win_data);
+;main.c:93: set_win_data(0,data_size,win_data);
 	ldhl	sp,	#6
 	ld	a, (hl)
 	pop	bc
@@ -3223,7 +3224,7 @@ _setup_windows::
 	inc	sp
 	call	_set_win_data
 	add	sp, #4
-;main.c:93: set_win_tiles(0,0,MapWidth,MapHeight,win_map);
+;main.c:94: set_win_tiles(0,0,MapWidth,MapHeight,win_map);
 	ldhl	sp,	#8
 	ld	a, (hl+)
 	ld	d, a
@@ -3244,7 +3245,7 @@ _setup_windows::
 	inc	sp
 	call	_set_win_tiles
 	add	sp, #6
-;main.c:94: move_win(MapX, MapY);
+;main.c:95: move_win(MapX, MapY);
 	ldhl	sp,	#14
 	ld	a, (hl-)
 	ld	c, a
@@ -3254,24 +3255,24 @@ _setup_windows::
 ;C:/gbdk/include/gb/gb.h:893: WX_REG=x, WY_REG=y;
 	ld	a, c
 	ldh	(_WY_REG+0),a
-;main.c:95: wait_vbl_done();
+;main.c:96: wait_vbl_done();
 	call	_wait_vbl_done
-;main.c:96: SHOW_WIN;
+;main.c:97: SHOW_WIN;
 	ldh	a, (_LCDC_REG+0)
 	or	a, #0x20
 	ldh	(_LCDC_REG+0),a
-;main.c:97: DISPLAY_ON;
+;main.c:98: DISPLAY_ON;
 	ldh	a, (_LCDC_REG+0)
 	or	a, #0x80
 	ldh	(_LCDC_REG+0),a
-;main.c:98: waitpad(J_START);
+;main.c:99: waitpad(J_START);
 	ld	a, #0x80
 	push	af
 	inc	sp
 	call	_waitpad
 	inc	sp
-;main.c:99: waitpadup(); 
-;main.c:100: }
+;main.c:100: waitpadup(); 
+;main.c:101: }
 	jp  _waitpadup
 _backgroundpalette:
 	.dw #0x17bc
@@ -3339,12 +3340,12 @@ _spritepalette:
 	.dw #0x001f
 	.dw #0x000f
 	.dw #0x0000
-;main.c:102: void setup_splashscreen(){
+;main.c:103: void setup_splashscreen(){
 ;	---------------------------------
 ; Function setup_splashscreen
 ; ---------------------------------
 _setup_splashscreen::
-;main.c:103: setup_windows(Letter2Data, Intro1Map, 40, Intro1MapHeight, Intro1MapWidth, 7, 7);
+;main.c:104: setup_windows(Letter2Data, Intro1Map, 40, Intro1MapHeight, Intro1MapWidth, 7, 7);
 	ld	hl, #0x0007
 	push	hl
 	ld	l, #0x07
@@ -3361,7 +3362,7 @@ _setup_splashscreen::
 	push	hl
 	call	_setup_windows
 	add	sp, #14
-;main.c:104: setup_windows(Letter2Data, Intro2Map, 40, Intro2MapHeight, Intro2MapWidth, 7, 7);
+;main.c:105: setup_windows(Letter2Data, Intro2Map, 40, Intro2MapHeight, Intro2MapWidth, 7, 7);
 	ld	hl, #0x0007
 	push	hl
 	ld	l, #0x07
@@ -3378,7 +3379,7 @@ _setup_splashscreen::
 	push	hl
 	call	_setup_windows
 	add	sp, #14
-;main.c:105: setup_windows(Letter2Data, Intro3Map, 40, Intro3MapHeight, Intro3MapWidth, 7, 7);
+;main.c:106: setup_windows(Letter2Data, Intro3Map, 40, Intro3MapHeight, Intro3MapWidth, 7, 7);
 	ld	hl, #0x0007
 	push	hl
 	ld	l, #0x07
@@ -3395,18 +3396,18 @@ _setup_splashscreen::
 	push	hl
 	call	_setup_windows
 	add	sp, #14
-;main.c:106: HIDE_WIN;
+;main.c:107: HIDE_WIN;
 	ldh	a, (_LCDC_REG+0)
 	and	a, #0xdf
 	ldh	(_LCDC_REG+0),a
-;main.c:107: }
+;main.c:108: }
 	ret
-;main.c:109: void setup_dialogues(){
+;main.c:110: void setup_dialogues(){
 ;	---------------------------------
 ; Function setup_dialogues
 ; ---------------------------------
 _setup_dialogues::
-;main.c:110: setup_windows(Letter2Data, Diag1, 41, Diag1Height, Diag1Width, 7, 104);
+;main.c:111: setup_windows(Letter2Data, Diag1, 41, Diag1Height, Diag1Width, 7, 104);
 	ld	hl, #0x0068
 	push	hl
 	ld	l, #0x07
@@ -3423,7 +3424,7 @@ _setup_dialogues::
 	push	hl
 	call	_setup_windows
 	add	sp, #14
-;main.c:111: setup_windows(Letter2Data, Diag2, 41, Diag2Height, Diag2Width, 7, 104);
+;main.c:112: setup_windows(Letter2Data, Diag2, 41, Diag2Height, Diag2Width, 7, 104);
 	ld	hl, #0x0068
 	push	hl
 	ld	l, #0x07
@@ -3440,7 +3441,7 @@ _setup_dialogues::
 	push	hl
 	call	_setup_windows
 	add	sp, #14
-;main.c:112: setup_windows(Letter2Data, Diag3, 41, Diag3Height, Diag3Width, 7, 104);
+;main.c:113: setup_windows(Letter2Data, Diag3, 41, Diag3Height, Diag3Width, 7, 104);
 	ld	hl, #0x0068
 	push	hl
 	ld	l, #0x07
@@ -3457,7 +3458,7 @@ _setup_dialogues::
 	push	hl
 	call	_setup_windows
 	add	sp, #14
-;main.c:113: setup_windows(Letter2Data, Diag4, 41, Diag4Height, Diag4Width, 7, 104);
+;main.c:114: setup_windows(Letter2Data, Diag4, 41, Diag4Height, Diag4Width, 7, 104);
 	ld	hl, #0x0068
 	push	hl
 	ld	l, #0x07
@@ -3474,20 +3475,20 @@ _setup_dialogues::
 	push	hl
 	call	_setup_windows
 	add	sp, #14
-;main.c:114: HIDE_WIN;
+;main.c:115: HIDE_WIN;
 	ldh	a, (_LCDC_REG+0)
 	and	a, #0xdf
 	ldh	(_LCDC_REG+0),a
-;main.c:115: }
+;main.c:116: }
 	ret
-;main.c:117: void setup_map(UWORD *pallete, unsigned char *map_data, unsigned char *tiles_1, unsigned char *tiles_0, int data_size, unsigned int MapHeight, unsigned int MapWidth){
+;main.c:118: void setup_map(UWORD *pallete, unsigned char *map_data, unsigned char *tiles_1, unsigned char *tiles_0, int data_size, unsigned int MapHeight, unsigned int MapWidth){
 ;	---------------------------------
 ; Function setup_map
 ; ---------------------------------
 _setup_map::
-;main.c:119: DISPLAY_OFF;
+;main.c:120: DISPLAY_OFF;
 	call	_display_off
-;main.c:120: set_bkg_palette(0, 8, pallete);
+;main.c:121: set_bkg_palette(0, 8, pallete);
 	pop	bc
 	pop	hl
 	push	hl
@@ -3501,7 +3502,7 @@ _setup_map::
 	inc	sp
 	call	_set_bkg_palette
 	add	sp, #4
-;main.c:121: set_bkg_data(0, data_size, map_data);
+;main.c:122: set_bkg_data(0, data_size, map_data);
 	ldhl	sp,	#10
 	ld	b, (hl)
 	ldhl	sp,	#4
@@ -3516,10 +3517,10 @@ _setup_map::
 	inc	sp
 	call	_set_bkg_data
 	add	sp, #4
-;main.c:122: VBK_REG = 1;
+;main.c:123: VBK_REG = 1;
 	ld	a, #0x01
 	ldh	(_VBK_REG+0),a
-;main.c:123: set_bkg_tiles(0, 0, MapWidth, MapHeight, tiles_1);
+;main.c:124: set_bkg_tiles(0, 0, MapWidth, MapHeight, tiles_1);
 	ldhl	sp,	#12
 	ld	a, (hl+)
 	ld	b, a
@@ -3543,10 +3544,10 @@ _setup_map::
 	inc	sp
 	call	_set_bkg_tiles
 	add	sp, #6
-;main.c:124: VBK_REG = 0;
+;main.c:125: VBK_REG = 0;
 	ld	a, #0x00
 	ldh	(_VBK_REG+0),a
-;main.c:125: set_bkg_tiles(0, 0, MapWidth, MapHeight, tiles_0);
+;main.c:126: set_bkg_tiles(0, 0, MapWidth, MapHeight, tiles_0);
 	ldhl	sp,	#8
 	ld	a, (hl+)
 	ld	h, (hl)
@@ -3561,26 +3562,26 @@ _setup_map::
 	inc	sp
 	call	_set_bkg_tiles
 	add	sp, #6
-;main.c:126: SHOW_BKG;
+;main.c:127: SHOW_BKG;
 	ldh	a, (_LCDC_REG+0)
 	or	a, #0x01
 	ldh	(_LCDC_REG+0),a
-;main.c:127: DISPLAY_ON;
+;main.c:128: DISPLAY_ON;
 	ldh	a, (_LCDC_REG+0)
 	or	a, #0x80
 	ldh	(_LCDC_REG+0),a
-;main.c:130: DISPLAY_ON;
+;main.c:131: DISPLAY_ON;
 	ldh	a, (_LCDC_REG+0)
 	or	a, #0x80
 	ldh	(_LCDC_REG+0),a
-;main.c:131: }
+;main.c:132: }
 	ret
-;main.c:133: void setup_characters(int character_x, int character_y){
+;main.c:134: void setup_characters(int character_x, int character_y){
 ;	---------------------------------
 ; Function setup_characters
 ; ---------------------------------
 _setup_characters::
-;main.c:134: set_sprite_palette(0,8, &spritepalette[0]);
+;main.c:135: set_sprite_palette(0,8, &spritepalette[0]);
 	ld	hl, #_spritepalette
 	push	hl
 	ld	a, #0x08
@@ -3591,7 +3592,7 @@ _setup_characters::
 	inc	sp
 	call	_set_sprite_palette
 	add	sp, #4
-;main.c:135: set_sprite_data(0, 46, GameSprites);
+;main.c:136: set_sprite_data(0, 46, GameSprites);
 	ld	hl, #_GameSprites
 	push	hl
 	ld	a, #0x2e
@@ -3602,7 +3603,7 @@ _setup_characters::
 	inc	sp
 	call	_set_sprite_data
 	add	sp, #4
-;main.c:136: setupbit(character_x, character_y);
+;main.c:137: setupbit(character_x, character_y);
 	ldhl	sp,	#4
 	ld	a, (hl-)
 	dec	hl
@@ -3613,7 +3614,7 @@ _setup_characters::
 	inc	sp
 	call	_setupbit
 	add	sp, #2
-;main.c:137: player_location[0] = character_x;
+;main.c:138: player_location[0] = character_x;
 	ld	de, #_player_location
 	ldhl	sp,	#2
 	ld	a, (hl)
@@ -3622,7 +3623,7 @@ _setup_characters::
 	inc	hl
 	ld	a, (hl)
 	ld	(de), a
-;main.c:138: player_location[1] = character_y;
+;main.c:139: player_location[1] = character_y;
 	ld	de, #(_player_location + 0x0002)
 	inc	hl
 	ld	a, (hl)
@@ -3631,42 +3632,143 @@ _setup_characters::
 	inc	hl
 	ld	a, (hl)
 	ld	(de), a
-;main.c:139: SHOW_SPRITES;
+;main.c:140: SHOW_SPRITES;
 	ldh	a, (_LCDC_REG+0)
 	or	a, #0x02
 	ldh	(_LCDC_REG+0),a
-;main.c:140: }
+;main.c:141: }
 	ret
-;main.c:142: void main()
+;main.c:144: void scroll_frog(int x, int y){
+;	---------------------------------
+; Function scroll_frog
+; ---------------------------------
+_scroll_frog::
+	add	sp, #-3
+;main.c:145: scroll_sprite(frog.spriteids[0], x, y);
+	ldhl	sp,	#7
+	ld	c, (hl)
+	ldhl	sp,	#0
+	ld	(hl), c
+	ldhl	sp,	#5
+	ld	a, (hl)
+	ldhl	sp,	#1
+	ld	(hl), a
+	ld	a, (hl+)
+	ld	(hl), a
+	ld	hl, #_frog
+;C:/gbdk/include/gb/gb.h:1093: OAM_item_t * itm = &shadow_OAM[nb];
+	ld	l, (hl)
+	ld	de, #_shadow_OAM+0
+	ld	h, #0x00
+	add	hl, hl
+	add	hl, hl
+	add	hl, de
+	ld	e, l
+	ld	d, h
+;C:/gbdk/include/gb/gb.h:1094: itm->y+=y, itm->x+=x;
+	ld	a, (de)
+	ldhl	sp,	#0
+	add	a, (hl)
+	ld	(de), a
+	inc	de
+	ld	a, (de)
+	inc	hl
+	inc	hl
+	add	a, (hl)
+	ld	(de), a
+;main.c:146: scroll_sprite(frog.spriteids[1], x, y);
+	ld	hl, #_frog + 1
+;C:/gbdk/include/gb/gb.h:1093: OAM_item_t * itm = &shadow_OAM[nb];
+	ld	l, (hl)
+	ld	de, #_shadow_OAM+0
+	ld	h, #0x00
+	add	hl, hl
+	add	hl, hl
+	add	hl, de
+	ld	e, l
+	ld	d, h
+;C:/gbdk/include/gb/gb.h:1094: itm->y+=y, itm->x+=x;
+	ld	a, (de)
+	add	a, c
+	ld	(de), a
+	inc	de
+	ld	a, (de)
+	ldhl	sp,	#1
+	add	a, (hl)
+	ld	(de), a
+;main.c:147: scroll_sprite(frog.spriteids[2], x, y);
+	ld	hl, #_frog + 2
+;C:/gbdk/include/gb/gb.h:1093: OAM_item_t * itm = &shadow_OAM[nb];
+	ld	l, (hl)
+	ld	de, #_shadow_OAM+0
+	ld	h, #0x00
+	add	hl, hl
+	add	hl, hl
+	add	hl, de
+	ld	e, l
+	ld	d, h
+;C:/gbdk/include/gb/gb.h:1094: itm->y+=y, itm->x+=x;
+	ld	a, (de)
+	add	a, c
+	ld	(de), a
+	inc	de
+	ld	a, (de)
+	ldhl	sp,	#1
+	add	a, (hl)
+	ld	(de), a
+;main.c:148: scroll_sprite(frog.spriteids[3], x, y);
+	ld	hl, #_frog + 3
+;C:/gbdk/include/gb/gb.h:1093: OAM_item_t * itm = &shadow_OAM[nb];
+	ld	l, (hl)
+	ld	de, #_shadow_OAM+0
+	ld	h, #0x00
+	add	hl, hl
+	add	hl, hl
+	add	hl, de
+;C:/gbdk/include/gb/gb.h:1094: itm->y+=y, itm->x+=x;
+	ld	a, (hl)
+	add	a, c
+	ld	(hl+), a
+	ld	c, l
+	ld	b, h
+	ld	a, (bc)
+	ldhl	sp,	#1
+	add	a, (hl)
+	ld	(bc), a
+;main.c:148: scroll_sprite(frog.spriteids[3], x, y);
+;main.c:149: }
+	add	sp, #3
+	ret
+;main.c:151: void main()
 ;	---------------------------------
 ; Function main
 ; ---------------------------------
 _main::
-;main.c:144: unsigned char* bk_collision = Lvl1BackgroundMapPLN0;
-;main.c:145: unsigned char* bk_tiles = Lvl1BackgroundMapPLN1;
-;main.c:149: ENABLE_RAM_MBC1;
+;main.c:153: unsigned char* bk_collision = Lvl1BackgroundMapPLN0;
+;main.c:154: unsigned char* bk_tiles = Lvl1BackgroundMapPLN1;
+;main.c:158: ENABLE_RAM_MBC1;
 	ld	hl, #0x0000
 	ld	(hl), #0x0a
-;main.c:150: SWITCH_ROM_MBC1(0);
+;main.c:159: SWITCH_ROM_MBC1(0);
 	ld	a, #0x00
 	ldh	(__current_bank+0),a
 	ld	h, #0x20
 	ld	(hl), #0x00
-;main.c:151: setup_splashscreen();
+;main.c:160: setup_splashscreen();
 	call	_setup_splashscreen
-;main.c:153: SWITCH_ROM_MBC1(3);
+;main.c:162: SWITCH_ROM_MBC1(3);
 	ld	a, #0x03
 	ldh	(__current_bank+0),a
 	ld	hl, #0x2000
 	ld	(hl), #0x03
-;main.c:155: setupfrog();
+;main.c:164: setupfrog();
 	call	_setupfrog
-;main.c:157: SWITCH_ROM_MBC1(2);
+;main.c:166: SWITCH_ROM_MBC1(2);
 	ld	a, #0x02
 	ldh	(__current_bank+0),a
 	ld	hl, #0x2000
 	ld	(hl), #0x02
-;main.c:158: setup_map(backgroundpalette, Lvl1BackgroundData, bk_tiles, bk_collision, 127, MapHeight, MapWidth);
+;main.c:167: setup_map(backgroundpalette, Lvl1BackgroundData, bk_tiles, bk_collision, 127, MapHeight, MapWidth);
 	ld	hl, #0x0017
 	push	hl
 	ld	l, #0x14
@@ -3683,14 +3785,14 @@ _main::
 	push	hl
 	call	_setup_map
 	add	sp, #14
-;main.c:159: setup_characters(88, 88);
+;main.c:168: setup_characters(88, 88);
 	ld	hl, #0x0058
 	push	hl
 	ld	l, #0x58
 	push	hl
 	call	_setup_characters
 	add	sp, #4
-;main.c:160: do_game_play(bk_collision, MapHeight, MapWidth);
+;main.c:169: do_game_play(bk_collision, MapHeight, MapWidth);
 	ld	hl, #0x0017
 	push	hl
 	ld	l, #0x14
@@ -3699,19 +3801,19 @@ _main::
 	push	hl
 	call	_do_game_play
 	add	sp, #6
-;main.c:162: SWITCH_ROM_MBC1(0);
+;main.c:171: SWITCH_ROM_MBC1(0);
 	ld	a, #0x00
 	ldh	(__current_bank+0),a
 	ld	hl, #0x2000
 	ld	(hl), #0x00
-;main.c:163: setup_dialogues();
+;main.c:172: setup_dialogues();
 	call	_setup_dialogues
-;main.c:165: SWITCH_ROM_MBC1(2);
+;main.c:174: SWITCH_ROM_MBC1(2);
 	ld	a, #0x02
 	ldh	(__current_bank+0),a
 	ld	hl, #0x2000
 	ld	(hl), #0x02
-;main.c:166: do_game_play(bk_collision, MapHeight, MapWidth);
+;main.c:175: do_game_play(bk_collision, MapHeight, MapWidth);
 	ld	hl, #0x0017
 	push	hl
 	ld	l, #0x14
@@ -3720,7 +3822,7 @@ _main::
 	push	hl
 	call	_do_game_play
 	add	sp, #6
-;main.c:167: }
+;main.c:176: }
 	ret
 	.area _CODE
 	.area _CABS (ABS)

@@ -1,25 +1,20 @@
-
 #include <gb/gb.h>
-//#include "GameCharacter.c"
+#include <stdio.h>
+#include "flags.h"
+#include "GameCharacter.c"
 //#include "Sprites/GameSprites.h"
 
-struct GameCharacter_square frog;
 UBYTE spritesize2 = 8;
 
-struct GameCharacter_square {
-    UBYTE spriteids[4];
-    UINT8 x;
-    UINT8 y;
-    UINT8 width;
-    UINT8 height;
-};
+struct GameCharacter_square frog;
 
-void movegamecharacter_frog(struct GameCharacter_square* character, UINT8 x, UINT8 y){
+void movegamecharacter_frog(struct GameCharacter_square* character, UINT8 x, UINT8 y){ 
     move_sprite(character->spriteids[0], x, y);
     move_sprite(character->spriteids[1], x + spritesize2, y);
     move_sprite(character->spriteids[2], x, y + spritesize2);
     move_sprite(character->spriteids[3], x + spritesize2, y + spritesize2);
 }
+
 
 void setupfrog(){
     frog.x = 80;
