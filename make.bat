@@ -6,7 +6,8 @@ C:\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -DUSE_SFR_FOR_REG -Wf-bo2 -c -o bank2.o bank2.
 C:\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -c -o GameSprites.o Sprites/GameSprites.c 
 C:\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -c -o flags.o flags.c 
 C:\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -c -o GameCharacter.o GameCharacter.c
-C:\gbdk\bin\lcc -Wa-l -Wl-m -Wf--debug -Wl-y -Wl-w -Wm-yc -Wl-j -Wl-yt0x01 -Wl-yo4 -o test_game.gb Lvl1BackgroundMap.o Lvl1BackgroundData.o main.o bank2.o bank3.o GameSprites.o flags.o GameCharacter.o
+C:\gbdk\bin\lcc -Wa-l -Wl-m -Wl-j -Wf-bo3 -c -o bank4.o bank4.c
+C:\gbdk\bin\lcc -Wa-l -Wl-m -Wf--debug -Wl-y -Wl-w -Wm-yc -Wl-j -Wl-yt0x01 -Wl-yo4 -o test_game.gb Lvl1BackgroundMap.o Lvl1BackgroundData.o main.o GameSprites.o bank2.o bank3.o bank4.o flags.o GameCharacter.o
 
 DEL *.lst
 DEL *.o

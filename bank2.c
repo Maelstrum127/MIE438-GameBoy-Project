@@ -1,24 +1,20 @@
 #include <gb/gb.h>
-#include <gb/font.h>
+#include "flags.h"
 #include <stdio.h>
 #include <gb/cgb.h>
-#include "flags.h"
 #include "Backgrounds/Lvl1BackgroundMap.h"
 #include "Backgrounds/Lvl1BackgroundData.h"
 #include "GameCharacter.c"
 #include "Sprites/GameSprites.h"
-//#include "bank3.c"
+
 
 const unsigned char blankmap[15] = {0x51, 0x52};
+UINT16 player_location[2];
 
 struct GameCharacter bit;
-extern struct GameCharacter_square frog;
 UBYTE spritesize = 8;
 
 UBYTE has_key, open_door, game_running;
-
-extern void movegamecharacter_frog(struct GameCharacter_square* character, UINT8 x, UINT8 y);
-extern void scroll_frog(int x, int y);
 
 void performantdelay(UINT8 numloops){
     UINT8 i;
@@ -294,9 +290,6 @@ void walk_background_movement(INT8 move_x, INT8 move_y, UINT8 *step){
         if (move_x % 4 == 0 && move_x != 0){
             *step = (move_x > 0 ? setbit_right(*step) : setbit_left(*step));
         }
-        for (int i = 0; i < 2; i++){
-            scroll_frog((move_x > 0 ? -1 : 1), 0);
-        }
         move_x += (move_x > 0 ? -2 : 2);
         performantdelay(2);
     }
@@ -304,9 +297,6 @@ void walk_background_movement(INT8 move_x, INT8 move_y, UINT8 *step){
         scroll_bkg(0, move_y < 0 ? -2 : 2);
         if (move_y % 4 == 0 && move_y != 0){
             *step = (move_y >  0 ? setbit_forward(*step) : setbit_backward(*step));
-        }
-        for (int i = 0; i < 2; i++){
-            scroll_frog(0, (move_y > 0 ? -1 : 1));
         }
         move_y += (move_y > 0 ? -2 : 2);
         performantdelay(2);
@@ -378,7 +368,54 @@ void move(UINT8 *step, UINT16 *player_loc_x, UINT16 *player_loc_y, unsigned char
     }
 }
 
+
+void pongJoypadDetection(UINT8 *step){
+    if (joypad() & J_LEFT){
+        bit.x -=1;
+        *step = setbit_left(*step);
+    }
+    if (joypad() & J_RIGHT){
+        bit.x += 1;
+        *step = setbit_right(*step);
+    }
+    movegamecharacter(&bit, bit.x, bit.y);
+}
+
+void combatHeatJoypadDetection(UINT8 *step){
+
+    if (joypad() & J_LEFT){
+        bit.x -= 4;
+        *step = setbit_left(*step);
+        movegamecharacter(&bit, bit.x, bit.y);
+    }
+    if (joypad() & J_RIGHT){
+        bit.x += 4;
+        *step = setbit_right(*step);
+        movegamecharacter(&bit, bit.x, bit.y);
+    }
+
+    if (joypad() & J_UP){
+        bit.y -= 4;
+        *step = setbit_backward(*step);
+        movegamecharacter(&bit, bit.x, bit.y);
+    }
+    if (joypad() & J_DOWN){
+        bit.y += 4;
+        *step = setbit_forward(*step);
+        movegamecharacter(&bit, bit.x, bit.y);
+    }
+}
+
+struct GameCharacter* returnBitAddress(){
+    return &bit;
+}
+
+void setupBitPong(){
+    bit.width = 8;
+}
+
 void do_game_play(unsigned char* bk_collision, unsigned int MapHeight, unsigned int MapWidth){
+
     //set_win_data(0,40,Letter2Data);
     game_running = 1;
     UINT8 step = 0;

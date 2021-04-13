@@ -1,43 +1,127 @@
 #include <gb/gb.h>
+#include <gb/cgb.h>
 #include <stdio.h>
-#include "flags.h"
-#include "GameCharacter.c"
-//#include "Sprites/GameSprites.h"
+#include <stdbool.h>
+#include <gb/console.h>
+#include "combatLevels.c"
 
-UBYTE spritesize2 = 8;
+#define BackWidth 1
+#define BackHeight 1
+#define BackBank 0
 
-struct GameCharacter_square frog;
+enemyCharacter enemies[8];
 
-void movegamecharacter_frog(struct GameCharacter_square* character, UINT8 x, UINT8 y){ 
-    move_sprite(character->spriteids[0], x, y);
-    move_sprite(character->spriteids[1], x + spritesize2, y);
-    move_sprite(character->spriteids[2], x, y + spritesize2);
-    move_sprite(character->spriteids[3], x + spritesize2, y + spritesize2);
+void setupenemiesPongOne(UINT8 id){
+    if(id == 0){
+        enemies[id].x = 30;
+        enemies[id].y = 15;
+        enemies[id].xspeed = 1;
+        enemies[id].xdirection = false;
+        enemies[id].yspeed = 0;
+    }
+    else if(id == 1){
+        enemies[id].x = 50;
+        enemies[id].y = 15;
+        enemies[id].xspeed = 1;
+        enemies[id].xdirection = true;
+        enemies[id].yspeed = 0;
+    }
+    else if(id == 2){
+        enemies[id].x = 100;
+        enemies[id].y = 15;
+        enemies[id].xspeed = 1;
+        enemies[id].xdirection = false;
+        enemies[id].yspeed = 0;
+    }
+
+    enemies[id].width = 16;
+    enemies[id].height = 8;
+
+    
 }
 
+void setupball(UINT8 id){
 
-void setupfrog(){
-    frog.x = 80;
-    frog.y = 20;
-    frog.height = 16;
-    frog.width = 16;
+    enemies[id].x = 90;
+    enemies[id].y = 30;
+    enemies[id].xspeed = 1;
+    enemies[id].xdirection = false;
+    enemies[id].yspeed = 1;
+    enemies[id].ydirection = true;
 
-    // load frog sprites
-    set_sprite_tile(6,42);
-    frog.spriteids[0] = 6;
-    set_sprite_prop(6,2);
-    set_sprite_tile(7,43);
-    frog.spriteids[1] = 7;
-    set_sprite_prop(7,2);
-    set_sprite_tile(8,44);
-    frog.spriteids[2] = 8;
-    set_sprite_prop(8,6);
-    set_sprite_tile(9,45);
-    frog.spriteids[3] = 9;
-    set_sprite_prop(9,6);
+    enemies[id].width = 8;
+    enemies[id].height = 8;
 
-    movegamecharacter_frog(&frog, frog.x, frog.y); 
-    SHOW_SPRITES;
-    DISPLAY_ON;
+    // load sprites for enemies
+    UINT8 tileid = id*2 + 6;
+    set_sprite_tile(tileid, 40);
+    enemies[id].spritids[0] = tileid;
+
+    moveballcharacter(&enemies[id], enemies[id].x, enemies[id].y);
+}
+
+void pongOnePartOne(UINT8 i, UINT8 tileid){
+    enemies[i].spritids[0] = tileid;
+    enemies[i].spritids[1] = tileid+1;
+}
+
+void movePongCharacterFromCombatLevelsFile(UINT8 i){
+    movepongcharacter(&enemies[i], enemies[i].x, enemies[i].y);
+}
+
+void PongOnecheckcollisions(struct GameCharacter* bitAddress, UBYTE ballID){
+    if(checkcollisions(bitAddress, &enemies[ballID])){
+        enemies[ballID].ydirection = false;
+    }
+}
+
+UBYTE pongOneUpdate(UBYTE *bitLives, UBYTE *enemyLives, UBYTE ballID){
+
+    UINT8 k;
+
+    for (k = 0; k<ballID+1; k++) {
+        if (enemies[k].xdirection == true){
+            enemies[k].x += enemies[k].xspeed;
+        }
+        else{
+            enemies[k].x -= enemies[k].xspeed;
+        }
+
+        if(enemies[k].x >= 168-enemies[k].width){
+            enemies[k].xdirection = false;
+        }
+        else if(enemies[k].x <= 8){
+            enemies[k].xdirection = true;
+        }
+        
+        if (k != ballID){
+            if(checkenemycollisions(&enemies[ballID], &enemies[k])){
+                enemies[ballID].ydirection = true;
+            }
+
+            movepongcharacter(&enemies[k],enemies[k].x,enemies[k].y);
+        }   
+    }
+
+    if(enemies[ballID].ydirection == true){
+        enemies[ballID].y += enemies[ballID].yspeed;
+    }
+    else {
+        enemies[ballID].y -= enemies[ballID].yspeed;
+    }
+
+    moveballcharacter(&enemies[ballID],enemies[ballID].x,enemies[ballID].y);
+
+    if(enemies[ballID].y <= 8){
+        *enemyLives = *enemyLives - 1;
+        return 0;
+    }
+    else if(enemies[ballID].y >= 150){
+        *bitLives = *bitLives - 1;
+        return 0;
+    }
+    
+    return 1;
+    
 }
 
