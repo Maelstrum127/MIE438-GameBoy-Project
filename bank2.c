@@ -1,11 +1,12 @@
 #include <gb/gb.h>
-#include <gb/font.h>
+#include "flags.h"
 #include <stdio.h>
 #include <gb/cgb.h>
 #include "Backgrounds/Lvl1BackgroundMap.h"
 #include "Backgrounds/Lvl1BackgroundData.h"
 #include "GameCharacter.c"
 #include "Sprites/GameSprites.h"
+
 
 const unsigned char blankmap[15] = {0x51, 0x52};
 UINT16 player_location[2];
@@ -66,6 +67,7 @@ const UWORD spritepalette[] = {
     GameSpritesCGBPal7c2,
     GameSpritesCGBPal7c3,
 };
+
 UBYTE has_key, open_door, game_running;
 
 void performantdelay(UINT8 numloops){
@@ -499,9 +501,32 @@ void do_game_play(){
     UINT8 step = 0;
 
     while(game_running){
-        move(&step, &player_location[0], &player_location[1], bk_collision, MapHeight, MapWidth);
-        if ((player_location[0] < 104 && player_location[0] > 88) && (player_location[1] < 40 && player_location[1] > 24)){
+        if (frog_talk){
+            if ((player_location[0] == 96 || player_location[0] == 88 || player_location[0] == 80 || player_location[0] == 72) && (player_location[1] == 32)){
+                frog_talk = 0; //3 steps right then up
+                break;
+            } 
+        }
+        else{
+            walk_without_background_movement(8, 0, &step);
+            performantdelay(8);
+            walk_without_background_movement(8, 0, &step);
+            performantdelay(8);
+            walk_without_background_movement(8, 0, &step);
+            performantdelay(8);
+            walk_without_background_movement(0, -8, &step);
+            performantdelay(8);
+            walk_without_background_movement(0, -8, &step);
+            performantdelay(8);
+            walk_without_background_movement(0, -8, &step);
+            performantdelay(8);
+            walk_without_background_movement(0, -8, &step);
+            performantdelay(8);
+            walk_without_background_movement(0, -8, &step);
+            performantdelay(8);
             break;
-        } 
+        }
+        move(&step, &player_location[0], &player_location[1], bk_collision, MapHeight, MapWidth);
+        performantdelay(10);
     }
 }

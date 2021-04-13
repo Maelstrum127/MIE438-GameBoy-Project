@@ -13,6 +13,17 @@
 
 const unsigned char blankmap3[15] = {0x51, 0x52};
 
+
+const UWORD blankbackground[] = {
+    RGB_CYAN,RGB_CYAN,RGB_CYAN,RGB_CYAN,
+    RGB_CYAN,RGB_CYAN,RGB_CYAN,RGB_CYAN,
+    RGB_CYAN,RGB_CYAN,RGB_CYAN,RGB_CYAN,
+    RGB_CYAN,RGB_CYAN,RGB_CYAN,RGB_CYAN,
+    RGB_CYAN,RGB_CYAN,RGB_CYAN,RGB_CYAN,
+    RGB_CYAN,RGB_CYAN,RGB_CYAN,RGB_CYAN,
+    RGB_CYAN,RGB_CYAN,RGB_CYAN,RGB_CYAN,
+    RGB_CYAN,RGB_CYAN,RGB_CYAN,RGB_CYAN
+};
 // bank 0
 void setup_windows(unsigned char *win_data, unsigned char *win_map, int data_size, unsigned int MapHeight, unsigned int MapWidth, unsigned int MapX, unsigned int MapY);
 void setup_splashscreen();
@@ -33,6 +44,7 @@ void combatHeatJoypadDetection(UINT8 *step);
 struct GameCharacter* returnBitAddress();
 void setupBitPong();
 void do_game_play();
+void setup_characters(int character_x, int character_y);
 
 // bank 3 = combat level 1 pong
 UBYTE bitLives;
@@ -82,16 +94,20 @@ _Bool levelPongOne(UINT8 *step){
 
     setupbit(80, 130);
     setupBitPong();
-    
+    DISPLAY_OFF;
+    set_bkg_palette(0,7,&blankbackground[0]);
+	wait_vbl_done();
+    SHOW_BKG;
+	DISPLAY_ON;
 
     UINT8 tileid = 0;
     UINT8 i;
     for (i=0; i<3; i++){   
         tileid = i*2 + 6;
 
-        SWITCH_ROM_MBC1(2);
-        set_sprite_tile(tileid, 41);
-        set_sprite_tile(tileid+1, 42);
+        SWITCH_ROM_MBC1(4);
+        set_sprite_tile(tileid, 42);
+        set_sprite_tile(tileid+1, 43);
 
         SWITCH_ROM_MBC1(3);
         setupenemiesPongOne(i);
@@ -139,7 +155,7 @@ _Bool levelPongOne(UINT8 *step){
             printf(" ");
             gotoxy(0, 7);
             printf("  Your lives: %d\n  Enemy lives: %d\n  Use A to continue", bitLives, enemyLives);
-            while(!(joypad() & J_A)){
+            while(!(joypad() & J_START)){
                 performantdelay(5);
             }
             cls();
@@ -151,7 +167,7 @@ _Bool levelPongOne(UINT8 *step){
         printf(" ");
         gotoxy(0, 7);
         printf("  === YOU LOSE ===\n   Please press B \n   to try again.");
-        while(!(joypad() & J_B)){
+        while(!(joypad() & J_START)){
             performantdelay(5); 
         }
         cls();
@@ -161,7 +177,7 @@ _Bool levelPongOne(UINT8 *step){
         printf(" ");
         gotoxy(0, 7);
         printf("  YOU WON THE BATTLE!\n   Please press B \n    to continue.");
-        while(!(joypad() & J_B)){
+        while(!(joypad() & J_START)){
             performantdelay(5); 
         }
         cls();
@@ -180,6 +196,11 @@ void main()
 
     SWITCH_ROM_MBC1(0);
     setup_dialogues();
+
+    SWITCH_ROM_MBC1(2);
+	do_game_play();
+
+    SWITCH_ROM_MBC1(0);
 
     performantdelay(5);
 
