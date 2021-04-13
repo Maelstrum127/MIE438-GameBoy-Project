@@ -15,7 +15,6 @@ void movegamecharacter_frog(struct GameCharacter_square* character, UINT8 x, UIN
     move_sprite(character->spriteids[3], x + spritesize2, y + spritesize2);
 }
 
-
 void setupfrog(){
     frog.x = 80;
     frog.y = 20;
