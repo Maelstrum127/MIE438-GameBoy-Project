@@ -6,8 +6,9 @@
 #include "Backgrounds/Lvl1BackgroundData.h"
 #include "GameCharacter.c"
 #include "Sprites/GameSprites.h"
+#include "Backgrounds/TransMap.c"
 
-
+extern unsigned char Letter2Data[];
 const unsigned char blankmap[15] = {0x51, 0x52};
 UINT16 player_location[2];
 
@@ -529,4 +530,18 @@ void do_game_play(){
         move(&step, &player_location[0], &player_location[1], bk_collision, MapHeight, MapWidth);
         performantdelay(10);
     }
+}
+
+void transition(){
+    DISPLAY_OFF;
+    set_win_data(0,41,Letter2Data);
+    set_win_tiles(0, 0, TransDataWidth, TransDataHeight, TransData);
+    move_win(5, 0);
+    HIDE_BKG;
+    HIDE_SPRITES;
+    SHOW_WIN;
+    DISPLAY_ON;
+    waitpad(J_START);
+    waitpadup(); 
+    HIDE_WIN;
 }

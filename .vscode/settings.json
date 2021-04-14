@@ -4,6 +4,8 @@
         "backgrounddata.h": "c",
         "backgroundmap.h": "c",
         "gb.h": "c",
-        "lvl1backgrounddata.h": "c"
+        "lvl1backgrounddata.h": "c",
+        "lvl1backgroundmap.h": "c",
+        "blankbackgroundmap.h": "c"
     }
 }

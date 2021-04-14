@@ -10,6 +10,7 @@
 ;--------------------------------------------------------
 	.globl _main
 	.globl _levelPongOne
+	.globl _transition
 	.globl _pongOneUpdate
 	.globl _PongOnecheckcollisions
 	.globl _movePongCharacterFromCombatLevelsFile
@@ -33,7 +34,6 @@
 	.globl _waitpadup
 	.globl _waitpad
 	.globl _joypad
-	.globl _set_bkg_palette
 	.globl _ballID
 	.globl _enemyLives
 	.globl _bitLives
@@ -42,13 +42,9 @@
 	.globl _Diag2
 	.globl _Diag1
 	.globl _Letter2Data
-	.globl _Intro3Map
-	.globl _Intro2Map
-	.globl _Intro1Map
 	.globl _blankbackground
 	.globl _blankmap3
 	.globl _setup_windows
-	.globl _setup_splashscreen
 	.globl _setup_dialogues
 ;--------------------------------------------------------
 ; special function registers
@@ -57,12 +53,6 @@
 ; ram data
 ;--------------------------------------------------------
 	.area _DATA
-_Intro1Map::
-	.ds 60
-_Intro2Map::
-	.ds 180
-_Intro3Map::
-	.ds 180
 _Letter2Data::
 	.ds 736
 _Diag1::
@@ -90,849 +80,6 @@ _ballID::
 	.area _GSINIT
 	.area _GSFINAL
 	.area _GSINIT
-;Splashscreens/intro1.c:25: unsigned char Intro1Map[] =
-	ld	hl, #_Intro1Map
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0001)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0002)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0003)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0004)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0005)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0006)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0007)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0008)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0009)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x000a)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x000b)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x000c)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x000d)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x000e)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x000f)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0010)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0011)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0012)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0013)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0014)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0015)
-	ld	(hl), #0x27
-	ld	hl, #(_Intro1Map + 0x0016)
-	ld	(hl), #0x17
-	ld	hl, #(_Intro1Map + 0x0017)
-	ld	(hl), #0x08
-	ld	hl, #(_Intro1Map + 0x0018)
-	ld	(hl), #0x05
-	ld	hl, #(_Intro1Map + 0x0019)
-	ld	(hl), #0x12
-	ld	hl, #(_Intro1Map + 0x001a)
-	ld	(hl), #0x05
-	ld	hl, #(_Intro1Map + 0x001b)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x001c)
-	ld	(hl), #0x01
-	ld	hl, #(_Intro1Map + 0x001d)
-	ld	(hl), #0x0d
-	ld	hl, #(_Intro1Map + 0x001e)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x001f)
-	ld	(hl), #0x09
-	ld	hl, #(_Intro1Map + 0x0020)
-	ld	(hl), #0x26
-	ld	hl, #(_Intro1Map + 0x0021)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0022)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0023)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0024)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0025)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0026)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0027)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0028)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0029)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x002a)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x002b)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x002c)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x002d)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x002e)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x002f)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0030)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0031)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0032)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0033)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0034)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0035)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0036)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0037)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0038)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x0039)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x003a)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro1Map + 0x003b)
-	ld	(hl), #0x00
-;Splashscreens/intro2.c:25: unsigned char Intro2Map[] =
-	ld	hl, #_Intro2Map
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0001)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0002)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0003)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0004)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0005)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0006)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0007)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0008)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0009)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x000a)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x000b)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x000c)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x000d)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x000e)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x000f)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0010)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0011)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0012)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0013)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0014)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0015)
-	ld	(hl), #0x09
-	ld	hl, #(_Intro2Map + 0x0016)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0017)
-	ld	(hl), #0x17
-	ld	hl, #(_Intro2Map + 0x0018)
-	ld	(hl), #0x01
-	ld	hl, #(_Intro2Map + 0x0019)
-	ld	(hl), #0x13
-	ld	hl, #(_Intro2Map + 0x001a)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x001b)
-	ld	(hl), #0x10
-	ld	hl, #(_Intro2Map + 0x001c)
-	ld	(hl), #0x0c
-	ld	hl, #(_Intro2Map + 0x001d)
-	ld	(hl), #0x01
-	ld	hl, #(_Intro2Map + 0x001e)
-	ld	(hl), #0x19
-	ld	hl, #(_Intro2Map + 0x001f)
-	ld	(hl), #0x09
-	ld	hl, #(_Intro2Map + 0x0020)
-	ld	(hl), #0x0e
-	ld	hl, #(_Intro2Map + 0x0021)
-	ld	(hl), #0x07
-	ld	hl, #(_Intro2Map + 0x0022)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0023)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0024)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0025)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0026)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0027)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0028)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0029)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x002a)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x002b)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x002c)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x002d)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x002e)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x002f)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0030)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0031)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0032)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0033)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0034)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0035)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0036)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0037)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0038)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0039)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x003a)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x003b)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x003c)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x003d)
-	ld	(hl), #0x10
-	ld	hl, #(_Intro2Map + 0x003e)
-	ld	(hl), #0x0f
-	ld	hl, #(_Intro2Map + 0x003f)
-	ld	(hl), #0x0b
-	ld	hl, #(_Intro2Map + 0x0040)
-	ld	(hl), #0x05
-	ld	hl, #(_Intro2Map + 0x0041)
-	ld	(hl), #0x0d
-	ld	hl, #(_Intro2Map + 0x0042)
-	ld	(hl), #0x0f
-	ld	hl, #(_Intro2Map + 0x0043)
-	ld	(hl), #0x0e
-	ld	hl, #(_Intro2Map + 0x0044)
-	ld	(hl), #0x27
-	ld	hl, #(_Intro2Map + 0x0045)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0046)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0047)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0048)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0049)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x004a)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x004b)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x004c)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x004d)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x004e)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x004f)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0050)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0051)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0052)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0053)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0054)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0055)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0056)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0057)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0058)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0059)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x005a)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x005b)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x005c)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x005d)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x005e)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x005f)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0060)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0061)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0062)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0063)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0064)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0065)
-	ld	(hl), #0x09
-	ld	hl, #(_Intro2Map + 0x0066)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0067)
-	ld	(hl), #0x0d
-	ld	hl, #(_Intro2Map + 0x0068)
-	ld	(hl), #0x15
-	ld	hl, #(_Intro2Map + 0x0069)
-	ld	(hl), #0x13
-	ld	hl, #(_Intro2Map + 0x006a)
-	ld	(hl), #0x14
-	ld	hl, #(_Intro2Map + 0x006b)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x006c)
-	ld	(hl), #0x08
-	ld	hl, #(_Intro2Map + 0x006d)
-	ld	(hl), #0x01
-	ld	hl, #(_Intro2Map + 0x006e)
-	ld	(hl), #0x16
-	ld	hl, #(_Intro2Map + 0x006f)
-	ld	(hl), #0x05
-	ld	hl, #(_Intro2Map + 0x0070)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0071)
-	ld	(hl), #0x04
-	ld	hl, #(_Intro2Map + 0x0072)
-	ld	(hl), #0x0f
-	ld	hl, #(_Intro2Map + 0x0073)
-	ld	(hl), #0x1a
-	ld	hl, #(_Intro2Map + 0x0074)
-	ld	(hl), #0x05
-	ld	hl, #(_Intro2Map + 0x0075)
-	ld	(hl), #0x04
-	ld	hl, #(_Intro2Map + 0x0076)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0077)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0078)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0079)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x007a)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x007b)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x007c)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x007d)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x007e)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x007f)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0080)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0081)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0082)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0083)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0084)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0085)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0086)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0087)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0088)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0089)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x008a)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x008b)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x008c)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x008d)
-	ld	(hl), #0x0f
-	ld	hl, #(_Intro2Map + 0x008e)
-	ld	(hl), #0x06
-	ld	hl, #(_Intro2Map + 0x008f)
-	ld	(hl), #0x06
-	ld	hl, #(_Intro2Map + 0x0090)
-	ld	(hl), #0x25
-	ld	hl, #(_Intro2Map + 0x0091)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0092)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0093)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0094)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0095)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0096)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0097)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0098)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x0099)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x009a)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x009b)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x009c)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x009d)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x009e)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x009f)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x00a0)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x00a1)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x00a2)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x00a3)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x00a4)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x00a5)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x00a6)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x00a7)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x00a8)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x00a9)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x00aa)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x00ab)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x00ac)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x00ad)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x00ae)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x00af)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x00b0)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x00b1)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x00b2)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro2Map + 0x00b3)
-	ld	(hl), #0x00
-;Splashscreens/intro3.c:25: unsigned char Intro3Map[] =
-	ld	hl, #_Intro3Map
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0001)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0002)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0003)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0004)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0005)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0006)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0007)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0008)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0009)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x000a)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x000b)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x000c)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x000d)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x000e)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x000f)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0010)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0011)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0012)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0013)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0014)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0015)
-	ld	(hl), #0x0f
-	ld	hl, #(_Intro3Map + 0x0016)
-	ld	(hl), #0x08
-	ld	hl, #(_Intro3Map + 0x0017)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0018)
-	ld	(hl), #0x09
-	ld	hl, #(_Intro3Map + 0x0019)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x001a)
-	ld	(hl), #0x13
-	ld	hl, #(_Intro3Map + 0x001b)
-	ld	(hl), #0x05
-	ld	hl, #(_Intro3Map + 0x001c)
-	ld	(hl), #0x05
-	ld	hl, #(_Intro3Map + 0x001d)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x001e)
-	ld	(hl), #0x13
-	ld	hl, #(_Intro3Map + 0x001f)
-	ld	(hl), #0x0f
-	ld	hl, #(_Intro3Map + 0x0020)
-	ld	(hl), #0x0d
-	ld	hl, #(_Intro3Map + 0x0021)
-	ld	(hl), #0x05
-	ld	hl, #(_Intro3Map + 0x0022)
-	ld	(hl), #0x0f
-	ld	hl, #(_Intro3Map + 0x0023)
-	ld	(hl), #0x0e
-	ld	hl, #(_Intro3Map + 0x0024)
-	ld	(hl), #0x05
-	ld	hl, #(_Intro3Map + 0x0025)
-	ld	(hl), #0x25
-	ld	hl, #(_Intro3Map + 0x0026)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0027)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0028)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0029)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x002a)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x002b)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x002c)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x002d)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x002e)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x002f)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0030)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0031)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0032)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0033)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0034)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0035)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0036)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0037)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0038)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0039)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x003a)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x003b)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x003c)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x003d)
-	ld	(hl), #0x09
-	ld	hl, #(_Intro3Map + 0x003e)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x003f)
-	ld	(hl), #0x17
-	ld	hl, #(_Intro3Map + 0x0040)
-	ld	(hl), #0x09
-	ld	hl, #(_Intro3Map + 0x0041)
-	ld	(hl), #0x0c
-	ld	hl, #(_Intro3Map + 0x0042)
-	ld	(hl), #0x0c
-	ld	hl, #(_Intro3Map + 0x0043)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0044)
-	ld	(hl), #0x01
-	ld	hl, #(_Intro3Map + 0x0045)
-	ld	(hl), #0x13
-	ld	hl, #(_Intro3Map + 0x0046)
-	ld	(hl), #0x0b
-	ld	hl, #(_Intro3Map + 0x0047)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0048)
-	ld	(hl), #0x14
-	ld	hl, #(_Intro3Map + 0x0049)
-	ld	(hl), #0x08
-	ld	hl, #(_Intro3Map + 0x004a)
-	ld	(hl), #0x05
-	ld	hl, #(_Intro3Map + 0x004b)
-	ld	(hl), #0x0d
-	ld	hl, #(_Intro3Map + 0x004c)
-	ld	(hl), #0x25
-	ld	hl, #(_Intro3Map + 0x004d)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x004e)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x004f)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0050)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0051)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0052)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0053)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0054)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0055)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0056)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0057)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0058)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0059)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x005a)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x005b)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x005c)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x005d)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x005e)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x005f)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0060)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0061)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0062)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0063)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0064)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0065)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0066)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0067)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0068)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0069)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x006a)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x006b)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x006c)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x006d)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x006e)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x006f)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0070)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0071)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0072)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0073)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0074)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0075)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0076)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0077)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0078)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0079)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x007a)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x007b)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x007c)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x007d)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x007e)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x007f)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0080)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0081)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0082)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0083)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0084)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0085)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0086)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0087)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0088)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0089)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x008a)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x008b)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x008c)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x008d)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x008e)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x008f)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0090)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0091)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0092)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0093)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0094)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0095)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0096)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0097)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0098)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x0099)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x009a)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x009b)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x009c)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x009d)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x009e)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x009f)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x00a0)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x00a1)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x00a2)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x00a3)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x00a4)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x00a5)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x00a6)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x00a7)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x00a8)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x00a9)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x00aa)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x00ab)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x00ac)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x00ad)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x00ae)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x00af)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x00b0)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x00b1)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x00b2)
-	ld	(hl), #0x00
-	ld	hl, #(_Intro3Map + 0x00b3)
-	ld	(hl), #0x00
 ;Dialogues/letter2Data.c:26: unsigned char Letter2Data[] =
 	ld	hl, #_Letter2Data
 	ld	(hl), #0xff
@@ -3219,14 +2366,14 @@ _ballID::
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;main.c:64: void setup_windows(unsigned char *win_data, unsigned char *win_map, int data_size, unsigned int MapHeight, unsigned int MapWidth, unsigned int MapX, unsigned int MapY){
+;main.c:60: void setup_windows(unsigned char *win_data, unsigned char *win_map, int data_size, unsigned int MapHeight, unsigned int MapWidth, unsigned int MapX, unsigned int MapY){
 ;	---------------------------------
 ; Function setup_windows
 ; ---------------------------------
 _setup_windows::
-;main.c:65: DISPLAY_OFF;
+;main.c:61: DISPLAY_OFF;
 	call	_display_off
-;main.c:66: set_win_data(0,data_size,win_data);
+;main.c:62: set_win_data(0,data_size,win_data);
 	ldhl	sp,	#6
 	ld	a, (hl)
 	pop	bc
@@ -3241,7 +2388,7 @@ _setup_windows::
 	inc	sp
 	call	_set_win_data
 	add	sp, #4
-;main.c:67: set_win_tiles(0,0,MapWidth,MapHeight,win_map);
+;main.c:63: set_win_tiles(0,0,MapWidth,MapHeight,win_map);
 	ldhl	sp,	#8
 	ld	a, (hl+)
 	ld	d, a
@@ -3262,7 +2409,7 @@ _setup_windows::
 	inc	sp
 	call	_set_win_tiles
 	add	sp, #6
-;main.c:68: move_win(MapX, MapY);
+;main.c:64: move_win(MapX, MapY);
 	ldhl	sp,	#14
 	ld	a, (hl-)
 	ld	c, a
@@ -3272,24 +2419,24 @@ _setup_windows::
 ;C:/gbdk/include/gb/gb.h:893: WX_REG=x, WY_REG=y;
 	ld	a, c
 	ldh	(_WY_REG+0),a
-;main.c:69: wait_vbl_done();
+;main.c:65: wait_vbl_done();
 	call	_wait_vbl_done
-;main.c:70: SHOW_WIN;
+;main.c:66: SHOW_WIN;
 	ldh	a, (_LCDC_REG+0)
 	or	a, #0x20
 	ldh	(_LCDC_REG+0),a
-;main.c:71: DISPLAY_ON;
+;main.c:67: DISPLAY_ON;
 	ldh	a, (_LCDC_REG+0)
 	or	a, #0x80
 	ldh	(_LCDC_REG+0),a
-;main.c:72: waitpad(J_START);
+;main.c:68: waitpad(J_START);
 	ld	a, #0x80
 	push	af
 	inc	sp
 	call	_waitpad
 	inc	sp
-;main.c:73: waitpadup(); 
-;main.c:74: }
+;main.c:69: waitpadup(); 
+;main.c:70: }
 	jp  _waitpadup
 _blankmap3:
 	.db #0x51	; 81	'Q'
@@ -3340,74 +2487,12 @@ _blankbackground:
 	.dw #0x7fe0
 	.dw #0x7fe0
 	.dw #0x7fe0
-;main.c:76: void setup_splashscreen(){
-;	---------------------------------
-; Function setup_splashscreen
-; ---------------------------------
-_setup_splashscreen::
-;main.c:77: setup_windows(Letter2Data, Intro1Map, 40, Intro1MapHeight, Intro1MapWidth, 7, 7);
-	ld	hl, #0x0007
-	push	hl
-	ld	l, #0x07
-	push	hl
-	ld	l, #0x14
-	push	hl
-	ld	l, #0x03
-	push	hl
-	ld	l, #0x28
-	push	hl
-	ld	hl, #_Intro1Map
-	push	hl
-	ld	hl, #_Letter2Data
-	push	hl
-	call	_setup_windows
-	add	sp, #14
-;main.c:78: setup_windows(Letter2Data, Intro2Map, 40, Intro2MapHeight, Intro2MapWidth, 7, 7);
-	ld	hl, #0x0007
-	push	hl
-	ld	l, #0x07
-	push	hl
-	ld	l, #0x14
-	push	hl
-	ld	l, #0x09
-	push	hl
-	ld	l, #0x28
-	push	hl
-	ld	hl, #_Intro2Map
-	push	hl
-	ld	hl, #_Letter2Data
-	push	hl
-	call	_setup_windows
-	add	sp, #14
-;main.c:79: setup_windows(Letter2Data, Intro3Map, 40, Intro3MapHeight, Intro3MapWidth, 7, 7);
-	ld	hl, #0x0007
-	push	hl
-	ld	l, #0x07
-	push	hl
-	ld	l, #0x14
-	push	hl
-	ld	l, #0x09
-	push	hl
-	ld	l, #0x28
-	push	hl
-	ld	hl, #_Intro3Map
-	push	hl
-	ld	hl, #_Letter2Data
-	push	hl
-	call	_setup_windows
-	add	sp, #14
-;main.c:80: HIDE_WIN;
-	ldh	a, (_LCDC_REG+0)
-	and	a, #0xdf
-	ldh	(_LCDC_REG+0),a
-;main.c:81: }
-	ret
-;main.c:83: void setup_dialogues(){
+;main.c:72: void setup_dialogues(){
 ;	---------------------------------
 ; Function setup_dialogues
 ; ---------------------------------
 _setup_dialogues::
-;main.c:84: setup_windows(Letter2Data, Diag1, 41, Diag1Height, Diag1Width, 7, 104);
+;main.c:73: setup_windows(Letter2Data, Diag1, 41, Diag1Height, Diag1Width, 7, 104);
 	ld	hl, #0x0068
 	push	hl
 	ld	l, #0x07
@@ -3424,7 +2509,7 @@ _setup_dialogues::
 	push	hl
 	call	_setup_windows
 	add	sp, #14
-;main.c:85: setup_windows(Letter2Data, Diag2, 41, Diag2Height, Diag2Width, 7, 104);
+;main.c:74: setup_windows(Letter2Data, Diag2, 41, Diag2Height, Diag2Width, 7, 104);
 	ld	hl, #0x0068
 	push	hl
 	ld	l, #0x07
@@ -3441,7 +2526,7 @@ _setup_dialogues::
 	push	hl
 	call	_setup_windows
 	add	sp, #14
-;main.c:86: setup_windows(Letter2Data, Diag3, 41, Diag3Height, Diag3Width, 7, 104);
+;main.c:75: setup_windows(Letter2Data, Diag3, 41, Diag3Height, Diag3Width, 7, 104);
 	ld	hl, #0x0068
 	push	hl
 	ld	l, #0x07
@@ -3458,7 +2543,7 @@ _setup_dialogues::
 	push	hl
 	call	_setup_windows
 	add	sp, #14
-;main.c:87: setup_windows(Letter2Data, Diag4, 41, Diag4Height, Diag4Width, 7, 104);
+;main.c:76: setup_windows(Letter2Data, Diag4, 41, Diag4Height, Diag4Width, 7, 104);
 	ld	hl, #0x0068
 	push	hl
 	ld	l, #0x07
@@ -3475,67 +2560,49 @@ _setup_dialogues::
 	push	hl
 	call	_setup_windows
 	add	sp, #14
-;main.c:88: HIDE_WIN;
+;main.c:77: HIDE_WIN;
 	ldh	a, (_LCDC_REG+0)
 	and	a, #0xdf
 	ldh	(_LCDC_REG+0),a
-;main.c:89: }
+;main.c:78: }
 	ret
-;main.c:91: _Bool levelPongOne(UINT8 *step){
+;main.c:81: _Bool levelPongOne(UINT8 *step){
 ;	---------------------------------
 ; Function levelPongOne
 ; ---------------------------------
 _levelPongOne::
 	add	sp, #-4
-;main.c:92: SWITCH_ROM_MBC1(2);
+;main.c:82: SWITCH_ROM_MBC1(2);
 	ld	a, #0x02
 	ldh	(__current_bank+0),a
 	ld	hl, #0x2000
 	ld	(hl), #0x02
-;main.c:93: struct GameCharacter* bitAddress = returnBitAddress();
+;main.c:83: struct GameCharacter* bitAddress = returnBitAddress();
 	call	_returnBitAddress
 	inc	sp
 	inc	sp
 	push	de
-;main.c:95: setupbit(80, 130);
+;main.c:85: setupbit(80, 130);
 	ld	de, #0x8250
 	push	de
 	call	_setupbit
 	add	sp, #2
-;main.c:96: setupBitPong();
+;main.c:86: setupBitPong();
 	call	_setupBitPong
-;main.c:97: DISPLAY_OFF;
-	call	_display_off
-;main.c:98: set_bkg_palette(0,7,&blankbackground[0]);
-	ld	hl, #_blankbackground
+;main.c:87: printf(" ");
+	ld	hl, #___str_0
 	push	hl
-	ld	a, #0x07
-	push	af
-	inc	sp
-	xor	a, a
-	push	af
-	inc	sp
-	call	_set_bkg_palette
-	add	sp, #4
-;main.c:99: wait_vbl_done();
-	call	_wait_vbl_done
-;main.c:100: SHOW_BKG;
-	ldh	a, (_LCDC_REG+0)
-	or	a, #0x01
-	ldh	(_LCDC_REG+0),a
-;main.c:101: DISPLAY_ON;
-	ldh	a, (_LCDC_REG+0)
-	or	a, #0x80
-	ldh	(_LCDC_REG+0),a
-;main.c:105: for (i=0; i<3; i++){   
+	call	_printf
+	add	sp, #2
+;main.c:96: for (i=0; i<3; i++){   
 	ld	b, #0x00
 00128$:
-;main.c:106: tileid = i*2 + 6;
+;main.c:97: tileid = i*2 + 6;
 	ld	a, b
 	add	a, a
 	add	a, #0x06
 	ld	c, a
-;main.c:108: SWITCH_ROM_MBC1(4);
+;main.c:99: SWITCH_ROM_MBC1(4);
 	ld	a, #0x04
 	ldh	(__current_bank+0),a
 	ld	hl, #0x2000
@@ -3551,7 +2618,7 @@ _levelPongOne::
 	inc	hl
 	ld	a,h
 	ld	(hl), #0x2a
-;main.c:110: set_sprite_tile(tileid+1, 43);
+;main.c:101: set_sprite_tile(tileid+1, 43);
 	ld	e, c
 	inc	e
 ;C:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
@@ -3565,19 +2632,19 @@ _levelPongOne::
 	inc	hl
 	inc	hl
 	ld	(hl), #0x2b
-;main.c:112: SWITCH_ROM_MBC1(3);
+;main.c:103: SWITCH_ROM_MBC1(3);
 	ld	a, #0x03
 	ldh	(__current_bank+0),a
 	ld	hl, #0x2000
 	ld	(hl), #0x03
-;main.c:113: setupenemiesPongOne(i);
+;main.c:104: setupenemiesPongOne(i);
 	push	bc
 	push	bc
 	inc	sp
 	call	_setupenemiesPongOne
 	inc	sp
 	pop	bc
-;main.c:114: pongOnePartOne(i, tileid);
+;main.c:105: pongOnePartOne(i, tileid);
 	push	bc
 	ld	a, c
 	push	af
@@ -3587,42 +2654,42 @@ _levelPongOne::
 	call	_pongOnePartOne
 	add	sp, #2
 	pop	bc
-;main.c:115: movePongCharacterFromCombatLevelsFile(i);
+;main.c:106: movePongCharacterFromCombatLevelsFile(i);
 	push	bc
 	push	bc
 	inc	sp
 	call	_movePongCharacterFromCombatLevelsFile
 	inc	sp
 	pop	bc
-;main.c:105: for (i=0; i<3; i++){   
+;main.c:96: for (i=0; i<3; i++){   
 	inc	b
 	ld	a, b
 	sub	a, #0x03
 	jr	C, 00128$
-;main.c:118: ballID = 3;
+;main.c:109: ballID = 3;
 	ld	hl, #_ballID
 	ld	(hl), #0x03
-;main.c:119: setupball(ballID);
+;main.c:110: setupball(ballID);
 	ld	a, #0x03
 	push	af
 	inc	sp
 	call	_setupball
 	inc	sp
-;main.c:121: SHOW_SPRITES;
+;main.c:112: SHOW_SPRITES;
 	ldh	a, (_LCDC_REG+0)
 	or	a, #0x02
 	ldh	(_LCDC_REG+0),a
-;main.c:122: DISPLAY_ON;
+;main.c:113: DISPLAY_ON;
 	ldh	a, (_LCDC_REG+0)
 	or	a, #0x80
 	ldh	(_LCDC_REG+0),a
-;main.c:126: bitLives = 3;
+;main.c:117: bitLives = 3;
 	ld	hl, #_bitLives
 	ld	(hl), #0x03
-;main.c:127: enemyLives = 3;
+;main.c:118: enemyLives = 3;
 	ld	hl, #_enemyLives
 	ld	(hl), #0x03
-;main.c:129: while(bitLives != 0 && enemyLives != 0){
+;main.c:120: while(bitLives != 0 && enemyLives != 0){
 	ldhl	sp,	#6
 	ld	a, (hl+)
 	ld	e, (hl)
@@ -3636,10 +2703,10 @@ _levelPongOne::
 	ld	a, (#_enemyLives)
 	or	a, a
 	jp	Z, 00116$
-;main.c:130: for (timer = 0; timer<8; timer++){
+;main.c:121: for (timer = 0; timer<8; timer++){
 	ld	c, #0x00
 00130$:
-;main.c:131: performantdelay(250); 
+;main.c:122: performantdelay(250); 
 	push	bc
 	ld	a, #0xfa
 	push	af
@@ -3647,22 +2714,22 @@ _levelPongOne::
 	call	_performantdelay
 	inc	sp
 	pop	bc
-;main.c:130: for (timer = 0; timer<8; timer++){
+;main.c:121: for (timer = 0; timer<8; timer++){
 	inc	c
 	ld	a, c
 	sub	a, #0x08
 	jr	C, 00130$
-;main.c:134: SWITCH_ROM_MBC1(2);
+;main.c:125: SWITCH_ROM_MBC1(2);
 	ld	a, #0x02
 	ldh	(__current_bank+0),a
 	ld	hl, #0x2000
 	ld	(hl), #0x02
-;main.c:135: if(joypad()){
+;main.c:126: if(joypad()){
 	call	_joypad
 	ld	a, e
 	or	a, a
 	jr	Z, 00104$
-;main.c:136: pongJoypadDetection(step);
+;main.c:127: pongJoypadDetection(step);
 	pop	bc
 	pop	hl
 	push	hl
@@ -3672,7 +2739,7 @@ _levelPongOne::
 	add	sp, #2
 	jr	00105$
 00104$:
-;main.c:139: wastetest = setbit_forward(*step);
+;main.c:130: wastetest = setbit_forward(*step);
 	ldhl	sp,#2
 	ld	a, (hl+)
 	ld	e, a
@@ -3683,12 +2750,12 @@ _levelPongOne::
 	call	_setbit_forward
 	inc	sp
 00105$:
-;main.c:142: SWITCH_ROM_MBC1(3);
+;main.c:133: SWITCH_ROM_MBC1(3);
 	ld	a, #0x03
 	ldh	(__current_bank+0),a
 	ld	hl, #0x2000
 	ld	(hl), #0x03
-;main.c:144: PongOnecheckcollisions(bitAddress, ballID);
+;main.c:135: PongOnecheckcollisions(bitAddress, ballID);
 	ld	a, (#_ballID)
 	push	af
 	inc	sp
@@ -3699,7 +2766,7 @@ _levelPongOne::
 	push	hl
 	call	_PongOnecheckcollisions
 	add	sp, #3
-;main.c:146: wastetest = pongOneUpdate(&bitLives, &enemyLives, ballID);
+;main.c:137: wastetest = pongOneUpdate(&bitLives, &enemyLives, ballID);
 	ld	a, (#_ballID)
 	push	af
 	inc	sp
@@ -3710,7 +2777,7 @@ _levelPongOne::
 	call	_pongOneUpdate
 	add	sp, #5
 	ld	a, e
-;main.c:148: if (wastetest == 0 && bitLives != 0 && enemyLives != 0){
+;main.c:139: if (wastetest == 0 && bitLives != 0 && enemyLives != 0){
 	or	a, a
 	jr	NZ, 00114$
 	ld	a, (#_bitLives)
@@ -3719,32 +2786,32 @@ _levelPongOne::
 	ld	a, (#_enemyLives)
 	or	a, a
 	jp	Z, 00114$
-;main.c:149: setupball(ballID);
+;main.c:140: setupball(ballID);
 	ld	a, (#_ballID)
 	push	af
 	inc	sp
 	call	_setupball
 	inc	sp
-;main.c:151: SHOW_SPRITES;
+;main.c:142: SHOW_SPRITES;
 	ldh	a, (_LCDC_REG+0)
 	or	a, #0x02
 	ldh	(_LCDC_REG+0),a
-;main.c:152: DISPLAY_ON;
+;main.c:143: DISPLAY_ON;
 	ldh	a, (_LCDC_REG+0)
 	or	a, #0x80
 	ldh	(_LCDC_REG+0),a
-;main.c:154: performantdelay(100);        
+;main.c:145: performantdelay(100);        
 	ld	a, #0x64
 	push	af
 	inc	sp
 	call	_performantdelay
 	inc	sp
-;main.c:155: printf(" ");
+;main.c:146: printf(" ");
 	ld	hl, #___str_0
 	push	hl
 	call	_printf
 	add	sp, #2
-;main.c:156: gotoxy(0, 7);
+;main.c:147: gotoxy(0, 7);
 	ld	a, #0x07
 	push	af
 	inc	sp
@@ -3753,7 +2820,7 @@ _levelPongOne::
 	inc	sp
 	call	_gotoxy
 	add	sp, #2
-;main.c:157: printf("  Your lives: %d\n  Enemy lives: %d\n  Use A to continue", bitLives, enemyLives);
+;main.c:148: printf("  Your lives: %d\n  Enemy lives: %d\n  Use A to continue", bitLives, enemyLives);
 	ld	hl, #_enemyLives
 	ld	e, (hl)
 	ld	d, #0x00
@@ -3766,13 +2833,13 @@ _levelPongOne::
 	push	hl
 	call	_printf
 	add	sp, #6
-;main.c:158: while(!(joypad() & J_START)){
+;main.c:149: while(!(joypad() & J_START)){
 00106$:
 	call	_joypad
 	ld	a, e
 	rlca
 	jr	C, 00108$
-;main.c:159: performantdelay(5);
+;main.c:150: performantdelay(5);
 	ld	a, #0x05
 	push	af
 	inc	sp
@@ -3780,20 +2847,20 @@ _levelPongOne::
 	inc	sp
 	jr	00106$
 00108$:
-;main.c:161: cls();
+;main.c:152: cls();
 	call	_cls
 	jp	00114$
 00116$:
-;main.c:166: if (bitLives == 0) {
+;main.c:157: if (bitLives == 0) {
 	ld	a, (#_bitLives)
 	or	a, a
 	jr	NZ, 00124$
-;main.c:167: printf(" ");
+;main.c:158: printf(" ");
 	ld	hl, #___str_0
 	push	hl
 	call	_printf
 	add	sp, #2
-;main.c:168: gotoxy(0, 7);
+;main.c:159: gotoxy(0, 7);
 	ld	a, #0x07
 	push	af
 	inc	sp
@@ -3802,18 +2869,18 @@ _levelPongOne::
 	inc	sp
 	call	_gotoxy
 	add	sp, #2
-;main.c:169: printf("  === YOU LOSE ===\n   Please press B \n   to try again.");
+;main.c:160: printf("  === YOU LOSE ===\n   Please press B \n   to try again.");
 	ld	hl, #___str_2
 	push	hl
 	call	_printf
 	add	sp, #2
-;main.c:170: while(!(joypad() & J_START)){
+;main.c:161: while(!(joypad() & J_START)){
 00117$:
 	call	_joypad
 	ld	a, e
 	rlca
 	jr	C, 00119$
-;main.c:171: performantdelay(5); 
+;main.c:162: performantdelay(5); 
 	ld	a, #0x05
 	push	af
 	inc	sp
@@ -3821,18 +2888,18 @@ _levelPongOne::
 	inc	sp
 	jr	00117$
 00119$:
-;main.c:173: cls();
+;main.c:164: cls();
 	call	_cls
-;main.c:174: return false;
+;main.c:165: return false;
 	ld	e, #0x00
 	jr	00132$
 00124$:
-;main.c:177: printf(" ");
+;main.c:168: printf(" ");
 	ld	hl, #___str_0
 	push	hl
 	call	_printf
 	add	sp, #2
-;main.c:178: gotoxy(0, 7);
+;main.c:169: gotoxy(0, 7);
 	ld	a, #0x07
 	push	af
 	inc	sp
@@ -3841,18 +2908,18 @@ _levelPongOne::
 	inc	sp
 	call	_gotoxy
 	add	sp, #2
-;main.c:179: printf("  YOU WON THE BATTLE!\n   Please press B \n    to continue.");
+;main.c:170: printf("  YOU WON THE BATTLE!\n   Please press B \n    to continue.");
 	ld	hl, #___str_3
 	push	hl
 	call	_printf
 	add	sp, #2
-;main.c:180: while(!(joypad() & J_START)){
+;main.c:171: while(!(joypad() & J_START)){
 00120$:
 	call	_joypad
 	ld	a, e
 	rlca
 	jr	C, 00122$
-;main.c:181: performantdelay(5); 
+;main.c:172: performantdelay(5); 
 	ld	a, #0x05
 	push	af
 	inc	sp
@@ -3860,12 +2927,12 @@ _levelPongOne::
 	inc	sp
 	jr	00120$
 00122$:
-;main.c:183: cls();
+;main.c:174: cls();
 	call	_cls
-;main.c:184: return true;
+;main.c:175: return true;
 	ld	e, #0x01
 00132$:
-;main.c:186: }
+;main.c:177: }
 	add	sp, #4
 	ret
 ___str_0:
@@ -3892,72 +2959,72 @@ ___str_3:
 	.db 0x0a
 	.ascii "    to continue."
 	.db 0x00
-;main.c:188: void main()
+;main.c:179: void main()
 ;	---------------------------------
 ; Function main
 ; ---------------------------------
 _main::
 	dec	sp
-;main.c:190: ENABLE_RAM_MBC1;
+;main.c:181: ENABLE_RAM_MBC1;
 	ld	hl, #0x0000
 	ld	(hl), #0x0a
-;main.c:191: SWITCH_ROM_MBC1(0);
-	ld	a, #0x00
+;main.c:185: SWITCH_ROM_MBC1(2);
+	ld	a, #0x02
 	ldh	(__current_bank+0),a
 	ld	h, #0x20
+	ld	(hl), #0x02
+;main.c:186: do_game_play();
+	call	_do_game_play
+;main.c:188: SWITCH_ROM_MBC1(0);
+	ld	a, #0x00
+	ldh	(__current_bank+0),a
+	ld	hl, #0x2000
 	ld	(hl), #0x00
-;main.c:192: setup_splashscreen();
-	call	_setup_splashscreen
+;main.c:189: setup_dialogues();
+	call	_setup_dialogues
+;main.c:191: SWITCH_ROM_MBC1(2);
+	ld	a, #0x02
+	ldh	(__current_bank+0),a
+	ld	hl, #0x2000
+	ld	(hl), #0x02
+;main.c:192: do_game_play();
+	call	_do_game_play
 ;main.c:194: SWITCH_ROM_MBC1(2);
 	ld	a, #0x02
 	ldh	(__current_bank+0),a
 	ld	hl, #0x2000
 	ld	(hl), #0x02
-;main.c:195: do_game_play();
-	call	_do_game_play
+;main.c:195: transition();
+	call	_transition
 ;main.c:197: SWITCH_ROM_MBC1(0);
 	ld	a, #0x00
 	ldh	(__current_bank+0),a
 	ld	hl, #0x2000
 	ld	(hl), #0x00
-;main.c:198: setup_dialogues();
-	call	_setup_dialogues
-;main.c:200: SWITCH_ROM_MBC1(2);
-	ld	a, #0x02
-	ldh	(__current_bank+0),a
-	ld	hl, #0x2000
-	ld	(hl), #0x02
-;main.c:201: do_game_play();
-	call	_do_game_play
-;main.c:203: SWITCH_ROM_MBC1(0);
-	ld	a, #0x00
-	ldh	(__current_bank+0),a
-	ld	hl, #0x2000
-	ld	(hl), #0x00
-;main.c:205: performantdelay(5);
+;main.c:198: performantdelay(5);
 	ld	a, #0x05
 	push	af
 	inc	sp
 	call	_performantdelay
 	inc	sp
-;main.c:208: UINT8 step = 0;
+;main.c:201: UINT8 step = 0;
 	xor	a, a
 	ldhl	sp,	#0
 	ld	(hl), a
-;main.c:209: _Bool test = false;
+;main.c:202: _Bool test = false;
 	ld	e, #0x00
-;main.c:210: while(test == false){
+;main.c:203: while(test == false){
 00101$:
 	bit	0, e
 	jr	NZ, 00104$
-;main.c:211: test = levelPongOne(&step);
+;main.c:204: test = levelPongOne(&step);
 	ldhl	sp,	#0
 	push	hl
 	call	_levelPongOne
 	add	sp, #2
 	jr	00101$
 00104$:
-;main.c:214: }
+;main.c:207: }
 	inc	sp
 	ret
 	.area _CODE

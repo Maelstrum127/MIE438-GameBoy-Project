@@ -1,10 +1,7 @@
-#include<gb/gb.h>
-#include<stdio.h>
+#include <gb/gb.h>
+#include <stdio.h>
 #include <stdbool.h>
 #include <gb/console.h>
-#include "Splashscreens/intro1.c"
-#include "Splashscreens/intro2.c"
-#include "Splashscreens/intro3.c"
 #include "Dialogues/letter2Data.c"
 #include "Dialogues/Diag1.c"
 #include "Dialogues/Diag2.c"
@@ -26,7 +23,7 @@ const UWORD blankbackground[] = {
 };
 // bank 0
 void setup_windows(unsigned char *win_data, unsigned char *win_map, int data_size, unsigned int MapHeight, unsigned int MapWidth, unsigned int MapX, unsigned int MapY);
-void setup_splashscreen();
+//void setup_splashscreen();
 void setup_dialogues();
 
 // bank 2
@@ -58,9 +55,8 @@ void PongOnecheckcollisions(struct GameCharacter* bitAddress, UBYTE ballID);
 UBYTE pongOneUpdate(UBYTE *bitLives, UBYTE *enemyLives, UBYTE ballID);
 
 //bank 4
+void transition();
 
-
-//other stuff
 void setup_windows(unsigned char *win_data, unsigned char *win_map, int data_size, unsigned int MapHeight, unsigned int MapWidth, unsigned int MapX, unsigned int MapY){
     DISPLAY_OFF;
 	set_win_data(0,data_size,win_data);
@@ -73,13 +69,6 @@ void setup_windows(unsigned char *win_data, unsigned char *win_map, int data_siz
     waitpadup(); 
 }
 
-void setup_splashscreen(){
-	setup_windows(Letter2Data, Intro1Map, 40, Intro1MapHeight, Intro1MapWidth, 7, 7);
-    setup_windows(Letter2Data, Intro2Map, 40, Intro2MapHeight, Intro2MapWidth, 7, 7);
-    setup_windows(Letter2Data, Intro3Map, 40, Intro3MapHeight, Intro3MapWidth, 7, 7);
-    HIDE_WIN;
-}
-
 void setup_dialogues(){
     setup_windows(Letter2Data, Diag1, 41, Diag1Height, Diag1Width, 7, 104);
     setup_windows(Letter2Data, Diag2, 41, Diag2Height, Diag2Width, 7, 104);
@@ -88,17 +77,19 @@ void setup_dialogues(){
     HIDE_WIN;
 }
 
+//other stuff
 _Bool levelPongOne(UINT8 *step){
     SWITCH_ROM_MBC1(2);
     struct GameCharacter* bitAddress = returnBitAddress();
 
     setupbit(80, 130);
     setupBitPong();
-    DISPLAY_OFF;
-    set_bkg_palette(0,7,&blankbackground[0]);
-	wait_vbl_done();
-    SHOW_BKG;
-	DISPLAY_ON;
+    printf(" ");
+    // DISPLAY_OFF;
+    // set_bkg_palette(0,1,&blankbackground[0]);
+	// wait_vbl_done();
+    // SHOW_BKG;
+	// DISPLAY_ON;
 
     UINT8 tileid = 0;
     UINT8 i;
@@ -188,8 +179,8 @@ _Bool levelPongOne(UINT8 *step){
 void main()
 {
 	ENABLE_RAM_MBC1;
-    SWITCH_ROM_MBC1(0);
-    setup_splashscreen();
+    //SWITCH_ROM_MBC1(4);
+    //setup_splashscreen();
 
 	SWITCH_ROM_MBC1(2);
 	do_game_play();
@@ -200,8 +191,10 @@ void main()
     SWITCH_ROM_MBC1(2);
 	do_game_play();
 
-    SWITCH_ROM_MBC1(0);
+    SWITCH_ROM_MBC1(2);
+    transition();
 
+    SWITCH_ROM_MBC1(0);
     performantdelay(5);
 
     //Combat Level 1 Pong
