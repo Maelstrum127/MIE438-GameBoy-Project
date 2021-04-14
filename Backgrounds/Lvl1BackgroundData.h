@@ -10,7 +10,7 @@
   Compression          : None.
   Counter              : None.
   Tile size            : 8 x 8
-  Tiles                : 0 to 127
+  Tiles                : 0 to 87
 
   Palette colors       : Included.
   SGB Palette          : None.
@@ -51,10 +51,10 @@
 #define Lvl1BackgroundDataSGBPal3c3 5344
 
 /* Gameboy Color palette 0 */
-#define Lvl1BackgroundDataCGBPal0c0 6076
-#define Lvl1BackgroundDataCGBPal0c1 8935
-#define Lvl1BackgroundDataCGBPal0c2 6596
-#define Lvl1BackgroundDataCGBPal0c3 5344
+#define Lvl1BackgroundDataCGBPal0c0 21140
+#define Lvl1BackgroundDataCGBPal0c1 545
+#define Lvl1BackgroundDataCGBPal0c2 1351
+#define Lvl1BackgroundDataCGBPal0c3 0
 
 /* Gameboy Color palette 1 */
 #define Lvl1BackgroundDataCGBPal1c0 32767
@@ -63,10 +63,10 @@
 #define Lvl1BackgroundDataCGBPal1c3 0
 
 /* Gameboy Color palette 2 */
-#define Lvl1BackgroundDataCGBPal2c0 11055
-#define Lvl1BackgroundDataCGBPal2c1 1355
-#define Lvl1BackgroundDataCGBPal2c2 5605
-#define Lvl1BackgroundDataCGBPal2c3 480
+#define Lvl1BackgroundDataCGBPal2c0 2452
+#define Lvl1BackgroundDataCGBPal2c1 1329
+#define Lvl1BackgroundDataCGBPal2c2 1441
+#define Lvl1BackgroundDataCGBPal2c3 1345
 
 /* Gameboy Color palette 3 */
 #define Lvl1BackgroundDataCGBPal3c0 11055
@@ -87,16 +87,16 @@
 #define Lvl1BackgroundDataCGBPal5c3 14373
 
 /* Gameboy Color palette 6 */
-#define Lvl1BackgroundDataCGBPal6c0 6076
-#define Lvl1BackgroundDataCGBPal6c1 8935
-#define Lvl1BackgroundDataCGBPal6c2 6596
-#define Lvl1BackgroundDataCGBPal6c3 5344
+#define Lvl1BackgroundDataCGBPal6c0 72
+#define Lvl1BackgroundDataCGBPal6c1 8226
+#define Lvl1BackgroundDataCGBPal6c2 1345
+#define Lvl1BackgroundDataCGBPal6c3 1196
 
 /* Gameboy Color palette 7 */
-#define Lvl1BackgroundDataCGBPal7c0 6076
-#define Lvl1BackgroundDataCGBPal7c1 8935
-#define Lvl1BackgroundDataCGBPal7c2 6596
-#define Lvl1BackgroundDataCGBPal7c3 5344
+#define Lvl1BackgroundDataCGBPal7c0 21140
+#define Lvl1BackgroundDataCGBPal7c1 2688
+#define Lvl1BackgroundDataCGBPal7c2 127
+#define Lvl1BackgroundDataCGBPal7c3 28672
 /* CGBpalette entries. */
 extern unsigned char Lvl1BackgroundDataCGB[];
 /* Start of tile array. */

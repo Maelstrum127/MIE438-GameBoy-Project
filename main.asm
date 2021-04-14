@@ -17,6 +17,7 @@
 	.globl _pongOnePartOne
 	.globl _setupball
 	.globl _setupenemiesPongOne
+	.globl _setup_characters
 	.globl _do_game_play
 	.globl _setupBitPong
 	.globl _returnBitAddress
@@ -26,6 +27,7 @@
 	.globl _performantdelay
 	.globl _cls
 	.globl _gotoxy
+	.globl _puts
 	.globl _printf
 	.globl _set_win_tiles
 	.globl _set_win_data
@@ -34,6 +36,7 @@
 	.globl _waitpadup
 	.globl _waitpad
 	.globl _joypad
+	.globl _set_bkg_palette
 	.globl _ballID
 	.globl _enemyLives
 	.globl _bitLives
@@ -2366,14 +2369,14 @@ _ballID::
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;main.c:60: void setup_windows(unsigned char *win_data, unsigned char *win_map, int data_size, unsigned int MapHeight, unsigned int MapWidth, unsigned int MapX, unsigned int MapY){
+;main.c:56: void setup_windows(unsigned char *win_data, unsigned char *win_map, int data_size, unsigned int MapHeight, unsigned int MapWidth, unsigned int MapX, unsigned int MapY){
 ;	---------------------------------
 ; Function setup_windows
 ; ---------------------------------
 _setup_windows::
-;main.c:61: DISPLAY_OFF;
+;main.c:57: DISPLAY_OFF;
 	call	_display_off
-;main.c:62: set_win_data(0,data_size,win_data);
+;main.c:58: set_win_data(0,data_size,win_data);
 	ldhl	sp,	#6
 	ld	a, (hl)
 	pop	bc
@@ -2388,7 +2391,7 @@ _setup_windows::
 	inc	sp
 	call	_set_win_data
 	add	sp, #4
-;main.c:63: set_win_tiles(0,0,MapWidth,MapHeight,win_map);
+;main.c:59: set_win_tiles(0,0,MapWidth,MapHeight,win_map);
 	ldhl	sp,	#8
 	ld	a, (hl+)
 	ld	d, a
@@ -2409,7 +2412,7 @@ _setup_windows::
 	inc	sp
 	call	_set_win_tiles
 	add	sp, #6
-;main.c:64: move_win(MapX, MapY);
+;main.c:60: move_win(MapX, MapY);
 	ldhl	sp,	#14
 	ld	a, (hl-)
 	ld	c, a
@@ -2419,24 +2422,24 @@ _setup_windows::
 ;C:/gbdk/include/gb/gb.h:893: WX_REG=x, WY_REG=y;
 	ld	a, c
 	ldh	(_WY_REG+0),a
-;main.c:65: wait_vbl_done();
+;main.c:61: wait_vbl_done();
 	call	_wait_vbl_done
-;main.c:66: SHOW_WIN;
+;main.c:62: SHOW_WIN;
 	ldh	a, (_LCDC_REG+0)
 	or	a, #0x20
 	ldh	(_LCDC_REG+0),a
-;main.c:67: DISPLAY_ON;
+;main.c:63: DISPLAY_ON;
 	ldh	a, (_LCDC_REG+0)
 	or	a, #0x80
 	ldh	(_LCDC_REG+0),a
-;main.c:68: waitpad(J_START);
+;main.c:64: waitpad(J_START);
 	ld	a, #0x80
 	push	af
 	inc	sp
 	call	_waitpad
 	inc	sp
-;main.c:69: waitpadup(); 
-;main.c:70: }
+;main.c:65: waitpadup(); 
+;main.c:66: }
 	jp  _waitpadup
 _blankmap3:
 	.db #0x51	; 81	'Q'
@@ -2455,44 +2458,28 @@ _blankmap3:
 	.db 0x00
 	.db 0x00
 _blankbackground:
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-	.dw #0x7fe0
-;main.c:72: void setup_dialogues(){
+	.dw #0x7fff
+	.dw #0x7fff
+	.dw #0x7fff
+	.dw #0x7fff
+	.dw #0x7fff
+	.dw #0x7fff
+	.dw #0x7fff
+	.dw #0x7fff
+	.dw #0x7fff
+	.dw #0x7fff
+	.dw #0x7fff
+	.dw #0x7fff
+	.dw #0x7fff
+	.dw #0x7fff
+	.dw #0x7fff
+	.dw #0x7fff
+;main.c:68: void setup_dialogues(){
 ;	---------------------------------
 ; Function setup_dialogues
 ; ---------------------------------
 _setup_dialogues::
-;main.c:73: setup_windows(Letter2Data, Diag1, 41, Diag1Height, Diag1Width, 7, 104);
+;main.c:69: setup_windows(Letter2Data, Diag1, 41, Diag1Height, Diag1Width, 7, 104);
 	ld	hl, #0x0068
 	push	hl
 	ld	l, #0x07
@@ -2509,7 +2496,7 @@ _setup_dialogues::
 	push	hl
 	call	_setup_windows
 	add	sp, #14
-;main.c:74: setup_windows(Letter2Data, Diag2, 41, Diag2Height, Diag2Width, 7, 104);
+;main.c:70: setup_windows(Letter2Data, Diag2, 41, Diag2Height, Diag2Width, 7, 104);
 	ld	hl, #0x0068
 	push	hl
 	ld	l, #0x07
@@ -2526,7 +2513,7 @@ _setup_dialogues::
 	push	hl
 	call	_setup_windows
 	add	sp, #14
-;main.c:75: setup_windows(Letter2Data, Diag3, 41, Diag3Height, Diag3Width, 7, 104);
+;main.c:71: setup_windows(Letter2Data, Diag3, 41, Diag3Height, Diag3Width, 7, 104);
 	ld	hl, #0x0068
 	push	hl
 	ld	l, #0x07
@@ -2543,7 +2530,7 @@ _setup_dialogues::
 	push	hl
 	call	_setup_windows
 	add	sp, #14
-;main.c:76: setup_windows(Letter2Data, Diag4, 41, Diag4Height, Diag4Width, 7, 104);
+;main.c:72: setup_windows(Letter2Data, Diag4, 41, Diag4Height, Diag4Width, 7, 104);
 	ld	hl, #0x0068
 	push	hl
 	ld	l, #0x07
@@ -2560,68 +2547,96 @@ _setup_dialogues::
 	push	hl
 	call	_setup_windows
 	add	sp, #14
-;main.c:77: HIDE_WIN;
+;main.c:73: HIDE_WIN;
 	ldh	a, (_LCDC_REG+0)
 	and	a, #0xdf
 	ldh	(_LCDC_REG+0),a
-;main.c:78: }
+;main.c:74: }
 	ret
-;main.c:81: _Bool levelPongOne(UINT8 *step){
+;main.c:77: _Bool levelPongOne(UINT8 *step){
 ;	---------------------------------
 ; Function levelPongOne
 ; ---------------------------------
 _levelPongOne::
 	add	sp, #-4
-;main.c:82: SWITCH_ROM_MBC1(2);
+;main.c:78: SWITCH_ROM_MBC1(2);
 	ld	a, #0x02
 	ldh	(__current_bank+0),a
 	ld	hl, #0x2000
 	ld	(hl), #0x02
-;main.c:83: struct GameCharacter* bitAddress = returnBitAddress();
+;main.c:79: struct GameCharacter* bitAddress = returnBitAddress();
 	call	_returnBitAddress
 	inc	sp
 	inc	sp
 	push	de
-;main.c:85: setupbit(80, 130);
+;main.c:81: setupbit(80, 130);
 	ld	de, #0x8250
 	push	de
 	call	_setupbit
 	add	sp, #2
-;main.c:86: setupBitPong();
+;main.c:82: setupBitPong();
 	call	_setupBitPong
-;main.c:87: printf(" ");
+;main.c:83: printf(" ");
 	ld	hl, #___str_0
 	push	hl
 	call	_printf
 	add	sp, #2
-;main.c:96: for (i=0; i<3; i++){   
+;main.c:87: set_bkg_palette(0, 1, &blankbackground[0]);
+	ld	hl, #_blankbackground
+	push	hl
+	ld	a, #0x01
+	push	af
+	inc	sp
+	xor	a, a
+	push	af
+	inc	sp
+	call	_set_bkg_palette
+	add	sp, #4
+;main.c:88: for (i=0; i<3; i++){   
 	ld	b, #0x00
-00128$:
-;main.c:97: tileid = i*2 + 6;
+00130$:
+;main.c:89: tileid = i*2 + 6;
 	ld	a, b
 	add	a, a
 	add	a, #0x06
 	ld	c, a
-;main.c:99: SWITCH_ROM_MBC1(4);
+;main.c:91: SWITCH_ROM_MBC1(4);
 	ld	a, #0x04
 	ldh	(__current_bank+0),a
 	ld	hl, #0x2000
 	ld	(hl), #0x04
 ;C:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
-	ld	de, #_shadow_OAM+0
 	ld	l, c
 	ld	h, #0x00
 	add	hl, hl
 	add	hl, hl
-	add	hl, de
-	inc	hl
-	inc	hl
-	ld	a,h
+	ld	e, l
+	ld	d, h
+	ld	hl,#_shadow_OAM+1+1
+	add	hl,de
 	ld	(hl), #0x2a
-;main.c:101: set_sprite_tile(tileid+1, 43);
+;C:/gbdk/include/gb/gb.h:1050: shadow_OAM[nb].prop=prop;
+	ld	hl,#_shadow_OAM+1+1+1
+	add	hl,de
+	ld	(hl), #0x03
+;main.c:94: set_sprite_tile(tileid+1, 43);
 	ld	e, c
 	inc	e
+	ld	d, e
 ;C:/gbdk/include/gb/gb.h:1004: shadow_OAM[nb].tile=tile;
+	ld	l, d
+	ld	h, #0x00
+	add	hl, hl
+	add	hl, hl
+	push	de
+	ld	de, #_shadow_OAM
+	add	hl, de
+	pop	de
+	inc	hl
+	inc	hl
+	ld	(hl), #0x2b
+;main.c:95: set_sprite_prop(tileid+1, 3);
+;C:/gbdk/include/gb/gb.h:1050: shadow_OAM[nb].prop=prop;
 	xor	a, a
 	ld	l, e
 	ld	h, a
@@ -2631,20 +2646,21 @@ _levelPongOne::
 	add	hl, de
 	inc	hl
 	inc	hl
-	ld	(hl), #0x2b
-;main.c:103: SWITCH_ROM_MBC1(3);
+	inc	hl
+	ld	(hl), #0x03
+;main.c:97: SWITCH_ROM_MBC1(3);
 	ld	a, #0x03
 	ldh	(__current_bank+0),a
 	ld	hl, #0x2000
 	ld	(hl), #0x03
-;main.c:104: setupenemiesPongOne(i);
+;main.c:98: setupenemiesPongOne(i);
 	push	bc
 	push	bc
 	inc	sp
 	call	_setupenemiesPongOne
 	inc	sp
 	pop	bc
-;main.c:105: pongOnePartOne(i, tileid);
+;main.c:99: pongOnePartOne(i, tileid);
 	push	bc
 	ld	a, c
 	push	af
@@ -2654,42 +2670,42 @@ _levelPongOne::
 	call	_pongOnePartOne
 	add	sp, #2
 	pop	bc
-;main.c:106: movePongCharacterFromCombatLevelsFile(i);
+;main.c:100: movePongCharacterFromCombatLevelsFile(i);
 	push	bc
 	push	bc
 	inc	sp
 	call	_movePongCharacterFromCombatLevelsFile
 	inc	sp
 	pop	bc
-;main.c:96: for (i=0; i<3; i++){   
+;main.c:88: for (i=0; i<3; i++){   
 	inc	b
 	ld	a, b
 	sub	a, #0x03
-	jr	C, 00128$
-;main.c:109: ballID = 3;
+	jr	C, 00130$
+;main.c:103: ballID = 3;
 	ld	hl, #_ballID
 	ld	(hl), #0x03
-;main.c:110: setupball(ballID);
+;main.c:104: setupball(ballID);
 	ld	a, #0x03
 	push	af
 	inc	sp
 	call	_setupball
 	inc	sp
-;main.c:112: SHOW_SPRITES;
+;main.c:106: SHOW_SPRITES;
 	ldh	a, (_LCDC_REG+0)
 	or	a, #0x02
 	ldh	(_LCDC_REG+0),a
-;main.c:113: DISPLAY_ON;
+;main.c:107: DISPLAY_ON;
 	ldh	a, (_LCDC_REG+0)
 	or	a, #0x80
 	ldh	(_LCDC_REG+0),a
-;main.c:117: bitLives = 3;
+;main.c:111: bitLives = 3;
 	ld	hl, #_bitLives
 	ld	(hl), #0x03
-;main.c:118: enemyLives = 3;
+;main.c:112: enemyLives = 3;
 	ld	hl, #_enemyLives
 	ld	(hl), #0x03
-;main.c:120: while(bitLives != 0 && enemyLives != 0){
+;main.c:114: while(bitLives != 0 && enemyLives != 0){
 	ldhl	sp,	#6
 	ld	a, (hl+)
 	ld	e, (hl)
@@ -2703,10 +2719,10 @@ _levelPongOne::
 	ld	a, (#_enemyLives)
 	or	a, a
 	jp	Z, 00116$
-;main.c:121: for (timer = 0; timer<8; timer++){
+;main.c:115: for (timer = 0; timer<8; timer++){
 	ld	c, #0x00
-00130$:
-;main.c:122: performantdelay(250); 
+00132$:
+;main.c:116: performantdelay(250); 
 	push	bc
 	ld	a, #0xfa
 	push	af
@@ -2714,22 +2730,22 @@ _levelPongOne::
 	call	_performantdelay
 	inc	sp
 	pop	bc
-;main.c:121: for (timer = 0; timer<8; timer++){
+;main.c:115: for (timer = 0; timer<8; timer++){
 	inc	c
 	ld	a, c
 	sub	a, #0x08
-	jr	C, 00130$
-;main.c:125: SWITCH_ROM_MBC1(2);
+	jr	C, 00132$
+;main.c:119: SWITCH_ROM_MBC1(2);
 	ld	a, #0x02
 	ldh	(__current_bank+0),a
 	ld	hl, #0x2000
 	ld	(hl), #0x02
-;main.c:126: if(joypad()){
+;main.c:120: if(joypad()){
 	call	_joypad
 	ld	a, e
 	or	a, a
 	jr	Z, 00104$
-;main.c:127: pongJoypadDetection(step);
+;main.c:121: pongJoypadDetection(step);
 	pop	bc
 	pop	hl
 	push	hl
@@ -2739,7 +2755,7 @@ _levelPongOne::
 	add	sp, #2
 	jr	00105$
 00104$:
-;main.c:130: wastetest = setbit_forward(*step);
+;main.c:124: wastetest = setbit_forward(*step);
 	ldhl	sp,#2
 	ld	a, (hl+)
 	ld	e, a
@@ -2750,12 +2766,12 @@ _levelPongOne::
 	call	_setbit_forward
 	inc	sp
 00105$:
-;main.c:133: SWITCH_ROM_MBC1(3);
+;main.c:127: SWITCH_ROM_MBC1(3);
 	ld	a, #0x03
 	ldh	(__current_bank+0),a
 	ld	hl, #0x2000
 	ld	(hl), #0x03
-;main.c:135: PongOnecheckcollisions(bitAddress, ballID);
+;main.c:129: PongOnecheckcollisions(bitAddress, ballID);
 	ld	a, (#_ballID)
 	push	af
 	inc	sp
@@ -2766,7 +2782,7 @@ _levelPongOne::
 	push	hl
 	call	_PongOnecheckcollisions
 	add	sp, #3
-;main.c:137: wastetest = pongOneUpdate(&bitLives, &enemyLives, ballID);
+;main.c:131: wastetest = pongOneUpdate(&bitLives, &enemyLives, ballID);
 	ld	a, (#_ballID)
 	push	af
 	inc	sp
@@ -2777,7 +2793,7 @@ _levelPongOne::
 	call	_pongOneUpdate
 	add	sp, #5
 	ld	a, e
-;main.c:139: if (wastetest == 0 && bitLives != 0 && enemyLives != 0){
+;main.c:133: if (wastetest == 0 && bitLives != 0 && enemyLives != 0){
 	or	a, a
 	jr	NZ, 00114$
 	ld	a, (#_bitLives)
@@ -2786,32 +2802,32 @@ _levelPongOne::
 	ld	a, (#_enemyLives)
 	or	a, a
 	jp	Z, 00114$
-;main.c:140: setupball(ballID);
+;main.c:134: setupball(ballID);
 	ld	a, (#_ballID)
 	push	af
 	inc	sp
 	call	_setupball
 	inc	sp
-;main.c:142: SHOW_SPRITES;
+;main.c:136: SHOW_SPRITES;
 	ldh	a, (_LCDC_REG+0)
 	or	a, #0x02
 	ldh	(_LCDC_REG+0),a
-;main.c:143: DISPLAY_ON;
+;main.c:137: DISPLAY_ON;
 	ldh	a, (_LCDC_REG+0)
 	or	a, #0x80
 	ldh	(_LCDC_REG+0),a
-;main.c:145: performantdelay(100);        
+;main.c:139: performantdelay(100);        
 	ld	a, #0x64
 	push	af
 	inc	sp
 	call	_performantdelay
 	inc	sp
-;main.c:146: printf(" ");
+;main.c:140: printf(" ");
 	ld	hl, #___str_0
 	push	hl
 	call	_printf
 	add	sp, #2
-;main.c:147: gotoxy(0, 7);
+;main.c:141: gotoxy(0, 7);
 	ld	a, #0x07
 	push	af
 	inc	sp
@@ -2820,7 +2836,7 @@ _levelPongOne::
 	inc	sp
 	call	_gotoxy
 	add	sp, #2
-;main.c:148: printf("  Your lives: %d\n  Enemy lives: %d\n  Use A to continue", bitLives, enemyLives);
+;main.c:142: printf("  Your lives: %d\n  Enemy lives: %d\n  Use A to continue", bitLives, enemyLives);
 	ld	hl, #_enemyLives
 	ld	e, (hl)
 	ld	d, #0x00
@@ -2833,13 +2849,13 @@ _levelPongOne::
 	push	hl
 	call	_printf
 	add	sp, #6
-;main.c:149: while(!(joypad() & J_START)){
+;main.c:143: while(!(joypad() & J_START)){
 00106$:
 	call	_joypad
 	ld	a, e
 	rlca
 	jr	C, 00108$
-;main.c:150: performantdelay(5);
+;main.c:144: performantdelay(5);
 	ld	a, #0x05
 	push	af
 	inc	sp
@@ -2847,20 +2863,20 @@ _levelPongOne::
 	inc	sp
 	jr	00106$
 00108$:
-;main.c:152: cls();
+;main.c:146: cls();
 	call	_cls
 	jp	00114$
 00116$:
-;main.c:157: if (bitLives == 0) {
+;main.c:151: if (bitLives == 0) {
 	ld	a, (#_bitLives)
 	or	a, a
 	jr	NZ, 00124$
-;main.c:158: printf(" ");
+;main.c:152: printf(" ");
 	ld	hl, #___str_0
 	push	hl
 	call	_printf
 	add	sp, #2
-;main.c:159: gotoxy(0, 7);
+;main.c:153: gotoxy(0, 7);
 	ld	a, #0x07
 	push	af
 	inc	sp
@@ -2869,18 +2885,18 @@ _levelPongOne::
 	inc	sp
 	call	_gotoxy
 	add	sp, #2
-;main.c:160: printf("  === YOU LOSE ===\n   Please press B \n   to try again.");
+;main.c:154: printf("  === YOU LOSE ===\n   Please press B \n   to try again.");
 	ld	hl, #___str_2
 	push	hl
 	call	_printf
 	add	sp, #2
-;main.c:161: while(!(joypad() & J_START)){
+;main.c:155: while(!(joypad() & J_START)){
 00117$:
 	call	_joypad
 	ld	a, e
 	rlca
 	jr	C, 00119$
-;main.c:162: performantdelay(5); 
+;main.c:156: performantdelay(5); 
 	ld	a, #0x05
 	push	af
 	inc	sp
@@ -2888,18 +2904,18 @@ _levelPongOne::
 	inc	sp
 	jr	00117$
 00119$:
-;main.c:164: cls();
+;main.c:158: cls();
 	call	_cls
-;main.c:165: return false;
+;main.c:159: return false;
 	ld	e, #0x00
-	jr	00132$
+	jr	00134$
 00124$:
-;main.c:168: printf(" ");
+;main.c:162: printf(" ");
 	ld	hl, #___str_0
 	push	hl
 	call	_printf
 	add	sp, #2
-;main.c:169: gotoxy(0, 7);
+;main.c:163: gotoxy(0, 7);
 	ld	a, #0x07
 	push	af
 	inc	sp
@@ -2908,18 +2924,18 @@ _levelPongOne::
 	inc	sp
 	call	_gotoxy
 	add	sp, #2
-;main.c:170: printf("  YOU WON THE BATTLE!\n   Please press B \n    to continue.");
-	ld	hl, #___str_3
+;main.c:164: printf("  YOU WON THE BATTLE!\n    Mal has been \n     defeated! \n");
+	ld	hl, #___str_4
 	push	hl
-	call	_printf
+	call	_puts
 	add	sp, #2
-;main.c:171: while(!(joypad() & J_START)){
+;main.c:165: while(!(joypad() & J_START)){
 00120$:
 	call	_joypad
 	ld	a, e
 	rlca
 	jr	C, 00122$
-;main.c:172: performantdelay(5); 
+;main.c:166: performantdelay(5); 
 	ld	a, #0x05
 	push	af
 	inc	sp
@@ -2927,12 +2943,12 @@ _levelPongOne::
 	inc	sp
 	jr	00120$
 00122$:
-;main.c:174: cls();
+;main.c:168: cls();
 	call	_cls
-;main.c:175: return true;
+;main.c:169: return true;
 	ld	e, #0x01
-00132$:
-;main.c:177: }
+00134$:
+;main.c:171: }
 	add	sp, #4
 	ret
 ___str_0:
@@ -2952,27 +2968,63 @@ ___str_2:
 	.db 0x0a
 	.ascii "   to try again."
 	.db 0x00
-___str_3:
+___str_4:
 	.ascii "  YOU WON THE BATTLE!"
 	.db 0x0a
-	.ascii "   Please press B "
+	.ascii "    Mal has been "
 	.db 0x0a
-	.ascii "    to continue."
+	.ascii "     defeated! "
 	.db 0x00
-;main.c:179: void main()
+;main.c:173: void main()
 ;	---------------------------------
 ; Function main
 ; ---------------------------------
 _main::
 	dec	sp
-;main.c:181: ENABLE_RAM_MBC1;
+;main.c:175: ENABLE_RAM_MBC1;
 	ld	hl, #0x0000
 	ld	(hl), #0x0a
-;main.c:185: SWITCH_ROM_MBC1(2);
+;main.c:177: printf(" ");
+	ld	hl, #___str_5
+	push	hl
+	call	_printf
+	add	sp, #2
+;main.c:178: gotoxy(0, 7);
+	ld	a, #0x07
+	push	af
+	inc	sp
+	xor	a, a
+	push	af
+	inc	sp
+	call	_gotoxy
+	add	sp, #2
+;main.c:179: printf("    Where am I?\n   I'll ask over \n    there!");
+	ld	hl, #___str_6
+	push	hl
+	call	_printf
+	add	sp, #2
+;main.c:180: waitpad(J_START);
+	ld	a, #0x80
+	push	af
+	inc	sp
+	call	_waitpad
+	inc	sp
+;main.c:181: waitpadup(); 
+	call	_waitpadup
+;main.c:182: cls();
+	call	_cls
+;main.c:184: SWITCH_ROM_MBC1(2);
 	ld	a, #0x02
 	ldh	(__current_bank+0),a
-	ld	h, #0x20
+	ld	hl, #0x2000
 	ld	(hl), #0x02
+;main.c:185: setup_characters(48, 80);
+	ld	hl, #0x0050
+	push	hl
+	ld	l, #0x30
+	push	hl
+	call	_setup_characters
+	add	sp, #4
 ;main.c:186: do_game_play();
 	call	_do_game_play
 ;main.c:188: SWITCH_ROM_MBC1(0);
@@ -3027,5 +3079,15 @@ _main::
 ;main.c:207: }
 	inc	sp
 	ret
+___str_5:
+	.ascii " "
+	.db 0x00
+___str_6:
+	.ascii "    Where am I?"
+	.db 0x0a
+	.ascii "   I'll ask over "
+	.db 0x0a
+	.ascii "    there!"
+	.db 0x00
 	.area _CODE
 	.area _CABS (ABS)

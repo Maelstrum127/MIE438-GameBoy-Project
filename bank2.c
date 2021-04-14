@@ -423,7 +423,7 @@ void move(UINT8 *step, UINT16 *player_loc_x, UINT16 *player_loc_y, unsigned char
     }
 }
 
-void setup_map(UWORD *pallete, unsigned char *map_data, unsigned char *tiles_1, unsigned char *tiles_0, int character_x, int character_y, int data_size, unsigned int MapHeight, unsigned int MapWidth){
+void setup_map(UWORD *pallete, unsigned char *map_data, unsigned char *tiles_1, unsigned char *tiles_0, int data_size, unsigned int MapHeight, unsigned int MapWidth){
     // setup background
     DISPLAY_OFF;
     set_bkg_palette(0, 8, pallete);
@@ -434,10 +434,11 @@ void setup_map(UWORD *pallete, unsigned char *map_data, unsigned char *tiles_1, 
     set_bkg_tiles(0, 0, MapWidth, MapHeight, tiles_0);
     SHOW_BKG;
     DISPLAY_ON;
-   
-    // setup character sprite
+}
+
+void setup_characters(int character_x, int character_y){
     set_sprite_palette(0,8, &spritepalette[0]);
-    set_sprite_data(0, 43, GameSprites);
+    set_sprite_data(0, 45, GameSprites);
     setupbit(character_x, character_y);
     player_location[0] = character_x;
     player_location[1] = character_y;
@@ -496,7 +497,7 @@ void do_game_play(){
     unsigned int MapHeight = Lvl1BackgroundMapHeight;
     unsigned int MapWidth = Lvl1BackgroundMapWidth;
     
-    setup_map(backgroundpalette, Lvl1BackgroundData, bk_tiles, bk_collision, 88, 88, 127, MapHeight, MapWidth);
+    setup_map(backgroundpalette, Lvl1BackgroundData, bk_tiles, bk_collision, 127, MapHeight, MapWidth);
     //set_win_data(0,40,Letter2Data);
     game_running = 1;
     UINT8 step = 0;

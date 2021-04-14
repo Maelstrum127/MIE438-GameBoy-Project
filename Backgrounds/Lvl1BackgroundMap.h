@@ -8,7 +8,7 @@
    Section       : 
    Bank          : 0
    Map size      : 23 x 20
-   Tile set      : lvl1_maptiles.gbr
+   Tile set      : C:\Users\Claire Glossop\Documents\MIE438_GB\MIE438_Git\main_maptiles.gbr
    Plane count   : 2 planes (16 bits)
    Plane order   : Planes are continues
    Tile offset   : 0

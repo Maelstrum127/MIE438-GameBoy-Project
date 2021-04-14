@@ -12,18 +12,14 @@ const unsigned char blankmap3[15] = {0x51, 0x52};
 
 
 const UWORD blankbackground[] = {
-    RGB_CYAN,RGB_CYAN,RGB_CYAN,RGB_CYAN,
-    RGB_CYAN,RGB_CYAN,RGB_CYAN,RGB_CYAN,
-    RGB_CYAN,RGB_CYAN,RGB_CYAN,RGB_CYAN,
-    RGB_CYAN,RGB_CYAN,RGB_CYAN,RGB_CYAN,
-    RGB_CYAN,RGB_CYAN,RGB_CYAN,RGB_CYAN,
-    RGB_CYAN,RGB_CYAN,RGB_CYAN,RGB_CYAN,
-    RGB_CYAN,RGB_CYAN,RGB_CYAN,RGB_CYAN,
-    RGB_CYAN,RGB_CYAN,RGB_CYAN,RGB_CYAN
+    RGB_WHITE,RGB_WHITE,RGB_WHITE,RGB_WHITE,
+    RGB_WHITE,RGB_WHITE,RGB_WHITE,RGB_WHITE,
+    RGB_WHITE,RGB_WHITE,RGB_WHITE,RGB_WHITE,
+    RGB_WHITE,RGB_WHITE,RGB_WHITE,RGB_WHITE,
 };
 // bank 0
 void setup_windows(unsigned char *win_data, unsigned char *win_map, int data_size, unsigned int MapHeight, unsigned int MapWidth, unsigned int MapX, unsigned int MapY);
-//void setup_splashscreen();
+void setup_splashscreen();
 void setup_dialogues();
 
 // bank 2
@@ -35,7 +31,7 @@ UINT8 setbit_backward(UINT8 step);
 void walk_without_background_movement(INT8 move_x, INT8 move_y, UINT8 *step);
 void walk_background_movement(INT8 move_x, INT8 move_y, UINT8 *step);
 void move(UINT8 *step, UINT16 *player_loc_x, UINT16 *player_loc_y, unsigned char *bk_col, unsigned int MapHeight, unsigned int MapWidth);
-void setup_map(UWORD *pallete, unsigned char *map_data, unsigned char *tiles_1, unsigned char *tiles_0, int character_x, int character_y, int data_size, unsigned int MapHeight, unsigned int MapWidth);
+void setup_map(UWORD *pallete, unsigned char *map_data, unsigned char *tiles_1, unsigned char *tiles_0, int data_size, unsigned int MapHeight, unsigned int MapWidth);
 void pongJoypadDetection(UINT8 *step);
 void combatHeatJoypadDetection(UINT8 *step);
 struct GameCharacter* returnBitAddress();
@@ -85,20 +81,18 @@ _Bool levelPongOne(UINT8 *step){
     setupbit(80, 130);
     setupBitPong();
     printf(" ");
-    // DISPLAY_OFF;
-    // set_bkg_palette(0,1,&blankbackground[0]);
-	// wait_vbl_done();
-    // SHOW_BKG;
-	// DISPLAY_ON;
 
     UINT8 tileid = 0;
     UINT8 i;
+    set_bkg_palette(0, 1, &blankbackground[0]);
     for (i=0; i<3; i++){   
         tileid = i*2 + 6;
 
         SWITCH_ROM_MBC1(4);
         set_sprite_tile(tileid, 42);
+        set_sprite_prop(tileid, 3);
         set_sprite_tile(tileid+1, 43);
+        set_sprite_prop(tileid+1, 3);
 
         SWITCH_ROM_MBC1(3);
         setupenemiesPongOne(i);
@@ -167,7 +161,7 @@ _Bool levelPongOne(UINT8 *step){
     else {
         printf(" ");
         gotoxy(0, 7);
-        printf("  YOU WON THE BATTLE!\n   Please press B \n    to continue.");
+        printf("  YOU WON THE BATTLE!\n    Mal has been \n     defeated! \n");
         while(!(joypad() & J_START)){
             performantdelay(5); 
         }
@@ -180,9 +174,15 @@ void main()
 {
 	ENABLE_RAM_MBC1;
     //SWITCH_ROM_MBC1(4);
-    //setup_splashscreen();
+    printf(" ");
+    gotoxy(0, 7);
+    printf("    Where am I?\n   I'll ask over \n    there!");
+	waitpad(J_START);
+    waitpadup(); 
+    cls();
 
 	SWITCH_ROM_MBC1(2);
+    setup_characters(48, 80);
 	do_game_play();
 
     SWITCH_ROM_MBC1(0);

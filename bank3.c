@@ -55,7 +55,8 @@ void setupball(UINT8 id){
 
     // load sprites for enemies
     UINT8 tileid = id*2 + 6;
-    set_sprite_tile(tileid, 40);
+    set_sprite_tile(tileid, 44);
+    set_sprite_prop(tileid, 3);
     enemies[id].spritids[0] = tileid;
 
     moveballcharacter(&enemies[id], enemies[id].x, enemies[id].y);
