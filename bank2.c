@@ -510,22 +510,16 @@ void do_game_play(){
             } 
         }
         else{
-            walk_without_background_movement(8, 0, &step);
             performantdelay(8);
-            walk_without_background_movement(8, 0, &step);
-            performantdelay(8);
-            walk_without_background_movement(8, 0, &step);
-            performantdelay(8);
-            walk_without_background_movement(0, -8, &step);
-            performantdelay(8);
-            walk_without_background_movement(0, -8, &step);
-            performantdelay(8);
-            walk_without_background_movement(0, -8, &step);
-            performantdelay(8);
-            walk_without_background_movement(0, -8, &step);
-            performantdelay(8);
-            walk_without_background_movement(0, -8, &step);
-            performantdelay(8);
+            while (player_location[0] < 112){
+                walk_without_background_movement(8, 0, &step);
+                player_location[0] += 8;
+                performantdelay(8);
+            }
+            for (int i = 0; i<6; i++){
+                walk_without_background_movement(0, -8, &step);
+                performantdelay(8);
+            }
             break;
         }
         move(&step, &player_location[0], &player_location[1], bk_collision, MapHeight, MapWidth);
