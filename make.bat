@@ -11,3 +11,6 @@ DEL *.o
 DEL *.asm
 DEL *.map
 DEL *.sym
+DEL *.cdb
+DEL *.ihx
+DEL *.noi
