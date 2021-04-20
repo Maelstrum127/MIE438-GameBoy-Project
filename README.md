@@ -24,3 +24,6 @@ git checkout master
 * Main map: all arrow keys 
 * Combat: left and right 
 The game is finished once the “Mal has been defeated!” text is displayed
+
+## Video
+To for a quick playthrough, watch this [video](https://www.youtube.com/watch?v=2vMHTOsuGYA&ab_channel=CatGlossop)
