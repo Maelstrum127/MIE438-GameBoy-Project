@@ -2,7 +2,7 @@
 Main project for University of Toronto's course MIE438: Microcontrollers and Embedded Processors.
 
 ## Game Overview
-This repository contains an original RPG Pong-Style game for the Original Game Boy, coded using gdbk package in C.  
+This repository contains an original RPG Pong-Style game for the Original Game Boy, coded using ```gdbk``` package in C.  
 
 ## Setup 
 Download mGBA [here](https://mgba.io/) and follow the installation instructions   
