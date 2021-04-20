@@ -7,16 +7,16 @@ This repository contains an original RPG Pong-Style game for the Original Game B
 ![](https://github.com/Maelstrum127/MIE438-GameBoy-Project/blob/master/Images/win.gif)
 
 ## Setup 
-Download mGBA [here](https://mgba.io/) and follow the installation instructions   
-1. Clone the repository    
+1. Download mGBA [here](https://mgba.io/) and follow the installation instructions   
+2. Clone the repository    
 ```
 git clone https://github.com/Maelstrum127/MIE438-GameBoy-Project.git 
 ```
-2. Make sure that you are on the master branch on your local machine. If you are on any other branch, switch to Master by typing the command 
+3. Make sure that you are on the master branch on your local machine. If you are on any other branch, switch to Master by typing the command 
 ```
 git checkout master 
 ```
-3. Open *bits_adventures.gb* in the repository- it should default open using mGBA emulator. If this doesn't happen, open mGBA, click "Load ROM" and open the *bits_adventures.gb* file.  
+4. Open *bits_adventures.gb* in the repository- it should default open using mGBA emulator. If this doesn't happen, open mGBA, click "Load ROM" and open the *bits_adventures.gb* file.  
 
 ## Game Play Instructions 
 * To skip through screens and dialogue, click “Enter” (Note: this replaces the classic A and B buttons for simplicity despite on screen text used for authenticity) 
