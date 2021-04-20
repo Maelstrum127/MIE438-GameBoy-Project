@@ -3,6 +3,7 @@ Main project for University of Toronto's course MIE438: Microcontrollers and Emb
 
 ## Game Overview
 This repository contains an original RPG Pong-Style game for the Original Game Boy, coded using ```gdbk``` package in C.  
+    
 ![](https://github.com/Maelstrum127/MIE438-GameBoy-Project/blob/master/Images/win.gif)
 
 ## Setup 
